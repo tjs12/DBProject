@@ -9,23 +9,34 @@
 
 #include "Record.h"
 
+/*
+Data format:
+Page 0: Header Page
+	COLUMN_NUM: Number of columns(1)
+	COLUMN_TYPES: Data types of the columns(1 for each column)
+	col_type_settings: Settings of the data types(1 for each column)
+	col_name : Names of the columns(MAX_STR for each column)
+
+*/
+
 class Table {
 public:
 	string tableName
 	int columnNum;
-	int *columnTypes;
+	Type *columnTypes;
 	std::string *columnNames;
 	
 	Record *select(string *col_names, Condition cond);
 	void deleteTable();
 	void insert();
 	Record getRecord(int rid);
-	void updateRecord(int rid, Record &r, Record &mask);
-	void insertRecord(Record &r);
-	void deleteRecord(int rid);
+	int updateRecord(int rid, Record &r, Record &mask);
+	int insertRecord(Record &r);
+	int deleteRecord(int rid);
 	int getRecordNum() {return record_num;}
+	bool isRecord(int rid);
 	
-	void createTable(int col_num, int *col_type, std::string name);
+	void createTable(int col_num, Type *col_type, std::string *col_names, std::string name);
 	void openTable(string name);
 	
 	~Table();
@@ -37,9 +48,12 @@ private:
 	int record_per_page;
 	int record_num;
 	int start_page;
-	int **page_available;
+	int first_page_available;
+	int page_header_size;
 	
 	make_header(Buf_Type b);
+	bool is_record_buf(int pos_in_page, BufType b);
+	void check_page_validity(BufType b);
 }
 	
 #endif
