@@ -3,11 +3,14 @@
 
 #include <string>
 
-#include "filesystem/bufmanager/BufPageManager.h"
-#include "filesystem/fileio/FileManager.h"
-#include "filesystem/utils/pagedef.h"
+#include "../filesystem/bufmanager/BufPageManager.h"
+#include "../filesystem/fileio/FileManager.h"
+#include "../filesystem/utils/pagedef.h"
 
 #include "Record.h"
+
+#define MAX_COL_NAME_LEN 255
+
 
 /*
 Data format:
@@ -17,16 +20,31 @@ Page 0: Header Page
 	col_type_settings: Settings of the data types(1 for each column)
 	col_name : Names of the columns(MAX_STR for each column)
 
+Other Pages:
+	PAGE_HEADER_VALID: the page is valid if value = PAGE_VALID
+	NEXT_PAGE_AVAILABLE: number of next page with free space
+
 */
+
+
+#define COLUMN_NUM 0
+#define COLUMN_TYPES 1
+
+
+#define PAGE_HEADER_VALID 0
+#define NEXT_PAGE_AVAILABLE 1
+#define PAGE_VALID 255 //NB
+#define PAGE_HEADER_SIZE 2 //TODO
+
 
 class Table {
 public:
-	string tableName
+	string tableName;
 	int columnNum;
 	Type *columnTypes;
 	std::string *columnNames;
 	
-	Record *select(string *col_names, Condition cond);
+	//Record *select(string *col_names, Condition cond);
 	void deleteTable();
 	void insert();
 	Record getRecord(int rid);
@@ -51,9 +69,9 @@ private:
 	int first_page_available;
 	int page_header_size;
 	
-	make_header(Buf_Type b);
+	void make_header(BufType b);
 	bool is_record_buf(int pos_in_page, BufType b);
-	void check_page_validity(BufType b);
-}
+	void check_page_validity(BufType b, int pgnum = 1);
+};
 	
 #endif

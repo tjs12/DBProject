@@ -1,6 +1,13 @@
 #ifndef SMM_H
 #define SMM_H
 
+#define RC int
+#define AttrType Type
+#define MAXNAME 255
+
+#include "../storage/Type.h"
+#include "../storage/rmm.h"
+
 // Used by SM_Manager::CreateTable
 struct AttrInfo {
    char     *attrName;           // Attribute name
@@ -21,7 +28,7 @@ struct DataAttrInfo {
 
 class SM_Manager {
   public:
-       SM_Manager  (IX_Manager &ixm, RM_Manager &rmm);  // Constructor
+       SM_Manager  (/*IX_Manager &ixm, */RM_Manager &rmm);  // Constructor
        ~SM_Manager ();                                  // Destructor
     RC OpenDb      (const char *dbName);                // Open database
     RC CloseDb     ();                                  // Close database
@@ -47,7 +54,7 @@ class Printer {
     Printer(const DataAttrInfo *attributes, const int attrCount);
     ~Printer();         
     void PrintHeader(ostream &c) const;
-    Void Print(ostream &c, const char * const data);
+    void Print(ostream &c, const char * const data);
     void Print(ostream &c, const void * const data[]);
     void PrintFooter(ostream &c) const;
 };

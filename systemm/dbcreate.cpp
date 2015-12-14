@@ -1,3 +1,10 @@
+#include <cstring>
+#include <iostream>
+#include <cstdlib>
+#include <unistd.h>
+
+using namespace std;
+
 int main (
  int argc,      // length of array argv
  char **argv )  // argv is an array of pointers
@@ -9,7 +16,7 @@ int main (
 
    if (argc != 2) {
       cerr << "Usage: " << argv[0] << " dbname \n";
-      exit(1);
+      return 0;
    }
 
    // The database name is the second argument
@@ -20,9 +27,9 @@ int main (
 
    if (chdir(dbname) < 0) {
       cerr << argv[0] << " chdir error to " << dbname << "\n";
-      exit(1);
+      return 0;
    }
 
    // Create the system catalogs
-   ...
+   //...
 }

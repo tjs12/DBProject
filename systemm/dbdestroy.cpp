@@ -1,3 +1,11 @@
+#include <cstring>
+#include <iostream>
+#include <cstdlib>
+#include <unistd.h>
+
+using namespace std;
+
+
 int main (
  int argc,      // length of array argv
  char **argv )  // argv is an array of pointers

@@ -19,7 +19,7 @@ public:
 		default:
 			return 0;
 		}
-	}
-}
+	};
+};
 
 #endif

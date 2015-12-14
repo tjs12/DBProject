@@ -1,4 +1,5 @@
 #include "Table.h"
+#include "../common/rc.h"
 using namespace std;
 
 void Table::createTable(int col_num, Type *col_type, string *col_names, string name)
@@ -8,15 +9,15 @@ void Table::createTable(int col_num, Type *col_type, string *col_names, string n
 	columnTypes = new Type[col_num];
 	columnNames = new string[col_num];
 	for (int i = 0; i < col_num; i++) {
-		columnType[i] = col_type[i];
+		columnTypes[i] = col_type[i];
 		columnNames[i] = col_names[i];
 	}
 	
 	
 	fm = new FileManager();
 	bpm = new BufPageManager(fm);
-	fm -> createFile(name);
-	fm -> openFile(name, fid);
+	fm -> createFile(name.c_str());
+	fm -> openFile(name.c_str(), fid);
 	
 	int index;
 	BufType b = bpm -> allocPage(fid, 0, index, false);
@@ -30,7 +31,7 @@ void Table::openTable(string name)
 {
 	fm = new FileManager();
 	bpm = new BufPageManager(fm);
-	fm -> openFile(name, fid);
+	fm -> openFile(name.c_str(), fid);
 	int index;
 	BufType b = bpm->getPage(fid, 0, index);
 	//read header
@@ -40,13 +41,13 @@ void Table::openTable(string name)
 	
 	int col_settings_pos = COLUMN_TYPES + columnNum;
 	int col_name_pos = col_settings_pos + columnNum;
-	int rec_per_page_pos = col_name_pos + columnNum * MAX_STRING_LEN / 4;
+	int rec_per_page_pos = col_name_pos + columnNum * MAX_COL_NAME_LEN / 4;
 	int rec_num_pos = rec_per_page_pos + 1;
 	
-	for (int i = 0; i < col_num; i++) {
+	for (int i = 0; i < columnNum; i++) {
 		columnTypes[i].type = b[COLUMN_TYPES + i];
-		columnType[i].setting = b[col_settings_pos + i]; //TODO
-		columnNames[i] = new string((char*)b[col_name_pos + i * MAX_STRING_LEN / 4]);
+		columnTypes[i].setting = b[col_settings_pos + i]; //TODO
+		columnNames[i] = new string((char*)b[col_name_pos + i * MAX_COL_NAME_LEN / 4]);
 	}
 	record_per_page = b[rec_per_page_pos];
 	record_num = b[rec_num_pos];
@@ -54,22 +55,22 @@ void Table::openTable(string name)
 }
 
 
-Table::make_header(BufType b)
+void Table::make_header(BufType b)
 {
 	//find the positions of the items in the header
 	int col_settings_pos = COLUMN_TYPES + columnNum;
 	int col_name_pos = COLUMN_TYPES + columnNum;
-	int rec_per_page_pos = col_name_pos + columnNum * MAX_STRING_LEN / 4;
+	int rec_per_page_pos = col_name_pos + columnNum * MAX_COL_NAME_LEN / 4;
 	int rec_num_pos = rec_per_page_pos + 1;
 	int first_free_pagen_pos = rec_num_pos + 1;
 	
 	b[COLUMN_NUM] = columnNum;
-	for (int i = 0; i < col_num; i++) {
+	for (int i = 0; i < columnNum; i++) {
 		b[COLUMN_TYPES + i] = columnTypes[i].type;
-		b[col_settings_pos + i] = columnType[i].setting;
+		b[col_settings_pos + i] = columnTypes[i].setting;
 		
 		char *c_str = columnNames[i].c_str();
-		memcpy(b[col_name_pos + i * MAX_STRING_LEN / 4], c_str, strlen(c_str) + 1);
+		memcpy(b + (col_name_pos + i * MAX_COL_NAME_LEN / 4), c_str, strlen(c_str) + 1);
 		delete []c_str;
 	}
 	
@@ -88,7 +89,7 @@ Record Table::getRecord(int rid)
 	int recordsize = Record::getRecordSize(columnNum, columnTypes);
 	int index;
 	BufType b = bpm->getPage(fid, pageid, index);
-	return Record(columnNum, columnType, b + pos_in_page * recordsize);
+	return Record(columnNum, columnTypes, b + pos_in_page * recordsize);
 }
 
 int Table::insertRecord(Record &r)
@@ -180,7 +181,7 @@ bool Table::is_record_buf(int pos_in_page, BufType b)
 	return (b[pos_in_page / 32] & (1 << (pos_in_page % 32))) >> (pos_in_page % 32);
 }
 
-void Table::check_page_validity(BufType b, int pgnum = 1)
+void Table::check_page_validity(BufType b, int pgnum)
 {
 	//check if the page exists, and make the page header if not.
 	if (b[PAGE_HEADER_VALID] == PAGE_VALID)
@@ -191,6 +192,6 @@ void Table::check_page_validity(BufType b, int pgnum = 1)
 	}
 	
 	b[NEXT_PAGE_AVAILABLE] = pgnum + 1;
-	b[PAGE_HEADER_VALID] = PAGE_VALID
+	b[PAGE_HEADER_VALID] = PAGE_VALID;
 	//Others...
 }

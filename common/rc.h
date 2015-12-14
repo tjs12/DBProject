@@ -3,7 +3,7 @@
 
 #define RC int
 
-#define RETURN_SUCCESS 0
-#define RETURN_FAILED 1
+#define RETURN_SUCCEED 1
+#define RETURN_FAILED 0
 
 #endif

@@ -1,3 +1,12 @@
+#include <cstring>
+#include <iostream>
+#include <cstdlib>
+#include <unistd.h>
+
+using namespace std;
+
+#include "../common/rc.h"
+#include "../storage/rmm.h"
 #include "smm.h"
 
 int main (
@@ -20,18 +29,20 @@ int main (
 	// Create a subdirectory for the database
 	system (strcat(command,dbname));
 
-	...
+	//...
 	// initialize RedBase components
-	PF_Manager pfm;
-	RM_Manager rmm(pfm);
+	//PF_Manager pfm;
+	RM_Manager rmm(/*pfm*/);
 	//IX_Manager ixm(pfm);
-	SM_Manager smm(ixm, rmm);
+	SM_Manager smm(/*ixm, */rmm);
 	//QL_Manager qlm(smm, ixm, rmm);
 	
 	// open the database
-	if (rc = smm.OpenDb(dbname)) ...
+	RC rc;
+	if (rc = smm.OpenDb(dbname))
+		;//...
 	// call the parser
-	RBparse(pfm, smm, qlm);
+	//RBparse(pfm, smm, qlm);
 	// close the database
-	if (rc = smm.CloseDb()) ...
+	if (rc = smm.CloseDb()) ;//...
 }
