@@ -6,8 +6,10 @@ RC Select (int           nSelAttrs,        // # attrs in Select clause
               const Condition conditions[])
 
 {
-	parseRelations()
-	parseConditions()
+	//parseRelations()
+	//parseConditions(nConditions, conditions, )
+	
+	
 }
 
 RC Insert (const char  *relName,           // relation to insert into

@@ -50,7 +50,7 @@ class QL_Manager {
               int   nConditions,              // # conditions in Where clause
               const Condition conditions[]);  // conditions in Where clause
 private:
-	parseRelations(int nRelations, const char * const relations[], std::vector<RelAttr> &rel, std::vector<Value>);
+	//parseRelations(int nRelations, const char * const relations[], std::vector<RelAttr> &rel, std::vector<Value>);
 	
 	parseConditions(int nConditions, const char * const conditions[], std::vector<Condition>);
 };
