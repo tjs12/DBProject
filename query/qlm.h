@@ -2,7 +2,10 @@
 #define QLM_H
 
 #include <vector>
-
+#include <iostream>
+#include "../common/rc.h"
+#include "../storage/Type.h"
+using namespace std;
 struct RelAttr {
   char *relName;     // relation name (may be NULL) 
   char *attrName;    // attribute name              
@@ -10,14 +13,14 @@ struct RelAttr {
 };
 
 struct Value {
-  AttrType type;     // type of value               
+  Type type;     // type of value               
   void     *data;    // value                       
   friend ostream &operator<<(ostream &s, const Value &v);
 };
 
 struct Condition {
   RelAttr lhsAttr;      // left-hand side attribute                     
-  CompOp  op;           // comparison operator                          
+  int  op;           // comparison operator                          
   int     bRhsIsAttr;   // TRUE if right-hand side is an attribute
                         //   and not a value
   RelAttr rhsAttr;      // right-hand side attribute if bRhsIsAttr = TRUE
@@ -28,7 +31,9 @@ struct Condition {
 class QL_Manager {
  public:
                                               // Constructor
-      QL_Manager (SM_Manager &smm, IX_Manager &ixm, RM_Manager &rmm);
+      QL_Manager (
+		 // SM_Manager &smm, IX_Manager &ixm, RM_Manager &rmm
+		  );
       ~QL_Manager ();                         // Destructor
     RC Select (int           nSelAttrs,        // # attrs in Select clause
               const RelAttr selAttrs[],       // attrs in Select clause
@@ -52,7 +57,7 @@ class QL_Manager {
 private:
 	//parseRelations(int nRelations, const char * const relations[], std::vector<RelAttr> &rel, std::vector<Value>);
 	
-	parseConditions(int nConditions, const char * const conditions[], std::vector<Condition>);
+	//parseConditions(int nConditions, const char * const conditions[], std::vector<Condition>);
 };
 
 #endif

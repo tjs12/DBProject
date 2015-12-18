@@ -1,5 +1,7 @@
 #include "Table.h"
 #include "../common/rc.h"
+#include <cstring>
+
 using namespace std;
 
 void Table::createTable(int col_num, Type *col_type, string *col_names, string name)
@@ -32,6 +34,7 @@ void Table::openTable(string name)
 	fm = new FileManager();
 	bpm = new BufPageManager(fm);
 	fm -> openFile(name.c_str(), fid);
+	tableName = name;
 	int index;
 	BufType b = bpm->getPage(fid, 0, index);
 	//read header
@@ -47,7 +50,10 @@ void Table::openTable(string name)
 	for (int i = 0; i < columnNum; i++) {
 		columnTypes[i].type = b[COLUMN_TYPES + i];
 		columnTypes[i].setting = b[col_settings_pos + i]; //TODO
-		columnNames[i] = new string((char*)b[col_name_pos + i * MAX_COL_NAME_LEN / 4]);
+		char *temp_str = new char[MAX_COL_NAME_LEN];
+		memcpy(temp_str, &b[col_name_pos + i * MAX_COL_NAME_LEN / 4], MAX_COL_NAME_LEN);
+		columnNames[i] = string(temp_str);
+		delete []temp_str;
 	}
 	record_per_page = b[rec_per_page_pos];
 	record_num = b[rec_num_pos];
@@ -69,7 +75,8 @@ void Table::make_header(BufType b)
 		b[COLUMN_TYPES + i] = columnTypes[i].type;
 		b[col_settings_pos + i] = columnTypes[i].setting;
 		
-		char *c_str = columnNames[i].c_str();
+		char *c_str = new char[columnNames[i].length() + 1];
+		strcpy(c_str, columnNames[i].c_str());
 		memcpy(b + (col_name_pos + i * MAX_COL_NAME_LEN / 4), c_str, strlen(c_str) + 1);
 		delete []c_str;
 	}
@@ -89,7 +96,7 @@ Record Table::getRecord(int rid)
 	int recordsize = Record::getRecordSize(columnNum, columnTypes);
 	int index;
 	BufType b = bpm->getPage(fid, pageid, index);
-	return Record(columnNum, columnTypes, b + pos_in_page * recordsize);
+	return Record(columnNum, columnTypes, &b[pos_in_page * recordsize]);
 }
 
 int Table::insertRecord(Record &r)
@@ -125,7 +132,7 @@ int Table::insertRecord(Record &r)
 		BufType b_header = bpm->getPage(fid, 0, index);
 		make_header(b_header);//save_header(); TODO
 	}
-	
+	return RETURN_SUCCEED;
 }
 
 int Table::updateRecord(int rid, Record &r, Record &mask)
@@ -194,4 +201,12 @@ void Table::check_page_validity(BufType b, int pgnum)
 	b[NEXT_PAGE_AVAILABLE] = pgnum + 1;
 	b[PAGE_HEADER_VALID] = PAGE_VALID;
 	//Others...
+}
+
+Table::~Table()
+{
+	bpm -> close();
+	delete bpm;
+	delete fm;
+
 }

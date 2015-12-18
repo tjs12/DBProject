@@ -11,7 +11,9 @@
 
 using namespace std;
 
-int main() {
+unsigned char h[61];
+
+int fsmain() {
 	FileManager* fm = new FileManager();
 	BufPageManager* bpm = new BufPageManager(fm);
 	fm->createFile("testfile.txt"); //新建文件
