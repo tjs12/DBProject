@@ -1,7 +1,7 @@
 #ifndef TYPE_H
 #define TYPE_H
 
-#define TYPE_INT 0
+#define TYPE_INT 0		
 #define TYPE_CHAR 1
 #define TYPE_VOID -1
 

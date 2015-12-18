@@ -57,7 +57,7 @@ public:
 	void createTable(int col_num, Type *col_type, std::string *col_names, std::string name);
 	void openTable(string name);
 	
-	Table() {;}
+	Table() {}
 	~Table();
 private:
 	FileManager *fm;
