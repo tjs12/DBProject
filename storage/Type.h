@@ -26,6 +26,10 @@ public:
 			return 0;
 		}
 	};
+
+	bool operator==(const Type &t) {
+		return (t.setting == setting) && (t.type == type);
+	}
 };
 
 #endif
