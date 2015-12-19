@@ -60,7 +60,7 @@ public:
 	RC createTable(vector<Type> &col_type, vector<string> &col_names, string name);
 	void openTable(string name);
 	
-	Table() {;}
+	Table() {}
 	~Table();
 private:
 	FileManager *fm;

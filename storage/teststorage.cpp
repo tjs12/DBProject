@@ -7,7 +7,7 @@ using namespace std;
 int main()
 {
 	Table *t1 = new Table();
-	Type coltypes[3] = {Type(TYPE_INT), Type(TYPE_INT), Type(TYPE_INT)};
+	Type coltypes[3] = {Type(TYPE_INT,4), Type(TYPE_CHAR,2), Type(TYPE_CHAR,2)};
 	string colnames[3] = {string("id"), string("n"), string("a")};
 	vector<Type> vt ;
 	vector<string> vn ;
@@ -24,6 +24,7 @@ int main()
 	int rid = t1->insertRecord(*rec);
 	int rid2 = t1->insertRecord(*rec);
 	delete t1;
+<<<<<<< HEAD
 
 
 	Table *t2 = new Table();
@@ -57,5 +58,10 @@ int main()
 	}
 
 	delete t2;
+=======
+	//Table *t2 = new Table();
+	//t2 -> openTable(string("t1"));
+	//delete t2;
+>>>>>>> origin/master
 	return 0;
 }

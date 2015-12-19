@@ -15,20 +15,28 @@ RC Table::createTable(vector<Type> &col_type, vector<string> &col_names, string 
 	for (int i = 0; i < col_num; i++) {
 		columnTypes[i] = col_type[i];
 		columnNames[i] = col_names[i];
+<<<<<<< HEAD
 	}*/
 	columnNames = col_names;
 	columnTypes = col_type;
 	
 	
+=======
+	}
+
+>>>>>>> origin/master
 	fm = new FileManager();
 	bpm = new BufPageManager(fm);
 	fm -> createFile(name.c_str());
 	fm -> openFile(name.c_str(), fid);
+<<<<<<< HEAD
 	
 	record_num = 0;
 	first_page_available = 1;
 	start_page = 1;
 
+=======
+>>>>>>> origin/master
 	int index;
 	BufType b = bpm -> allocPage(fid, 0, index, false);
 	make_header(b);
@@ -79,8 +87,13 @@ void Table::openTable(string name)
 void Table::make_header(BufType b)
 {
 	//find the positions of the items in the header
+<<<<<<< HEAD
 	int col_settings_pos = COLUMN_TYPES + columnNum;
 	int col_name_pos = col_settings_pos + columnNum;
+=======
+	int col_settings_pos = COLUMN_TYPES + columnNum;  
+	int col_name_pos = COLUMN_TYPES + columnNum;
+>>>>>>> origin/master
 	int rec_per_page_pos = col_name_pos + columnNum * MAX_COL_NAME_LEN / 4;
 	int rec_num_pos = rec_per_page_pos + 1;
 	int first_free_pagen_pos = rec_num_pos + 1;
@@ -90,7 +103,6 @@ void Table::make_header(BufType b)
 	for (int i = 0; i < columnNum; i++) {
 		b[COLUMN_TYPES + i] = columnTypes[i].type;
 		b[col_settings_pos + i] = columnTypes[i].setting;
-		
 		char *c_str = new char[columnNames[i].length() + 1];
 		strcpy(c_str, columnNames[i].c_str());
 		memcpy(b + (col_name_pos + i * MAX_COL_NAME_LEN / 4), c_str, strlen(c_str) + 1);
