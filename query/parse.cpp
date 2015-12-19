@@ -27,19 +27,73 @@ int parse_sql_action(char &*cmd) {
 		parse_sql_update(cmd);
 }
 
-int parse_sql_delete(char &*cmd) {
-	if (!strcnt(" FROM "))
-		return ;
-	char *relName = str;
-	while (*str != ' ' && *str)
-		str++;
-	if (!*str)
-		return ;
-	*str = '\0';
-	if (!strcnt(++str, "WHERE "))
-		return ;
+char *parse_sql_relName(char &*cmd) {
+	char *relName = cmd;
+	cmd = strchr(cmd, ' ');
+	if (!cmd)
+		return NULL;
+	*cmd = '\0';
+	cmd++;
+	return relName;
+}
+
+vector<Condition> parse_sql_conditions(char &*cmd) {
 	vector<Condition> conditions(0);
-	sstream sin(str);
+	sstream sin(cmd);
 	for (Condition cond; sin >> cond; conditions.push_back(cond));
-	Delete(relName, conditions.size(), conditions.)
+	return conditions;	// use C++11 to optimize
+}
+
+int parse_sql_delete(char &*cmd) {
+	if (!strcnt(cmd, " FROM "))
+		return ;
+	char *relName = parse_sql_relName(cmd);
+	if (!relName)
+		return ;
+	if (!strcnt(cmd, "WHERE "))
+		return ;
+	vector<Condition> conditions = parse_sql_conditions(cmd);	// use C+11 to optimize
+	Delete(relName, conditions.size(), &conditions.front());
+}
+
+int parse_sql_update(char &*cmd) {
+	if (!strcnt(cmd, " "))
+		return ;
+	char *relName = parse_sql_relName(cmd);
+	if (!relName)
+		return ;
+	if (!strcnt(cmd, "SET "))
+		return ;
+	RelAttr updAttr = parse_sql_relAttr(cmd);
+	int bIsValue = -1;
+	for (char *str = cmd; *str && bIsValue < 0; str++)
+		if (*str == '.')
+			bIsValue = 0;
+		else if (*str == '=')
+			bIsValue = 1;
+	if (bIsValue < 0)
+		return ;
+    RelAttr rhsRelAttr;
+    Value rhsValue;
+	sstream sin(cmd);
+	if (bIsValue)
+		sin >> rhsValue;
+	else
+		sin >> rhsRelAttr;
+	vector<Condition> conditions = parse_sql_conditions(cmd);	// use C+11 to optimize
+	Update(relName, updAttr, bIsValue, rhsRelAttr, rhsValue, conditions.size(), &conditions.front());
+}
+
+int parse_sql_insert() {
+	if (!strcnt(cmd, " INTO "))
+		return ;
+	char *relName = parse_sql_relName(cmd);
+	if (!relName)
+		return ;
+	vector<Value> values = parse_sql_values(cmd);
+	Insert(relName, values.size(), &values.front());
+}
+
+int parse_sql_select() {
+	
 }
