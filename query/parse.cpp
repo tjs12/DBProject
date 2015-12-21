@@ -1,12 +1,13 @@
-//	TODO: set init values
-char *parse_sql_keyword(char &*cmd, char *kw) {	// contrast key word
+//	TODO: need test
+bool parse_sql_keyword(char &*cmd, char *kw) {	// contrast key word
 	int i = 0;
 	while (kw[i]) {
 		if (cmd[i] != kw[i])
-			return NULL;
+			return false;
 		i++;
 	}
-	return cmd += i;
+	cmd += i;
+	return true;
 }
 
 int parse_sql_name(char &*cmd) {
@@ -53,7 +54,8 @@ int parse_sql_int(char &*cmd, int &data) {
 
 int parse_sql_char(char &*cmd, char &*data, int &length) {
 	int end;
-	parse_sql_keyword(cmd, "'");
+	if (!parse_sql_keyword(cmd, "'"))
+		return -1;
 	data = cmd;
 	cmd = strchr(cmd, '\'');
 	if (!cmd)
@@ -74,6 +76,7 @@ int parse_sql_value(char &*cmd, Value &value) {
 		value.data = data;
 	} else {
 		value.type.type = TYPE_INT;
+		value.type.setting = 0;
 		int *data = new int;
 		end = parse_sql_int(cmd, *data);
 		value.data = data;
@@ -85,10 +88,11 @@ int parse_sql_values(char &*cmd, vector<Value> &values) {
 	int end;
 	if (!parse_sql_keyword(cmd, "VALUES ("))
 		return -1;
+	values.clear();
 	Value value;
 	do {
 		end = parse_sql_value(cmd, value);
-		values.push_back(value)
+		values.push_back(value);
 	} while (end == ',');
 	return end;
 }
@@ -109,6 +113,7 @@ int parse_sql_condition(char &*cmd, Condition &condition) {
 
 int parse_sql_conditions(char &*cmd, vector<Condition> &conditions) {
 	int end;
+	conditions.clear();
 	for (Condition cond; (end = parse_sql_condition(cmd, cond)) == ' '; conditions.push_back(cond))
 		if (!parse_sql_keyword(cmd, "AND ")))
 			return -1;
@@ -129,34 +134,35 @@ int parse_sql_action(char &*cmd) {
 		return parse_sql_delete(cmd);
 	if (parse_sql_keyword(cmd, "UPDATE"))
 		return parse_sql_update(cmd);
+	return -1;
 }
 
 int parse_sql_delete(char &*cmd) {
 	if (!parse_sql_keyword(cmd, " FROM "))
-		return ;
+		return -1;
 	char *relName = cmd;
 	if (parse_sql_name(cmd) != ' ')
-		return ;
+		return -1;
 	if (!parse_sql_keyword(cmd, "WHERE "))
-		return ;
+		return -1;
 	vector<Condition> conditions = parse_sql_conditions(cmd);	// use C+11 to optimize
 	return Delete(relName, conditions.size(), &conditions.front());
 }
 
 int parse_sql_update(char &*cmd) {
 	if (!parse_sql_keyword(cmd, " "))
-		return ;
+		return -1;
 	char *relName = cmd;
 	if (parse_sql_name(cmd) != ' ')
-		return ;
+		return -1;
 	if (!parse_sql_keyword(cmd, "SET "))
-		return ;
+		return -1;
 	Condition updCond;
 	if (parse_sql_condition(cmd, updCond) != ' ')
-		return ;
+		return -1;
 	if (!parse_sql_keyword(cmd, "WHERE "))
-		return ;
-	vector<Condition> conditions;
+		return -1;
+	vector<Condition> conditions(0);
 	parse_sql_conditions(cmd, conditions);
 	return Update(relName,
 		updCond.lhsAttr, updCond.bRhsIsAttr, updCond.rhsAttr, updCond.rhsValue,
@@ -165,11 +171,11 @@ int parse_sql_update(char &*cmd) {
 
 int parse_sql_insert(char &*cmd) {
 	if (!parse_sql_keyword(cmd, " INTO "))
-		return ;
+		return -1;
 	char *relName = cmd;
 	if (parse_sql_name(cmd) != ' ')
-		return ;
-	vector<Value> values;
+		return -1;
+	vector<Value> values(0);
 	parse_sql_values(cmd, values);
 	return Insert(relName, values.size(), &values.front());
 }
