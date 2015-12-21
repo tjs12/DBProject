@@ -33,6 +33,21 @@ public:
 		//columnTypes = 0;
 		data = 0;
 	}
+
+	Record(Record &r)
+	{
+		
+		//for (int i = 0; i < r.size(); i++)
+		//if (r.data != 0)
+		//	memcpy(data, r.data, r.size() * sizeof(unsigned int));
+		columnNum = r.columnNum;
+		columnTypes = r.columnTypes;
+		data = 0;
+		vars = vector<Var*>();
+		for (int i = 0; i < r.vars.size(); i++) {
+			vars.push_back(&(*r.vars[i]));
+		}
+	}
 	
 	~Record() {
 		//if (columnTypes != 0) delete []columnTypes;
@@ -60,6 +75,8 @@ public:
 
 	unsigned int *getData() {
 		int j = 0;
+		if (data == 0) data = new unsigned int[getRecordSize(columnNum, columnTypes)];
+
 		for (int i = 0; i < columnNum; i++) {
 			vars[i]->writeToBuf(&data[j]);
 			j += columnTypes[i].size();

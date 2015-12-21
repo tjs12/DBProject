@@ -30,7 +30,8 @@ Other Pages:
 
 
 #define COLUMN_NUM 0
-#define COLUMN_TYPES 1
+#define PRIMARY_KEY 1
+#define COLUMN_TYPES 2
 
 
 #define PAGE_HEADER_VALID 0
@@ -41,9 +42,11 @@ Other Pages:
 
 
 class Table {
+friend class TableIterator;
 public:
 	string tableName;
 	int columnNum;
+	int primaryKey;
 	std::vector<Type> columnTypes;
 	std::vector<std::string> columnNames;
 	
@@ -57,10 +60,10 @@ public:
 	int getRecordNum() {return record_num;}
 	bool isRecord(int rid);
 	
-	RC createTable(vector<Type> &col_type, vector<string> &col_names, string name);
+	RC createTable(vector<Type> &col_type, vector<string> &col_names, string name, int pri_key = -1);
 	void openTable(string name);
 	
-	Table() {}
+	Table() {primaryKey = -1;}
 	~Table();
 private:
 	FileManager *fm;
@@ -76,6 +79,8 @@ private:
 	void make_header(BufType b);
 	bool is_record_buf(int pos_in_page, BufType b);
 	void check_page_validity(BufType b, int pgnum = 1);
+
+	int max_rid;
 
 };
 	
