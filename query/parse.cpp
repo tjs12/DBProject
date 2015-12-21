@@ -1,4 +1,8 @@
 //	TODO: need test
+//	int parse_sql_statement(char *cmd) is used to parse query command
+//	accept SELECT, INSERT, UPDATE, DELETE
+//	return -1 when failed, otherwise the last parsed char(?)
+//	the mem poined by cmd should be writable
 bool parse_sql_keyword(char &*cmd, char *kw) {	// contrast key word
 	int i = 0;
 	while (kw[i]) {
@@ -22,9 +26,11 @@ int parse_sql_name(char &*cmd) {
 
 int parse_sql_relAttr(char &*cmd, RelAttr &relAttr) {
 	int end;
-	relAttr.relName = cmd;
+	relAttr.relName = NULL;
+	relAttr.attrName = cmd;
 	end = parse_sql_name(cmd);
 	if (end == '.') {
+		relAttr.relName = relAttr.attrName;
 		relAttr.attrName = cmd;
 		end = parse_sql_relName(cmd);
 	}
@@ -54,8 +60,6 @@ int parse_sql_int(char &*cmd, int &data) {
 
 int parse_sql_char(char &*cmd, char &*data, int &length) {
 	int end;
-	if (!parse_sql_keyword(cmd, "'"))
-		return -1;
 	data = cmd;
 	cmd = strchr(cmd, '\'');
 	if (!cmd)
@@ -69,7 +73,7 @@ int parse_sql_char(char &*cmd, char &*data, int &length) {
 
 int parse_sql_value(char &*cmd, Value &value) {
 	int end;
-	if (*cmd = '\'') {
+	if (parse_sql_keyword(cmd, "'")) {
 		value.type.type = TYPE_CHAR;
 		char *data;
 		end = parse_sql_char(cmd, data, value.type.setting);
