@@ -1,4 +1,3 @@
-//	TODO: need test
 //	int parse_sql_statement(char *cmd) is used to parse query command
 //	accept SELECT, INSERT, UPDATE, DELETE
 //	return -1 when failed, otherwise the last parsed char(?)
@@ -39,6 +38,9 @@ int parse_sql_relAttr(char &*cmd, RelAttr &relAttr) {
 
 int parse_sql_relAttrs(char &*cmd, vector<RelAttr> &relAttrs) {
 	int end;
+	relAttrs.clear();
+	if (parse_sql_keyword(cmd, "* "))
+		return ' ';
 	RelAttr relAttr;
 	do {
 		end = parse_sql_relAttr(cmd, relAttr);
