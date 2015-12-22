@@ -1,6 +1,8 @@
 #include "dbManager.h"
 using namespace std; 
 int main(){
-	DbManager::getInstance()->createDb("");
-	cout<<DbManager::getInstance()->showCurDbPath();
+	DbManager* m = DbManager::getInstance();
+	m->useDb("hgee");
+	m->showTables();
+	int k;cin>>k;
 }
