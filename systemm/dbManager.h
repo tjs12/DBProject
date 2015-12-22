@@ -1,6 +1,8 @@
 #ifndef DBMANAGER
 #define DBMANAGER 
 #include "createDb.h" 
+#include "../storage/Table.h"
+#include "../storage/TableIterator.h"
 #include <iostream> 
 #include <string>
 #include <vector>
@@ -11,11 +13,12 @@ using namespace std;
 class DbManager{							
 	public:
 		vector<string> dbNames; 			//维护所有数据库的名字 
-		int createDb(const string name);			//创建一个数据库，成功返回1，失败返回0 
+		int createDb(const string name);	//创建一个数据库，成功返回1，失败返回0 
+		int createTable(vector<Type>types,vector<string>names,string name,int pri_key); //创建表
 		int useDb(const string name);		//切换数据库，成功返回1，失败返回0
 		int dropDb(const string name);		//删除数据库，成功返回1，失败返回0 
 		void showTables();					//显示当前数据库下的所有表
-		int dropTable(const string name);					//删除表，成功返回1，失败0
+		int dropTable(const string name);	//删除表，成功返回1，失败0
 		const string getCurDbName();		//返回当前数据库的名称
 		const string getCurDbPath();		//返回当前数据库的绝对路径 
 		static DbManager* getInstance();	//单例，全局唯一 
@@ -39,6 +42,12 @@ int DbManager::createDb(const string name){
 	return result;
 }
 
+int DbManager::createTable(vector<Type>types,vector<string>names,string name,int pri_key){
+	string absoluteName = curDbPath+"\\"+name;
+	Table* table = new Table();
+	table->createTable(types,names,absoluteName,pri_key);
+	return 0;
+}
 int DbManager::useDb(const string name){
 	if(DbCreator::exsist(rootpath,name)){
 		curDbName = name;
@@ -85,8 +94,12 @@ void DbManager::showTables(){
 }
 
 int DbManager::dropTable(const string name){
-	if(DbCreator::exsist(curDbPath,name));
-	return 1;
+	if(DbCreator::exsist(curDbPath+"\\",name)){
+		DeleteFile((curDbPath+"\\"+name).c_str());
+		return 1;
+	}
+	cout<<"table not found!"<<endl;
+	return 0;
 }
 DbManager* DbManager::getInstance(){
 	if(manager==NULL){
