@@ -2,10 +2,12 @@
 #define TABLE_H
 
 #include <string>
+#include <vector>
 
 #include "../filesystem/bufmanager/BufPageManager.h"
 //#include "../filesystem/fileio/FileManager.h"
 //#include "../filesystem/utils/pagedef.h"
+#include "../common/rc.h"
 
 #include "Record.h"
 
@@ -28,36 +30,40 @@ Other Pages:
 
 
 #define COLUMN_NUM 0
-#define COLUMN_TYPES 1
+#define PRIMARY_KEY 1
+#define COLUMN_TYPES 2
 
 
 #define PAGE_HEADER_VALID 0
 #define NEXT_PAGE_AVAILABLE 1
 #define PAGE_VALID 255 //NB
-#define PAGE_HEADER_SIZE 2 //TODO
+//#define PAGE_HEADER_SIZE  //TODO
+#define PAGE_BITMAP_POS 3
 
 
 class Table {
+friend class TableIterator;
 public:
 	string tableName;
 	int columnNum;
-	Type *columnTypes;
-	std::string *columnNames;
+	int primaryKey;
+	std::vector<Type> columnTypes;
+	std::vector<std::string> columnNames;
 	
 	//Record *select(string *col_names, Condition cond);
 	void deleteTable();
 	void insert();
-	Record getRecord(int rid);
+	RC Table::getRecord(int rid, Record &rec);
 	int updateRecord(int rid, Record &r, Record &mask);
 	int insertRecord(Record &r);
 	int deleteRecord(int rid);
 	int getRecordNum() {return record_num;}
 	bool isRecord(int rid);
 	
-	void createTable(int col_num, Type *col_type, std::string *col_names, std::string name);
+	RC createTable(vector<Type> &col_type, vector<string> &col_names, string name, int pri_key = -1);
 	void openTable(string name);
 	
-	Table() {}
+	Table() {primaryKey = -1;}
 	~Table();
 private:
 	FileManager *fm;
@@ -73,6 +79,9 @@ private:
 	void make_header(BufType b);
 	bool is_record_buf(int pos_in_page, BufType b);
 	void check_page_validity(BufType b, int pgnum = 1);
+
+	int max_rid;
+
 };
 	
 #endif

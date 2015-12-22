@@ -1,7 +1,7 @@
 #ifndef TYPE_H
 #define TYPE_H
 
-#define TYPE_INT 0		
+#define TYPE_INT 0
 #define TYPE_CHAR 1
 #define TYPE_VOID -1
 
@@ -26,6 +26,10 @@ public:
 			return 0;
 		}
 	};
+
+	bool operator==(const Type &t) {
+		return (t.setting == setting) && (t.type == type);
+	}
 };
 
 #endif
