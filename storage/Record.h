@@ -2,7 +2,7 @@
 #define RECORD_H
 
 #include "Var.h"
-//#include "../query/qlm.h"
+#include "../common/Condition.h"
 #include <cstring>
 #include <vector>
 
@@ -93,7 +93,20 @@ public:
 		}
 	}
 
-	//bool judgeCondition()
+
+
+	bool judgeCondition(Condition &c, vector<string> colNames)
+	{
+		if (c.bRhsIsAttr) return false;
+		int i;
+		for (i = 0; i < colNames.size(); i++) {
+			if (colNames[i].compare(c.lhsAttr.attrName)) {
+				break;
+			}
+		}
+		Var *data = Var::fromBuf((unsigned int*)c.rhsValue.data, c.rhsValue.type);
+		return data->equal(vars[i]);
+	}
 	
 	static int getRecordSize(int columnNum, vector<Type> columnTypes) {
 		int size = 0;

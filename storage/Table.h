@@ -61,7 +61,7 @@ public:
 	bool isRecord(int rid);
 	
 	RC createTable(vector<Type> &col_type, vector<string> &col_names, string name, int pri_key = -1);
-	void openTable(string name);
+	RC openTable(string name);
 	
 	Table() {primaryKey = -1;}
 	~Table();

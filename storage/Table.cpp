@@ -38,11 +38,13 @@ RC Table::createTable(vector<Type> &col_type, vector<string> &col_names, string 
 	//PAGE_HEADER_SIZE = PAGE_HEADER_FIXED_LEN + ((PAGE_INT_NUM + columnTypes.size() - 1) / columnTypes.size() + 31) / 32;
 }
 
-void Table::openTable(string name)
+RC Table::openTable(string name)
 {
 	fm = new FileManager();
 	bpm = new BufPageManager(fm);
-	fm -> openFile(name.c_str(), fid);
+	if (!fm -> openFile(name.c_str(), fid)) {
+		return RETURN_FAILED;
+	}
 	tableName = name;
 	int index;
 	BufType b = bpm->getPage(fid, 0, index);
@@ -77,6 +79,7 @@ void Table::openTable(string name)
 	first_page_available = b[first_free_pagen_pos];
 	start_page = b[start_page_pos];
 	max_rid = b[max_rid_pos];
+	return RETURN_SUCCEED;
 }
 
 

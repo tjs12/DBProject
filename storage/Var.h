@@ -13,8 +13,8 @@ public:
 	virtual Type type() = 0;
 	virtual void writeToBuf(unsigned int *buf) = 0;
 	virtual Var *copy() = 0;
+	virtual bool equal(Var *v) = 0;
 	static Var *fromBuf(unsigned int *buf, Type type);
-	
 };
 
 class IntVar : public Var
@@ -37,6 +37,13 @@ public:
 
 	Var *copy() {
 		return new IntVar(val);
+	}
+
+	bool equal(Var *v) {
+		if (v->type() == Type(TYPE_INT)) {
+			if (((IntVar*)v) -> val == val) return true;
+		}
+		return false;
 	}
 
 	int val;
