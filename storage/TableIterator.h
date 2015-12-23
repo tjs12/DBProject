@@ -8,13 +8,13 @@ class TableIterator
 public:
 	TableIterator(Table *table) {
 		t = table;
-		num = t -> page_header_size;
+		num = 0;
 		gotoBegin();
 	}
 
 	Record begin() {
 		int i = 0;
-		while (i < t -> max_rid) {
+		while (i <= t -> max_rid) {
 			if (t -> isRecord(i)) break;
 			i++;
 		}
@@ -39,7 +39,7 @@ public:
 
 	void gotoNext()
 	{
-		if (num == t -> max_rid) return;
+		if (num > t -> max_rid) return;
 		do {
 			num++;
 			if (t -> isRecord(num)) break;
@@ -49,8 +49,8 @@ public:
 
 	void gotoBegin()
 	{
-		num = t->page_header_size;
-		while (num < t -> max_rid) {
+		num = 0;
+		while (num <= t -> max_rid) {
 			if (t -> isRecord(num)) break;
 			num++;
 		}
@@ -58,7 +58,11 @@ public:
 
 	bool isEnd()
 	{
-		return num == t->max_rid;
+		return num > t->max_rid;
+	}
+
+	int getRID() {
+		return num;
 	}
 private:
 	int num;

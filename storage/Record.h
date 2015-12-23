@@ -2,6 +2,7 @@
 #define RECORD_H
 
 #include "Var.h"
+//#include "../query/qlm.h"
 #include <cstring>
 #include <vector>
 
@@ -45,13 +46,13 @@ public:
 		data = 0;
 		vars = vector<Var*>();
 		for (int i = 0; i < r.vars.size(); i++) {
-			vars.push_back(&(*r.vars[i]));
+			vars.push_back(r.vars[i]->copy());
 		}
 	}
 	
 	~Record() {
 		//if (columnTypes != 0) delete []columnTypes;
-		if (data != 0) delete []data;
+		//if (data != 0) delete []data;
 		
 	}
 	
@@ -92,6 +93,7 @@ public:
 		}
 	}
 
+	//bool judgeCondition()
 	
 	static int getRecordSize(int columnNum, vector<Type> columnTypes) {
 		int size = 0;

@@ -36,7 +36,7 @@ Other Pages:
 
 #define PAGE_HEADER_VALID 0
 #define NEXT_PAGE_AVAILABLE 1
-#define PAGE_VALID 255 //NB
+#define PAGE_VALID 2863311530 //NB
 //#define PAGE_HEADER_SIZE  //TODO
 #define PAGE_BITMAP_POS 3
 
@@ -81,6 +81,13 @@ private:
 	void check_page_validity(BufType b, int pgnum = 1);
 
 	int max_rid;
+
+	int get_page_id(int rid);
+	int get_page_pos(int rid);
+	int get_rid_from_pos(int page, int pos);
+
+	void set_record_flag(int rid, int flag);
+	int get_record_flag(int rid);
 
 };
 	

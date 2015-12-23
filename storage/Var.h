@@ -12,7 +12,7 @@ public:
 	virtual std::string toString() = 0;
 	virtual Type type() = 0;
 	virtual void writeToBuf(unsigned int *buf) = 0;
-
+	virtual Var *copy() = 0;
 	static Var *fromBuf(unsigned int *buf, Type type);
 	
 };
@@ -35,7 +35,9 @@ public:
 		*buf = val;
 	}
 
-	
+	Var *copy() {
+		return new IntVar(val);
+	}
 
 	int val;
 	

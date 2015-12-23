@@ -8,6 +8,9 @@
 #include <unistd.h>
 #include <fcntl.h>
 //#include "../MyLinkList.h"
+
+
+
 using namespace std;
 class FileManager {
 private:
@@ -25,7 +28,11 @@ private:
 		return 0;
 	}
 	int _openFile(const char* name, int fileID) {
+#ifdef _WIN32
+		int f = open(name, O_RDWR | O_BINARY);
+#else
 		int f = open(name, O_RDWR);
+#endif
 		if (f == -1) {
 			return -1;
 		}

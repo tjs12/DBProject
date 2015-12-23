@@ -18,11 +18,11 @@ int main()
 		vn.push_back(colnames[i]);
 	}
 
-	t1->createTable(vt, vn, string("t1"));
+	//t1->createTable(vt, vn, string("t1"));
 	int recdata[3] = {1, 2, 3};
 	Record *rec = new Record(vt);
 	for (int i = 0; i < 3; i++) rec->addVar(new IntVar(recdata[i]), i);
-	int rid = t1->insertRecord(*rec);
+	/*int rid = t1->insertRecord(*rec);
 	int rid2 = t1->insertRecord(*rec);
 	delete t1;
 
@@ -57,21 +57,29 @@ int main()
 		cout<<"delete failed2"<<endl;
 	}
 
-	delete t2;
+	delete t2;*/
+
+	cout<<"write"<<endl;
 
 	Table *t3 = new Table;
 	t3 -> createTable(vt, vn, string("t3"));
 	for (int i = 0; i < 1000; i++) {
 		rec->addVar(&IntVar(i), 0);
-		t3->insertRecord(*rec);
+		int rid = t3->insertRecord(*rec);
+		cout << rid << ' ' << i << endl;
 	}
+	delete t3;
+
+	cout <<endl <<"read" <<endl;
 	//TableIterator ti(t3);
+	t3 = new Table();
+	t3 -> openTable(string("t3"));
 	Record tempr;
 	for (TableIterator i(t3); !i.isEnd(); i.gotoNext()) {
 		tempr = i.current();
-		cout << tempr.getVar(0)->toString() << ' ';
+		cout << i.getRID() << ' ' << tempr.getVar(0)->toString() << endl;
 	}
 
-	delete t3;
+	
 	return 0;
 }

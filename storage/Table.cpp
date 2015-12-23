@@ -28,6 +28,7 @@ RC Table::createTable(vector<Type> &col_type, vector<string> &col_names, string 
 	record_num = 0;
 	first_page_available = 1;
 	start_page = 1;
+	max_rid = -1;
 
 	int index;
 	BufType b = bpm -> allocPage(fid, 0, index, false);
@@ -59,6 +60,7 @@ void Table::openTable(string name)
 	int rec_num_pos = rec_per_page_pos + 1;
 	int first_free_pagen_pos = rec_num_pos + 1;
 	int start_page_pos = first_free_pagen_pos + 1;
+	int max_rid_pos = start_page_pos + 1;
 	
 	for (int i = 0; i < columnNum; i++) {
 		columnTypes[i].type = b[COLUMN_TYPES + i];
@@ -74,6 +76,7 @@ void Table::openTable(string name)
 	record_num = b[rec_num_pos];
 	first_page_available = b[first_free_pagen_pos];
 	start_page = b[start_page_pos];
+	max_rid = b[max_rid_pos];
 }
 
 
@@ -89,6 +92,7 @@ void Table::make_header(BufType b)
 	int rec_num_pos = rec_per_page_pos + 1;
 	int first_free_pagen_pos = rec_num_pos + 1;
 	int start_page_pos = first_free_pagen_pos + 1;
+	int max_rid_pos = start_page_pos + 1;
 	
 	b[COLUMN_NUM] = columnNum;
 	b[PRIMARY_KEY] = primaryKey;
@@ -109,6 +113,7 @@ void Table::make_header(BufType b)
 	b[rec_num_pos] = record_num;
 	b[first_free_pagen_pos] = first_page_available;
 	b[start_page_pos] = start_page;
+	b[max_rid_pos] = max_rid;
 }
 
 RC Table::getRecord(int rid, Record &rec)
@@ -149,6 +154,7 @@ int Table::insertRecord(Record &r)
 	memcpy(b + pos_in_page * recordsize, r.getData(), recordsize * sizeof(unsigned int));
 	
 	b[pos_in_page / 32 + PAGE_BITMAP_POS] = b[pos_in_page / 32 + PAGE_BITMAP_POS] | (1 << (pos_in_page % 32)); //Set free space flag
+	//set_record_flag(get_rid_from_pos(
 	
 	bool still_free = false;
 	for (int i = pos_in_page + 1; i < record_per_page; i++)
@@ -250,4 +256,41 @@ Table::~Table()
 	delete bpm;
 	delete fm;
 
+}
+
+int Table::get_page_id(int rid)
+{
+	return rid / record_per_page + start_page;
+}
+
+int Table::get_page_pos(int rid)
+{
+	return rid % record_per_page + page_header_size;
+}
+
+int Table::get_rid_from_pos(int page, int pos)
+{
+	return (page - start_page) * record_per_page + pos - page_header_size;
+}
+
+void Table::set_record_flag(int rid, int flag)
+{
+	int pageid = get_page_id(rid);
+	int pos_in_page = get_page_pos(rid);
+	int index = 0;
+	BufType b = bpm->getPage(fid, pageid, index);
+	if (flag == 0)
+		b[pos_in_page / 32 + PAGE_BITMAP_POS] = b[pos_in_page / 32 + PAGE_BITMAP_POS] & ~(1 << (pos_in_page % 32));
+	else
+		b[pos_in_page / 32 + PAGE_BITMAP_POS] = b[pos_in_page / 32 + PAGE_BITMAP_POS] | (1 << (pos_in_page % 32));
+	bpm->markDirty(index);
+}
+
+int Table::get_record_flag(int rid)
+{
+	int pageid = get_page_id(rid);
+	int pos_in_page = get_page_pos(rid);
+	int index = 0;
+	BufType b = bpm->getPage(fid, pageid, index);
+	return (b[pos_in_page / 32 + PAGE_BITMAP_POS] & (1 << (pos_in_page % 32))) >> (pos_in_page % 32);
 }
