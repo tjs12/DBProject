@@ -1,8 +1,26 @@
 //	int parse_sql_statement(char *cmd) is used to parse query command
-//	accept SELECT, INSERT, UPDATE, DELETE
-//	return -1 when failed, otherwise the last parsed char(?)
+//	accept all
+//	return -1 when failed, otherwise the cmd's running result
 //	the mem poined by cmd should be writable
-bool parse_sql_keyword(char &*cmd, char *kw) {	// contrast key word
+#include "qlm.h"
+#define TEST 1
+#if TEST
+#include <cstdio>
+using namespace std;
+#define createDb(str) printf("createDb(%s)\n", str);
+#define createTable printf("createTable()\n");
+#define dropDb(str) printf("dropDb(%s)\n", str);
+#define dropTable(str) printf("dropTable(%s)\n", str);
+#define useDb(str) printf("useDb(%s)\n", str);
+#define showTables() printf("showTables()\n");
+#define Delete printf("Delete()\n");
+#define Update printf("Update()\n");
+#define Insert printf("Insert()\n");
+#define Select printf("Select()\n");
+#else
+#include "../systemm/dbManager.h"
+#endif
+bool parse_sql_keyword(char *&cmd, char *kw) {	// contrast key word
 	int i = 0;
 	while (kw[i]) {
 		if (cmd[i] != kw[i])
@@ -13,7 +31,7 @@ bool parse_sql_keyword(char &*cmd, char *kw) {	// contrast key word
 	return true;
 }
 
-int parse_sql_name(char &*cmd) {
+int parse_sql_name(char *&cmd) {
 	while (('a' <= *cmd && *cmd <= 'z')
 		|| ('A' <= *cmd && *cmd <= 'Z'))
 		cmd++;
@@ -23,7 +41,7 @@ int parse_sql_name(char &*cmd) {
 	return end;
 }
 
-int parse_sql_relAttr(char &*cmd, RelAttr &relAttr) {
+int parse_sql_relAttr(char *&cmd, RelAttr &relAttr) {
 	int end;
 	relAttr.relName = NULL;
 	relAttr.attrName = cmd;
@@ -31,12 +49,12 @@ int parse_sql_relAttr(char &*cmd, RelAttr &relAttr) {
 	if (end == '.') {
 		relAttr.relName = relAttr.attrName;
 		relAttr.attrName = cmd;
-		end = parse_sql_relName(cmd);
+		end = parse_sql_name(cmd);
 	}
 	return end;
 }
 
-int parse_sql_relAttrs(char &*cmd, vector<RelAttr> &relAttrs) {
+int parse_sql_relAttrs(char *&cmd, vector<RelAttr> &relAttrs) {
 	int end;
 	relAttrs.clear();
 	if (parse_sql_keyword(cmd, "* "))
@@ -49,10 +67,9 @@ int parse_sql_relAttrs(char &*cmd, vector<RelAttr> &relAttrs) {
 	return end;
 }
 
-int parse_sql_int(char &*cmd, int &data) {
+int parse_sql_int(char *&cmd, int &data) {
 	int end;
-	data = 0;
-	while ('0' <= *cmd && *cmd <= '9')
+	for (data = 0; '0' <= *cmd && *cmd <= '9'; cmd++)
 		data = data * 10 + (*cmd - '0');
 	end = *cmd;
 	*cmd = '\0';
@@ -60,20 +77,33 @@ int parse_sql_int(char &*cmd, int &data) {
 	return end;
 }
 
-int parse_sql_char(char &*cmd, char &*data, int &length) {
+int parse_sql_char(char *&cmd, char *&data, int &length) {
 	int end;
 	data = cmd;
 	cmd = strchr(cmd, '\'');
 	if (!cmd)
 		return -1;
-	end = *cmd;
 	length = (cmd - data) / sizeof(char);
 	*cmd = '\0';
+	cmd++;
+	end = *cmd;
 	cmd++;
 	return end;
 }
 
-int parse_sql_value(char &*cmd, Value &value) {
+int parse_sql_type(char *&cmd, Type &type) {
+	int end;
+	if (parse_sql_keyword(cmd, "int("))
+		type.type = TYPE_INT;
+	else if (parse_sql_keyword(cmd, "varchar("))
+		type.type = TYPE_CHAR;
+	else
+		return -1;
+	end = parse_sql_int(cmd, type.setting);
+	return end;
+}
+
+int parse_sql_value(char *&cmd, Value &value) {
 	int end;
 	if (parse_sql_keyword(cmd, "'")) {
 		value.type.type = TYPE_CHAR;
@@ -90,7 +120,7 @@ int parse_sql_value(char &*cmd, Value &value) {
 	return end;
 }
 
-int parse_sql_values(char &*cmd, vector<Value> &values) {
+int parse_sql_values(char *&cmd, vector<Value> &values) {
 	int end;
 	if (!parse_sql_keyword(cmd, "VALUES ("))
 		return -1;
@@ -103,7 +133,7 @@ int parse_sql_values(char &*cmd, vector<Value> &values) {
 	return end;
 }
 
-int parse_sql_condition(char &*cmd, Condition &condition) {
+int parse_sql_condition(char *&cmd, Condition &condition) {
 	int end;
 	condition.op = parse_sql_relAttr(cmd, condition.lhsAttr);
 	if (('a' <= *cmd && *cmd <= 'z')
@@ -117,33 +147,83 @@ int parse_sql_condition(char &*cmd, Condition &condition) {
 	return end;
 }
 
-int parse_sql_conditions(char &*cmd, vector<Condition> &conditions) {
+int parse_sql_conditions(char *&cmd, vector<Condition> &conditions) {
 	int end;
 	conditions.clear();
 	for (Condition cond; (end = parse_sql_condition(cmd, cond)) == ' '; conditions.push_back(cond))
-		if (!parse_sql_keyword(cmd, "AND ")))
+		if (!parse_sql_keyword(cmd, "AND "))
 			return -1;
 	return end;
 }
 
-// cmd should point to a writable memory
-int parse_sql_statement(char *cmd) {
-	return parse_sql_action(cmd);
-}
-
-int parse_sql_action(char &*cmd) {
-	if (parse_sql_keyword(cmd, "SELECT"))
-		return parse_sql_select(cmd);
-	if (parse_sql_keyword(cmd, "INSERT"))
-		return parse_sql_insert(cmd);
-	if (parse_sql_keyword(cmd, "DELETE"))
-		return parse_sql_delete(cmd);
-	if (parse_sql_keyword(cmd, "UPDATE"))
-		return parse_sql_update(cmd);
+int parse_sql_create(char *&cmd) {
+	if (parse_sql_keyword(cmd, " DATABASE ")) {
+		char *dbName = cmd;
+		parse_sql_name(cmd);
+		return createDb(dbName);
+	}
+	if (parse_sql_keyword(cmd, " TABLE ")) {
+		char *tbName = cmd;
+		if (parse_sql_name(cmd) != '(')
+			return -1;
+		vector<Type> types(0);
+		vector<string> names(0);
+		while (!parse_sql_keyword(cmd, "PRIMARY KEY(")) {
+			char *id = cmd;
+			parse_sql_name(cmd);
+			names.push_back(id);
+			Type type;
+			parse_sql_type(cmd, type);
+			types.push_back(type);
+			parse_sql_keyword(cmd, " NOT NULL");
+			if (!parse_sql_keyword(cmd, ","))
+				return -1;
+		}
+		char *pkName = cmd;
+		parse_sql_name(cmd);
+		int priKey = distance(names.begin(), find(names.begin(), names.end(), pkName));
+		return createTable(types, names, tbName, priKey);
+	}
 	return -1;
 }
 
-int parse_sql_delete(char &*cmd) {
+int parse_sql_drop(char *&cmd) {
+	if (parse_sql_keyword(cmd, " DATABASE ")) {
+		char *dbName = cmd;
+		parse_sql_name(cmd);
+		return dropDb(dbName);
+	}
+	if (parse_sql_keyword(cmd, " TABLE ")) {
+		char *tbName = cmd;
+		parse_sql_name(cmd);
+		return dropTable(tbName);
+	}
+	return -1;
+}
+
+int parse_sql_use(char *&cmd) {
+	if (!parse_sql_keyword(cmd, " "))
+		return -1;
+	char *dbName = cmd;
+	parse_sql_name(cmd);
+	return useDb(dbName);
+}
+
+int parse_sql_show(char *&cmd) {
+	if (!parse_sql_keyword(cmd, " TABLES"))
+		return -1;
+	return showTables();
+}
+
+int parse_sql_desc(char *&cmd) {
+	if (!parse_sql_keyword(cmd, " "))
+		return -1;
+	char *tbName = cmd;
+	parse_sql_name(cmd);
+	return 0;(tbName);
+}
+
+int parse_sql_delete(char *&cmd) {
 	if (!parse_sql_keyword(cmd, " FROM "))
 		return -1;
 	char *relName = cmd;
@@ -151,11 +231,12 @@ int parse_sql_delete(char &*cmd) {
 		return -1;
 	if (!parse_sql_keyword(cmd, "WHERE "))
 		return -1;
-	vector<Condition> conditions = parse_sql_conditions(cmd);	// use C+11 to optimize
+	vector<Condition> conditions(0);
+    parse_sql_conditions(cmd, conditions);	// use C+11 to optimize
 	return Delete(relName, conditions.size(), &conditions.front());
 }
 
-int parse_sql_update(char &*cmd) {
+int parse_sql_update(char *&cmd) {
 	if (!parse_sql_keyword(cmd, " "))
 		return -1;
 	char *relName = cmd;
@@ -175,7 +256,7 @@ int parse_sql_update(char &*cmd) {
 		conditions.size(), &conditions.front());
 }
 
-int parse_sql_insert(char &*cmd) {
+int parse_sql_insert(char *&cmd) {
 	if (!parse_sql_keyword(cmd, " INTO "))
 		return -1;
 	char *relName = cmd;
@@ -186,9 +267,11 @@ int parse_sql_insert(char &*cmd) {
 	return Insert(relName, values.size(), &values.front());
 }
 
-int parse_sql_select(char &*cmd) {
+int parse_sql_select(char *&cmd) {
 	int end;
-	vector<RelAttr> selAttrs;
+	vector<RelAttr> selAttrs(0);
+	if (!parse_sql_keyword(cmd, " "))
+	   return -1;
 	parse_sql_relAttrs(cmd, selAttrs);
 	if (!parse_sql_keyword(cmd, "FROM "))
 		return -1;
@@ -201,7 +284,39 @@ int parse_sql_select(char &*cmd) {
 		return -1;
 	vector<Condition> conditions;
 	end = parse_sql_conditions(cmd, conditions);
-	return Select(selAttr.size(), &selAttr.front(), 
+	return Select(selAttrs.size(), &selAttrs.front(), 
 		relations.size(), &relations.front(),
 		conditions.size(), &conditions.front());
 }
+
+// cmd should point to a writable memory
+int parse_sql_statement(char *cmd) {
+	if (parse_sql_keyword(cmd, "CREATE"))
+		return parse_sql_create(cmd);
+	if (parse_sql_keyword(cmd, "DROP"))
+		return parse_sql_drop(cmd);
+	if (parse_sql_keyword(cmd, "USE"))
+		return parse_sql_use(cmd);
+	if (parse_sql_keyword(cmd, "SHOW"))
+		return parse_sql_show(cmd);
+	if (parse_sql_keyword(cmd, "DESC"))
+		return parse_sql_desc(cmd);
+	if (parse_sql_keyword(cmd, "SELECT"))
+		return parse_sql_select(cmd);
+	if (parse_sql_keyword(cmd, "INSERT"))
+		return parse_sql_insert(cmd);
+	if (parse_sql_keyword(cmd, "DELETE"))
+		return parse_sql_delete(cmd);
+	if (parse_sql_keyword(cmd, "UPDATE"))
+		return parse_sql_update(cmd);
+	return -1;
+}
+
+#if TEST
+int main() {
+	char *cmd = new char[1 << 8];
+	while (gets(cmd))
+		printf("cmd's running result: %d\n------------------------\n", parse_sql_statement(cmd));
+	delete []cmd;
+}
+#endif
