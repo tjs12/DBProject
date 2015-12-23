@@ -1,24 +1,29 @@
+#ifndef CREATEDB_H
+#define CREATEDB_H
 #include <direct.h>
 #include <io.h>
+#include <windows.h>
 #include <stdio.h>
 #include <string>
 #include <iostream>
-#define rootpath "E:/DBProject/dbs/"
+#define rootpath "E:\\DBProject\\dbs\\"
 using namespace std;
+int m;
 class DbCreator{
 	public:
-		static bool exsist(const string name);
+		static bool exsist(string dir,const string name);
 		static int createFolder(const string name);
 		static string dbName;
 		static string dbPath;
 };
 string DbCreator::dbName = "";
 string DbCreator::dbPath ="";
-bool DbCreator::exsist(const string name){
+bool DbCreator::exsist(string dir,const string name){
+	dir +="*.*";
 	_finddata_t fileDir;
 	bool result = false;
 	long lfDir;
-	if((lfDir = _findfirst("E:\\DBProject\\dbs\\*.*",&fileDir))==-1) {
+	if((lfDir = _findfirst((dir).c_str(),&fileDir))==-1) {
 		  _findclose(lfDir);
 		return result;
 	}
@@ -34,7 +39,7 @@ bool DbCreator::exsist(const string name){
 	return result;
 }
 int DbCreator::createFolder(const string name){
-	if(exsist(name)){
+	if(exsist(rootpath,name)){
 		cout<<"Database already existed,create failed!"<<endl;
 		return 0;
 	}
@@ -43,22 +48,4 @@ int DbCreator::createFolder(const string name){
 	_mkdir((string(rootpath)+name).c_str());
 	return 1;
 } 
-
-//int main(){
-////	 _finddata_t fileDir;
-////   // char* dir="e:\\DBProject\\*.*";
-////    long lfDir;
-////     
-////    if((lfDir = _findfirst("e:\\DBProject\\dbs\\*.*",&fileDir))==-1l)
-////        printf("No file is found\n");
-////    else{
-////        printf("file list:\n");
-////        do{
-////            printf("%s\n",fileDir.name);
-//// 
-////        }while( _findnext( lfDir, &fileDir ) == 0 );
-////    }
-////    _findclose(lfDir);
-// 	DbCreator::createFolder("hehe");
-//	return 0;
-//}
+#endif
