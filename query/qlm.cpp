@@ -1,5 +1,6 @@
 #include "qlm.h"
 #include "../storage/TableIterator.h"
+#include "../systemm/dbManager.h"
 
 RC QL_Manager::select_all_attr (
               int           nRelations,       // # relations in From clause
@@ -8,10 +9,13 @@ RC QL_Manager::select_all_attr (
               /*const*/ Condition conditions[])
 
 {
+	DbManager* m = DbManager::getInstance();
+
 	if (nRelations == 1) {
-		
 		Table t;
-		if (t.openTable(string(relations[0])) == RETURN_FAILED) return RETURN_FAILED;
+		string tablepath = m->getCurDbPath(), tablename = string(relations[0]);
+		tablepath = tablename.append("/").append(tablename);
+		if (t.openTable(tablename) == RETURN_FAILED) return RETURN_FAILED;
 
 		res.clear();
 		res_rid.clear();
@@ -41,23 +45,28 @@ RC QL_Manager::select_all_attr (
 		res.clear();
 		res_rid.clear();
 
+		vector<string> joined_colname;
+
+		for (int i = 0; i < t1.columnNum; i++) {
+			joined_colname.push_back(string(relations[0]).append(string(".")).append(t1.columnNames[i]));
+		}
 
 		for (TableIterator i(&t1); !i.isEnd(); i.gotoNext()) {
 			for (TableIterator j(&t2); !j.isEnd(); j.gotoNext()) {
 
 				//TODO change left value of conditions from attribute to value;
 
-				Record current = i.current();
+				Record current1 = i.current(), current2 = j.current();
+				Record joined = Record::join(current1, current2);
 				bool flag = true;
 				for (int k = 0; k < nConditions; k++) {
-					if (!current.judgeCondition(conditions[k], t1.columnNames)) {
+					if (!joined.judgeCondition(conditions[k], joined_colname)) {
 						flag = false;
 						break;
 					}
 				}
 				if (flag) {
-					res.push_back(current);
-					res_rid.push_back(i.getRID());
+					res.push_back(joined);
 				}
 			}
 		}

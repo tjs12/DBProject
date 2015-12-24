@@ -5,6 +5,7 @@
 #include <iostream>
 #include "../common/rc.h"
 #include "../common/Condition.h"
+#include "../storage/Record.h"
 
 using namespace std;
 

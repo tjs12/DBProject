@@ -35,7 +35,7 @@ public:
 		data = 0;
 	}
 
-	Record(Record &r)
+	Record(const Record &r)
 	{
 		
 		//for (int i = 0; i < r.size(); i++)
@@ -97,15 +97,33 @@ public:
 
 	bool judgeCondition(Condition &c, vector<string> colNames)
 	{
-		if (c.bRhsIsAttr) return false;
+		
 		int i;
 		for (i = 0; i < colNames.size(); i++) {
 			if (colNames[i].compare(c.lhsAttr.attrName)) {
 				break;
 			}
 		}
-		Var *data = Var::fromBuf((unsigned int*)c.rhsValue.data, c.rhsValue.type);
-		return data->equal(vars[i]);
+		if (c.bRhsIsAttr) {
+			int j;
+			for (j = 0; j < colNames.size(); j++) {
+				if (colNames[j].compare(c.rhsAttr.attrName)) {
+					break;
+				}
+			}
+			if (c.op == '=')
+				return vars[j]->equal(vars[j]);
+			else 
+				return false; //TODO
+
+		}
+		else {
+			Var *data = Var::fromBuf((unsigned int*)c.rhsValue.data, c.rhsValue.type);
+			if (c.op == '=')
+				return data->equal(vars[i]);
+			else 
+				return false; //TODO
+		}
 	}
 	
 	static int getRecordSize(int columnNum, vector<Type> columnTypes) {
@@ -113,6 +131,26 @@ public:
 		for (int i = 0; i < columnNum; i++)
 			size += columnTypes[i].size();
 		return size;
+	}
+
+	static Record join(Record &r1, Record &r2)
+	{
+		int ncol = r1.columnNum + r2.columnNum;
+		vector<Type> types;
+		for (int i = 0; i < r1.columnNum; i++) {
+			types.push_back(r1.columnTypes[i]);
+		}
+		for (int i = 0; i < r2.columnNum; i++) {
+			types.push_back(r2.columnTypes[i]);
+		}
+		Record rec(types);
+		for (int i = 0; i < r1.columnNum; i++) {
+			rec.addVar(r1.getVar(i)->copy(), i);
+		}
+		for (int i = 0; i < r2.columnNum; i++) {
+			rec.addVar(r2.getVar(i)->copy(), i + r1.columnNum);
+		}
+		return rec;
 	}
 	
 private:

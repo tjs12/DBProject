@@ -89,6 +89,10 @@ private:
 	void set_record_flag(int rid, int flag);
 	int get_record_flag(int rid);
 
+	int int_size_to_rec(int s) {
+		int rsize = Record::getRecordSize(columnNum, columnTypes);
+		return (s + rsize - 1) / rsize;
+	}
 };
 	
 #endif

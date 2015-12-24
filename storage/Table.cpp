@@ -123,8 +123,11 @@ RC Table::getRecord(int rid, Record &rec)
 {
 	//if (rid > record_num)
 	
-	int pageid = rid / record_per_page + start_page;
-	int pos_in_page = rid % record_per_page + page_header_size; //TODO /recordsize
+	/*int pageid = rid / record_per_page + start_page;
+	int pos_in_page = rid % record_per_page + page_header_size; //TODO /recordsize*/
+
+	int pageid = get_page_id(rid);
+	int pos_in_page = get_page_pos(rid);
 	int recordsize = Record::getRecordSize(columnNum, columnTypes);
 	int index;
 	BufType b = bpm->getPage(fid, pageid, index);
@@ -147,7 +150,7 @@ int Table::insertRecord(Record &r)
 	
 	check_page_validity(b);
 	
-	int pos_in_page = page_header_size;
+	int pos_in_page = int_size_to_rec(page_header_size);
 	for (; pos_in_page < record_per_page; pos_in_page++) {
 		if (!is_record_buf(pos_in_page, b))
 			break;
@@ -160,7 +163,7 @@ int Table::insertRecord(Record &r)
 	//set_record_flag(get_rid_from_pos(
 	
 	bool still_free = false;
-	for (int i = pos_in_page + 1; i < record_per_page; i++)
+	for (int i = pos_in_page + 1; i < record_per_page - int_size_to_rec(page_header_size); i++)
 		if (!is_record_buf(i, b)) {
 			still_free = true;
 			break;
@@ -174,7 +177,8 @@ int Table::insertRecord(Record &r)
 	record_num++;
 	
 	bpm -> markDirty(index);
-	int rid = pos_in_page - page_header_size + record_per_page * (pageid - start_page);
+	//int rid = pos_in_page - page_header_size + record_per_page * (pageid - start_page);
+	int rid = get_rid_from_pos(pageid, pos_in_page);
 	if (max_rid < rid) max_rid = rid;
 	return rid;
 }
@@ -183,8 +187,11 @@ int Table::updateRecord(int rid, Record &r, Record &mask)
 {
 	//if (rid > record_num)
 	
-	int pageid = rid / record_per_page + start_page;
-	int pos_in_page = rid % record_per_page + page_header_size;
+	/*int pageid = rid / record_per_page + start_page;
+	int pos_in_page = rid % record_per_page + page_header_size;*/
+
+	int pageid = get_page_id(rid);
+	int pos_in_page = get_page_pos(rid);
 	int recordsize = Record::getRecordSize(columnNum, columnTypes);
 	int index;
 	BufType b = bpm->getPage(fid, pageid, index);
@@ -202,8 +209,10 @@ int Table::updateRecord(int rid, Record &r, Record &mask)
 
 int Table::deleteRecord(int rid)
 {
-	int pageid = rid / record_per_page + start_page;
-	int pos_in_page = rid % record_per_page + page_header_size;
+	/*int pageid = rid / record_per_page + start_page;
+	int pos_in_page = rid % record_per_page + page_header_size;*/
+	int pageid = get_page_id(rid);
+	int pos_in_page = get_page_pos(rid);
 	int recordsize = Record::getRecordSize(columnNum, columnTypes);
 	int index;
 	BufType b = bpm->getPage(fid, pageid, index);
@@ -215,14 +224,21 @@ int Table::deleteRecord(int rid)
 	
 	record_num--;
 
+	if (first_page_available > pageid) {
+		b[NEXT_PAGE_AVAILABLE] = first_page_available;
+		first_page_available = pageid;
+	}
+
 	return RETURN_SUCCEED;
 	//TODO: when shall we delete pages?
 }
 
 bool Table::isRecord(int rid)
 {
-	int pageid = rid / record_per_page + start_page;
-	int pos_in_page = rid % record_per_page + page_header_size;
+	/*int pageid = rid / record_per_page + start_page;
+	int pos_in_page = rid % record_per_page + page_header_size;*/
+	int pageid = get_page_id(rid);
+	int pos_in_page = get_page_pos(rid);
 	int recordsize = Record::getRecordSize(columnNum, columnTypes);
 	int index;
 	BufType b = bpm->getPage(fid, pageid, index);
@@ -263,17 +279,17 @@ Table::~Table()
 
 int Table::get_page_id(int rid)
 {
-	return rid / record_per_page + start_page;
+	return rid / (record_per_page - int_size_to_rec(page_header_size)) + start_page;
 }
 
 int Table::get_page_pos(int rid)
 {
-	return rid % record_per_page + page_header_size;
+	return rid % (record_per_page - int_size_to_rec(page_header_size)) + int_size_to_rec(page_header_size);
 }
 
 int Table::get_rid_from_pos(int page, int pos)
 {
-	return (page - start_page) * record_per_page + pos - page_header_size;
+	return (page - start_page) * (record_per_page - int_size_to_rec(page_header_size)) + pos - int_size_to_rec(page_header_size);
 }
 
 void Table::set_record_flag(int rid, int flag)
