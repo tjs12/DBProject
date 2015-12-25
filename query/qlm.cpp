@@ -35,6 +35,8 @@ RC QL_Manager::select_all_attr (
 			}
 
 		}
+
+		attr_names = t.columnNames;
 	}
 
 	else if (nRelations == 2) {
@@ -70,6 +72,8 @@ RC QL_Manager::select_all_attr (
 				}
 			}
 		}
+
+		attr_names = joined_colname;
 	}
 
 	
@@ -121,4 +125,70 @@ RC QL_Manager::Delete (const char *relName,            // relation to delete fro
 	}
 
 	return RETURN_SUCCEED;
+}
+
+ RC QL_Manager::Update (const char *relName,            // relation to update
+              const RelAttr &updAttr,         // attribute to update
+              const int bIsValue,             // 0/1 if RHS of = is attribute/value
+              const RelAttr &rhsRelAttr,      // attr on RHS of =
+              const Value &rhsValue,          // value on RHS of =
+              int   nConditions,              // # conditions in Where clause
+              Condition conditions[])  // conditions in Where clause
+ {
+	select_all_attr(1, &relName, nConditions, conditions);
+	Table t;  
+	if (t.openTable(string(relName)) == RETURN_FAILED) return RETURN_FAILED;
+
+	Record mask = Record(t.columnTypes);
+	unsigned int *maskdata = new unsigned int[mask.size()];
+	memset(maskdata, 0, sizeof(unsigned int)*mask.size());
+
+	for (int i = 0; i < res.size(); i++) {
+		int j;
+		for (j = 0; j < t.columnNum; j++) 
+			if (t.columnNames[j] == updAttr.attrName) break;
+		if (bIsValue)
+			res[i].addVar(Var::fromBuf((unsigned int*)rhsValue.data, rhsValue.type), j);
+		else {
+			int r_attr_pos = 0;
+			for (; r_attr_pos < t.columnNum; r_attr_pos++) 
+				if (t.columnNames[r_attr_pos] == rhsRelAttr.attrName)
+					break;
+			res[i].addVar(res[i].getVar(r_attr_pos), j);
+		}
+		
+		mask.fromData(maskdata);
+		t.updateRecord(res_rid[i], res[i], mask);
+	}
+
+	delete []maskdata;
+
+	return RETURN_SUCCEED;
+ }
+
+
+RC QL_Manager::Select (int           nSelAttrs,        // # attrs in Select clause
+              const RelAttr selAttrs[],       // attrs in Select clause
+              int           nRelations,       // # relations in From clause
+              const char * const relations[], // relations in From clause
+              int           nConditions,      // # conditions in Where clause
+              Condition conditions[])  // conditions in Where clause
+{
+	select_all_attr(nRelations, relations, nConditions, conditions);
+
+	Table t;  
+	
+	for (int i = 0; i < res.size(); i++) {
+		for (int j = 0; j < attr_names.size(); j++) {
+			for (int k = 0; k < nSelAttrs; k++) {
+				if (attr_names[j].compare(selAttrs[k].attrName) == 0 || 
+					attr_names[j].compare(string(selAttrs[k].relName).append(".").append(selAttrs[k].attrName)) == 0 ||
+					nSelAttrs == 0) //*
+				{
+					cout << res[i].getVar(j)->toString() << ' ';
+				}
+			}
+		}
+		cout << endl;
+	}
 }

@@ -48,7 +48,7 @@ private:
 
 	vector<Record> res;
 	vector<int> res_rid;
-
+	vector<string> attr_names;
 };
 
 #endif
