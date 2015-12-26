@@ -163,9 +163,13 @@ int parse_sql_condition(char *&cmd, Condition &condition) {
 int parse_sql_conditions(char *&cmd, vector<Condition> &conditions) {
 	int end;
 	conditions.clear();
-	for (Condition cond; (end = parse_sql_condition(cmd, cond)) == ' '; conditions.push_back(cond))
-		if (!parse_sql_keyword(cmd, "AND "))
+	Condition cond;
+	do {
+		end = parse_sql_condition(cmd, cond));
+		conditions.push_back(cond));
+		if (end == ' ' && !parse_sql_keyword(cmd, "AND "))
 			return -1;
+	} while (end == ' ');
 	return end;
 }
 
