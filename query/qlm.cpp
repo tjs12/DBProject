@@ -2,6 +2,9 @@
 #include "../storage/TableIterator.h"
 #include "../systemm/dbManager.h"
 
+
+QL_Manager QL_Manager::inst;
+
 RC QL_Manager::select_all_attr (
               int           nRelations,       // # relations in From clause
               const char * const relations[], // relations in From clause
@@ -14,8 +17,8 @@ RC QL_Manager::select_all_attr (
 	if (nRelations == 1) {
 		Table t;
 		string tablepath = m->getCurDbPath(), tablename = string(relations[0]);
-		tablepath = tablename.append("/").append(tablename);
-		if (t.openTable(tablename) == RETURN_FAILED) return RETURN_FAILED;
+		tablepath = tablepath.append("\\").append(tablename);
+		if (t.openTable(tablepath) == RETURN_FAILED) return RETURN_FAILED;
 
 		res.clear();
 		res_rid.clear();
@@ -41,8 +44,12 @@ RC QL_Manager::select_all_attr (
 
 	else if (nRelations == 2) {
 		Table t1, t2;
-		if (t1.openTable(string(relations[0])) == RETURN_FAILED) return RETURN_FAILED;
-		if (t2.openTable(string(relations[1])) == RETURN_FAILED) return RETURN_FAILED;
+		string tablepath1 = DbManager::getInstance()->getCurDbPath(), tablename1 = relations[0];
+		tablepath1 = tablepath1.append("\\").append(tablename1);
+		string tablepath2 = DbManager::getInstance()->getCurDbPath(), tablename2 = relations[1];
+		tablepath2 = tablepath2.append("\\").append(tablename2);
+		if (t1.openTable(tablepath1) == RETURN_FAILED) return RETURN_FAILED;
+		if (t2.openTable(tablepath2) == RETURN_FAILED) return RETURN_FAILED;
 
 		res.clear();
 		res_rid.clear();
@@ -95,7 +102,9 @@ RC QL_Manager::Insert (const char  *relName,           // relation to insert int
 	}
 
 	Table t;  
-	if (t.openTable(string(relName)) == RETURN_FAILED) return RETURN_FAILED;
+	string tablepath = DbManager::getInstance()->getCurDbPath(), tablename = relName;
+	tablepath = tablepath.append("\\").append(tablename);
+	if (t.openTable(tablepath) == RETURN_FAILED) return RETURN_FAILED;
 
 	if (t.primaryKey != -1) {
 		for (TableIterator i(&t); !i.isEnd(); i.gotoNext()) {
@@ -117,7 +126,9 @@ RC QL_Manager::Delete (const char *relName,            // relation to delete fro
 	select_all_attr(1, &relName, nConditions, conditions);
 
 	Table t;  
-	if (t.openTable(string(relName)) == RETURN_FAILED) return RETURN_FAILED;
+	string tablepath = DbManager::getInstance()->getCurDbPath(), tablename = relName;
+	tablepath = tablepath.append("\\").append(tablename);
+	if (t.openTable(tablepath) == RETURN_FAILED) return RETURN_FAILED;
 
 
 	for (int i = 0; i < res_rid.size(); i++) {
@@ -137,7 +148,9 @@ RC QL_Manager::Delete (const char *relName,            // relation to delete fro
  {
 	select_all_attr(1, &relName, nConditions, conditions);
 	Table t;  
-	if (t.openTable(string(relName)) == RETURN_FAILED) return RETURN_FAILED;
+	string tablepath = DbManager::getInstance()->getCurDbPath(), tablename = relName;
+	tablepath = tablepath.append("\\").append(tablename);
+	if (t.openTable(tablepath) == RETURN_FAILED) return RETURN_FAILED;
 
 	Record mask = Record(t.columnTypes);
 	unsigned int *maskdata = new unsigned int[mask.size()];
@@ -177,18 +190,18 @@ RC QL_Manager::Select (int           nSelAttrs,        // # attrs in Select clau
 	RC r = select_all_attr(nRelations, relations, nConditions, conditions);
 	if (r != RETURN_SUCCEED) return r;
 
-	Table t;  
+	//Table t;  
 	
 	for (int i = 0; i < res.size(); i++) {
 		for (int j = 0; j < attr_names.size(); j++) {
 			for (int k = 0; k < nSelAttrs; k++) {
 				if (attr_names[j].compare(selAttrs[k].attrName) == 0 || 
-					attr_names[j].compare(string(selAttrs[k].relName).append(".").append(selAttrs[k].attrName)) == 0 ||
-					nSelAttrs == 0) //*
+					attr_names[j].compare(string(selAttrs[k].relName).append(".").append(selAttrs[k].attrName)) == 0 ) //*
 				{
 					cout << res[i].getVar(j)->toString() << ' ';
 				}
 			}
+			if (nSelAttrs == 0) cout << res[i].getVar(j)->toString() << ' ';
 		}
 		cout << endl;
 	}

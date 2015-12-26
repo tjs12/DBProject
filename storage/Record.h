@@ -100,14 +100,14 @@ public:
 		
 		int i;
 		for (i = 0; i < colNames.size(); i++) {
-			if (colNames[i].compare(c.lhsAttr.attrName)) {
+			if (colNames[i].compare(c.lhsAttr.attrName) ==0) {
 				break;
 			}
 		}
 		if (c.bRhsIsAttr) {
 			int j;
 			for (j = 0; j < colNames.size(); j++) {
-				if (colNames[j].compare(c.rhsAttr.attrName)) {
+				if (colNames[j].compare(c.rhsAttr.attrName) == 0) {
 					break;
 				}
 			}

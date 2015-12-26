@@ -28,10 +28,7 @@ RC dropDb(string str) {DbManager* m = DbManager::getInstance(); return m -> drop
 RC dropTable(string str) {DbManager* m = DbManager::getInstance(); return m -> dropTable(str);}
 RC useDb(string str) {DbManager* m = DbManager::getInstance(); return m -> useDb(str);};
 void showTables() {DbManager* m = DbManager::getInstance(); m -> showTables();}
-#define Delete printf("Delete()\n");
-#define Update printf("Update()\n");
-#define Insert printf("Insert()\n");
-#define Select printf("Select()\n");
+
 #endif
 bool parse_sql_keyword(char *&cmd, char *kw) {	// contrast key word
 	int i = 0;
@@ -165,8 +162,8 @@ int parse_sql_conditions(char *&cmd, vector<Condition> &conditions) {
 	conditions.clear();
 	Condition cond;
 	do {
-		end = parse_sql_condition(cmd, cond));
-		conditions.push_back(cond));
+		end = parse_sql_condition(cmd, cond);
+		conditions.push_back(cond);
 		if (end == ' ' && !parse_sql_keyword(cmd, "AND "))
 			return -1;
 	} while (end == ' ');
@@ -254,7 +251,11 @@ int parse_sql_delete(char *&cmd) {
 		return -1;
 	vector<Condition> conditions(0);
     parse_sql_conditions(cmd, conditions);	// use C+11 to optimize
+#if test
 	return Delete(relName, conditions.size(), &conditions.front());
+#else
+	return QL_Manager::getInst() -> Delete(relName, conditions.size(), &conditions.front());
+#endif
 }
 
 int parse_sql_update(char *&cmd) {
@@ -272,9 +273,16 @@ int parse_sql_update(char *&cmd) {
 		return -1;
 	vector<Condition> conditions(0);
 	parse_sql_conditions(cmd, conditions);
+#if test
 	return Update(relName,
 		updCond.lhsAttr, updCond.bRhsIsAttr, updCond.rhsAttr, updCond.rhsValue,
 		conditions.size(), &conditions.front());
+#else
+	return QL_Manager::getInst() -> Update(relName,
+		updCond.lhsAttr, updCond.bRhsIsAttr, updCond.rhsAttr, updCond.rhsValue,
+		conditions.size(), &conditions.front());
+#endif
+	
 }
 
 int parse_sql_insert(char *&cmd) {
@@ -285,7 +293,7 @@ int parse_sql_insert(char *&cmd) {
 		return -1;
 	vector<Value> values(0);
 	parse_sql_values(cmd, values);
-	return Insert(relName, values.size(), &values.front());
+	return QL_Manager::getInst() -> Insert(relName, values.size(), &values.front());
 }
 
 int parse_sql_select(char *&cmd) {
@@ -304,10 +312,10 @@ int parse_sql_select(char *&cmd) {
 	if (!parse_sql_keyword(cmd, "WHERE "))
 		return -1;
 	vector<Condition> conditions;
-	end = parse_sql_conditions(cmd, conditions);
-	return Select(selAttrs.size(), &selAttrs.front(), 
+		end = parse_sql_conditions(cmd, conditions);
+	return QL_Manager::getInst() -> Select(selAttrs.size(), selAttrs.size()==0? 0: &selAttrs.front(), 
 		relations.size(), &relations.front(),
-		conditions.size(), &conditions.front());
+		conditions.size(), conditions.size()==0 ? 0 : &conditions.front());
 }
 
 // cmd should point to a writable memory
