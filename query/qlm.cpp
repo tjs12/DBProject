@@ -174,7 +174,8 @@ RC QL_Manager::Select (int           nSelAttrs,        // # attrs in Select clau
               int           nConditions,      // # conditions in Where clause
               Condition conditions[])  // conditions in Where clause
 {
-	select_all_attr(nRelations, relations, nConditions, conditions);
+	RC r = select_all_attr(nRelations, relations, nConditions, conditions);
+	if (r != RETURN_SUCCEED) return r;
 
 	Table t;  
 	
@@ -191,4 +192,5 @@ RC QL_Manager::Select (int           nSelAttrs,        // # attrs in Select clau
 		}
 		cout << endl;
 	}
+	return RETURN_SUCCEED;
 }

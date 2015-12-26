@@ -5,7 +5,7 @@
 
 using namespace std;
 
-int main()
+int storagemain()
 {
 	Table *t1 = new Table();
 	Type coltypes[3] = {Type(TYPE_INT), Type(TYPE_INT), Type(TYPE_INT)};
@@ -68,6 +68,14 @@ int main()
 		int rid = t3->insertRecord(*rec);
 		cout << rid << ' ' << i << endl;
 	}
+	for (int i = 0; i < 500; i++) {
+		t3->deleteRecord(i);
+	}
+	for (int i = 1000; i < 1500; i++) {
+		rec->addVar(&IntVar(i), 0);
+		int rid = t3->insertRecord(*rec);
+		cout << rid << ' ' << i << endl;
+	}
 	delete t3;
 
 	cout <<endl <<"read" <<endl;
@@ -78,6 +86,10 @@ int main()
 	for (TableIterator i(t3); !i.isEnd(); i.gotoNext()) {
 		tempr = i.current();
 		cout << i.getRID() << ' ' << tempr.getVar(0)->toString() << endl;
+		if (tempr.getVar(0)->equal(new IntVar(991))) {
+			int abc;
+			abc = 10;
+		}
 	}
 
 	

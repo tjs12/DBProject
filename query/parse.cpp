@@ -3,7 +3,9 @@
 //	return -1 when failed, otherwise the cmd's running result
 //	the mem poined by cmd should be writable
 #include "qlm.h"
-#define TEST 1
+
+
+#define TEST 0
 #if TEST
 #include <cstdio>
 using namespace std;
@@ -19,6 +21,17 @@ using namespace std;
 #define Select printf("Select()\n");
 #else
 #include "../systemm/dbManager.h"
+
+RC createDb(string str) {DbManager* m = DbManager::getInstance(); return m -> createDb(str);}
+//RC createTable printf("createTable()\n");
+RC dropDb(string str) {DbManager* m = DbManager::getInstance(); return m -> dropDb(str);}
+RC dropTable(string str) {DbManager* m = DbManager::getInstance(); return m -> dropTable(str);}
+RC useDb(string str) {DbManager* m = DbManager::getInstance(); return m -> useDb(str);};
+void showTables() {DbManager* m = DbManager::getInstance(); m -> showTables();}
+#define Delete printf("Delete()\n");
+#define Update printf("Update()\n");
+#define Insert printf("Insert()\n");
+#define Select printf("Select()\n");
 #endif
 bool parse_sql_keyword(char *&cmd, char *kw) {	// contrast key word
 	int i = 0;
@@ -182,7 +195,11 @@ int parse_sql_create(char *&cmd) {
 		char *pkName = cmd;
 		parse_sql_name(cmd);
 		int priKey = distance(names.begin(), find(names.begin(), names.end(), pkName));
+#if TEST == 0
+		return DbManager::getInstance() -> createTable(types, names, tbName, priKey);
+#else
 		return createTable(types, names, tbName, priKey);
+#endif
 	}
 	return -1;
 }
@@ -212,7 +229,7 @@ int parse_sql_use(char *&cmd) {
 int parse_sql_show(char *&cmd) {
 	if (!parse_sql_keyword(cmd, " TABLES"))
 		return -1;
-	return showTables();
+	/*return */showTables();
 }
 
 int parse_sql_desc(char *&cmd) {
@@ -312,11 +329,11 @@ int parse_sql_statement(char *cmd) {
 	return -1;
 }
 
-#if TEST
+//#if TEST
 int main() {
 	char *cmd = new char[1 << 8];
 	while (gets(cmd))
 		printf("cmd's running result: %d\n------------------------\n", parse_sql_statement(cmd));
 	delete []cmd;
 }
-#endif
+//#endif

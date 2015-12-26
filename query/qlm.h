@@ -12,10 +12,10 @@ using namespace std;
 class QL_Manager {
  public:
                                               // Constructor
-      QL_Manager (
+      /*QL_Manager (
 		 // SM_Manager &smm, IX_Manager &ixm, RM_Manager &rmm
 		  );
-      ~QL_Manager ();                         // Destructor
+      ~QL_Manager ();                         // Destructor*/
     RC Select (int           nSelAttrs,        // # attrs in Select clause
               const RelAttr selAttrs[],       // attrs in Select clause
               int           nRelations,       // # relations in From clause
@@ -35,10 +35,13 @@ class QL_Manager {
               const Value &rhsValue,          // value on RHS of =
               int   nConditions,              // # conditions in Where clause
               /*const*/ Condition conditions[]);  // conditions in Where clause
+
+	QL_Manager *getInst() {return &inst;}
+
 private:
-	//parseRelations(int nRelations, const char * const relations[], std::vector<RelAttr> &rel, std::vector<Value>);
-	
-	//parseConditions(int nConditions, const char * const conditions[], std::vector<Condition>);
+	QL_Manager() {}
+	QL_Manager(const QL_Manager &val) {}
+	static QL_Manager inst;
 
 	RC select_all_attr(
               int           nRelations,       // # relations in From clause

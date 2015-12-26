@@ -27,6 +27,7 @@ public:
 	std::string toString() {
 		return to_string(val);
 	}
+
 	Type type() {
 		return Type(TYPE_INT, 0);
 	}
@@ -55,16 +56,34 @@ class VarCharVar : public Var
 public:
 	VarCharVar(const char *v, int maxlength) {
 		maxlen = maxlength;
-		val = new char[maxlen];
+		val = new char[maxlen+1];
+		//TODO check for leng
 		strcpy(val, v);
 	}
 
 	std::string toString() {
 		return std::string(val);
 	}
-	 Type type() {
-		 return Type(TYPE_CHAR, maxlen);
-	 }
+
+	Type type() {
+		return Type(TYPE_CHAR, maxlen);
+	}
+
+	void writeToBuf(unsigned int *buf) {
+		char *b1 = (char*) buf;
+		strcpy(b1, val);
+	}
+
+	Var *copy() {
+		return new VarCharVar(val, maxlen);
+	}
+
+	bool equal(Var *v) {
+		if (v->type() == Type(TYPE_CHAR)) {
+			return strcmp(val, ((VarCharVar*)v)->val) == 0;
+		}
+		return false;
+	}
 
 	char *val;
 	int maxlen;
