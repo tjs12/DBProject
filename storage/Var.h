@@ -62,7 +62,7 @@ public:
 	}
 
 	std::string toString() {
-		return std::string(val);
+		return "'" + std::string(val) + "'";
 	}
 
 	Type type() {

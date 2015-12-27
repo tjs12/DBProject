@@ -29,6 +29,7 @@ RC Table::createTable(vector<Type> &col_type, vector<string> &col_names, string 
 	first_page_available = 1;
 	start_page = 1;
 	max_rid = -1;
+	primaryKey = pri_key;
 
 	int index;
 	BufType b = bpm -> allocPage(fid, 0, index, false);
@@ -53,8 +54,8 @@ RC Table::openTable(string name)
 	primaryKey = b[PRIMARY_KEY];
 	//columnTypes = new Type[columnNum];
 	//columnNames = new string[columnNum];
-	columnTypes = vector<Type>(3, Type());
-	columnNames = vector<string>(3, string(""));
+	columnTypes = vector<Type>(columnNum, Type());
+	columnNames = vector<string>(columnNum, string(""));
 	
 	int col_settings_pos = COLUMN_TYPES + columnNum;
 	int col_name_pos = col_settings_pos + columnNum;

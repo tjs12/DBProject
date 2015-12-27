@@ -36,7 +36,7 @@ class QL_Manager {
               int   nConditions,              // # conditions in Where clause
               /*const*/ Condition conditions[]);  // conditions in Where clause
 
-	QL_Manager *getInst() {return &inst;}
+	static QL_Manager *getInst() {return &inst;}
 
 private:
 	QL_Manager() {}

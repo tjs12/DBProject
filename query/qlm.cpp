@@ -196,7 +196,7 @@ RC QL_Manager::Select (int           nSelAttrs,        // # attrs in Select clau
 		for (int j = 0; j < attr_names.size(); j++) {
 			for (int k = 0; k < nSelAttrs; k++) {
 				if (attr_names[j].compare(selAttrs[k].attrName) == 0 || 
-					attr_names[j].compare(string(selAttrs[k].relName).append(".").append(selAttrs[k].attrName)) == 0 ) //*
+					(selAttrs[k].relName!=0 && attr_names[j].compare(string(selAttrs[k].relName).append(".").append(selAttrs[k].attrName)) == 0) ) //*
 				{
 					cout << res[i].getVar(j)->toString() << ' ';
 				}
