@@ -21,6 +21,7 @@ using namespace std;
 #define Select printf("Select()\n");
 #else
 #include "../systemm/dbManager.h"
+#include "../common/IO.h"
 
 RC createDb(string str) {DbManager* m = DbManager::getInstance(); return m -> createDb(str);}
 //RC createTable printf("createTable()\n");
@@ -180,7 +181,7 @@ int parse_sql_create(char *&cmd) {
 		char *tbName = cmd;
 		if (parse_sql_name(cmd) != ' ')
 			return -1;
-		if (!parse_sql_keyword("("))
+		if (!parse_sql_keyword(cmd, "("))
 			return -1;
 		vector<Type> types(0);
 		vector<string> names(0);
@@ -343,23 +344,19 @@ int parse_sql_statement(char *cmd) {
 	return -1;
 }
 
-//#if TEST
-int main() {
-	char *cmd = new char[1 << 8];
-	while (gets(cmd))
-		printf("cmd's running result: %d\n------------------------\n", parse_sql_statement(cmd));
-	delete []cmd;
-}
-//#endif
 
 int parse_entrance(char c) {
 	static string cmd = "";
 	int ret = 0;	// not run the cmd
+	char *temp;
 	switch (c) {
 		case ';':
 			cmd += c;
-			ret = parse_sql_statement(cmd.c_str());
+			temp = new char[cmd.length()+1];
+			strcpy(temp, cmd.c_str());
+			ret = parse_sql_statement(temp);
 			cmd = "";
+			delete temp;
 			return ret;
 		case ' ':
 		case '\t':
@@ -373,3 +370,16 @@ int parse_entrance(char c) {
 			return ret;
 	}
 }
+
+int main() {
+	char *cmd = new char[1 << 8];
+	SocketIO io;
+	QL_Manager::getInst() -> setIO(&io);
+	char temp;
+	while (temp = io.getchar()) {
+		//printf("cmd's running result: %d\n------------------------\n", parse_entrance(temp));
+		parse_entrance(temp);
+	}
+	delete []cmd;
+}
+

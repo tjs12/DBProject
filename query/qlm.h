@@ -4,6 +4,7 @@
 #include <vector>
 #include <iostream>
 #include "../common/rc.h"
+#include "../common/IO.h"
 #include "../common/Condition.h"
 #include "../storage/Record.h"
 
@@ -36,10 +37,13 @@ class QL_Manager {
               int   nConditions,              // # conditions in Where clause
               /*const*/ Condition conditions[]);  // conditions in Where clause
 
+	void setIO(IO *i) {io = i;}
+	
 	static QL_Manager *getInst() {return &inst;}
+	
 
 private:
-	QL_Manager() {}
+	QL_Manager() {io = 0;}
 	QL_Manager(const QL_Manager &val) {}
 	static QL_Manager inst;
 
@@ -52,6 +56,8 @@ private:
 	vector<Record> res;
 	vector<int> res_rid;
 	vector<string> attr_names;
+	vector<Type> attr_types;
+	IO *io;
 };
 
 #endif

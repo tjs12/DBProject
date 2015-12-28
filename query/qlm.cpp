@@ -40,6 +40,7 @@ RC QL_Manager::select_all_attr (
 		}
 
 		attr_names = t.columnNames;
+		attr_types = t.columnTypes;
 	}
 
 	else if (nRelations == 2) {
@@ -191,14 +192,22 @@ RC QL_Manager::Select (int           nSelAttrs,        // # attrs in Select clau
 	if (r != RETURN_SUCCEED) return r;
 
 	//Table t;  
-	
+	for (int i = 0; i < attr_names.size(); i++) {
+		io -> print(attr_names[i] + " ");
+	}
+	io -> print("\n");
+	for (int i = 0; i < attr_names.size(); i++) {
+		io -> print(to_string(attr_types[i].type) + " " + to_string(attr_types[i].setting) + " ");
+	}
+	io -> print("\n");
+
 	for (int i = 0; i < res.size(); i++) {
 		for (int j = 0; j < attr_names.size(); j++) {
 			for (int k = 0; k < nSelAttrs; k++) {
 				if (attr_names[j].compare(selAttrs[k].attrName) == 0 || 
 					(selAttrs[k].relName!=0 && attr_names[j].compare(string(selAttrs[k].relName).append(".").append(selAttrs[k].attrName)) == 0) ) //*
 				{
-					cout << res[i].getVar(j)->toString() << ' ';
+					io -> print(res[i].getVar(j)->toString() +  " ");
 				}
 			}
 			if (nSelAttrs == 0) cout << res[i].getVar(j)->toString() << ' ';

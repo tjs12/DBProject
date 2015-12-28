@@ -5,6 +5,8 @@
 #include <string>
 #include "socket.h"
 
+using namespace std;
+
 class IO
 {
 public:
@@ -15,21 +17,28 @@ public:
 class StdIO : public IO
 {
 public:
+	StdIO()
+	{
+		pos = 0;
+	}
 	void print(std::string str) {
 		std::cout << str;
 	}
 	
 	char getchar() {
-		if (pos == buffer.length())
+		if (pos == Buffer.length())
 		{
 			pos = 0;
-			cin >> buffer;
+			char *temp = new char[MAX_PATH];
+			std::cin.getline(temp, MAX_PATH);
+			Buffer = temp;
+			delete []temp;
 		}
-		return buffer[pos]++;
+		return Buffer[pos++];
 	}
 	
 private:
-	string buffer;
+	string Buffer;
 	int pos;
 };
 
@@ -40,10 +49,14 @@ public:
 	SocketIO() {
 		socket.Start();
 		buf = new char[MAX_PATH];
-		
+		memset(buf, 0, sizeof(char) * MAX_PATH);
+		pos = 0;
 	}
 	void print(std::string str) {
-		socket.Send(str.c_str());
+		char *temp = new char[str.length() + 1];
+		strcpy(temp, str.c_str());
+		socket.Send(temp);
+		delete []temp;
 	}
 	char getchar() {
 		if (pos == strlen(buf)) {
@@ -55,6 +68,7 @@ public:
 	private:
 	Socket socket;
 	char *buf;
+	int pos;
 };
 
 #endif
