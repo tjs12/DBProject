@@ -373,7 +373,7 @@ int parse_entrance(char c) {
 
 int main() {
 	char *cmd = new char[1 << 8];
-	SocketIO io;
+	StdIO io;
 	QL_Manager::getInst() -> setIO(&io);
 	char temp;
 	while (temp = io.getchar()) {
