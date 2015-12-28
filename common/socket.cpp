@@ -6,6 +6,9 @@ static char *RecvBuffer = 0;
 SOCKET Socket::ServerSocket = 0;
 SOCKET Socket::CientSocket = 0;
 
+#include <iostream>
+using namespace std;
+
 RC Socket::Start()
 {
     WSADATA  Ws;
@@ -58,7 +61,7 @@ RC Socket::Start()
         return RETURN_FAILED;
     }
 	
-    //cout<<"客户端连接::"<<inet_ntoa(ClientAddr.sin_addr)<<":"<<ClientAddr.sin_port<<endl;
+    cout<<"Client connect::"<<inet_ntoa(ClientAddr.sin_addr)<<":"<<ClientAddr.sin_port<<endl;
 	return RETURN_SUCCEED;
 }
 

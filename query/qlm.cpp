@@ -193,11 +193,22 @@ RC QL_Manager::Select (int           nSelAttrs,        // # attrs in Select clau
 
 	//Table t;  
 	for (int i = 0; i < attr_names.size(); i++) {
-		io -> print(attr_names[i] + " ");
+		for (int j = 0; j < nSelAttrs; j++)
+			if (attr_names[i].compare(selAttrs[j].attrName) == 0 || 
+					(selAttrs[j].relName!=0 && attr_names[i].compare(string(selAttrs[j].relName).append(".").append(selAttrs[j].attrName)) == 0) ) //*
+					io -> print(attr_names[i] + ((i < attr_names.size() - 1)?" ":""));
+		if (nSelAttrs == 0)
+			io -> print(attr_names[i] + ((i < attr_names.size() - 1)?" ":""));
 	}
+
 	io -> print("\n");
 	for (int i = 0; i < attr_names.size(); i++) {
-		io -> print(to_string(attr_types[i].type) + " " + to_string(attr_types[i].setting) + " ");
+		for (int j = 0; j < nSelAttrs; j++)
+			if (attr_names[i].compare(selAttrs[j].attrName) == 0 || 
+					(selAttrs[j].relName!=0 && attr_names[i].compare(string(selAttrs[j].relName).append(".").append(selAttrs[j].attrName)) == 0) ) //*
+				io -> print(to_string(attr_types[i].type) + " " + to_string(attr_types[i].setting) + ((i < attr_names.size() - 1)?" ":""));
+		if (nSelAttrs == 0)
+			io -> print(to_string(attr_types[i].type) + " " + to_string(attr_types[i].setting) + ((i < attr_names.size() - 1)?" ":""));
 	}
 	io -> print("\n");
 
@@ -210,9 +221,10 @@ RC QL_Manager::Select (int           nSelAttrs,        // # attrs in Select clau
 					io -> print(res[i].getVar(j)->toString() +  " ");
 				}
 			}
-			if (nSelAttrs == 0) cout << res[i].getVar(j)->toString() << ' ';
+			if (nSelAttrs == 0) io -> print(res[i].getVar(j)->toString() + ' ');
 		}
-		cout << endl;
+		io -> print("\n");
 	}
+	io -> print("#end");
 	return RETURN_SUCCEED;
 }

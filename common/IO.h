@@ -55,6 +55,7 @@ public:
 	void print(std::string str) {
 		char *temp = new char[str.length() + 1];
 		strcpy(temp, str.c_str());
+		cout << temp;
 		socket.Send(temp);
 		delete []temp;
 	}
