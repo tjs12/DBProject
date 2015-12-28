@@ -1,0 +1,102 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="common\Condition.h" />
+    <ClInclude Include="common\IO.h" />
+    <ClInclude Include="common\rc.h" />
+    <ClInclude Include="common\socket.h" />
+    <ClInclude Include="filesystem\bufmanager\BufPageManager.h" />
+    <ClInclude Include="filesystem\bufmanager\FindReplace.h" />
+    <ClInclude Include="filesystem\fileio\FileManager.h" />
+    <ClInclude Include="filesystem\fileio\FileTable.h" />
+    <ClInclude Include="filesystem\utils\compare.h" />
+    <ClInclude Include="filesystem\utils\MyBitMap.h" />
+    <ClInclude Include="filesystem\utils\MyHashMap.h" />
+    <ClInclude Include="filesystem\utils\MyLinkList.h" />
+    <ClInclude Include="filesystem\utils\pagedef.h" />
+    <ClInclude Include="query\qlm.h" />
+    <ClInclude Include="storage\Record.h" />
+    <ClInclude Include="storage\rmm.h" />
+    <ClInclude Include="storage\Table.h" />
+    <ClInclude Include="storage\TableIterator.h" />
+    <ClInclude Include="storage\Type.h" />
+    <ClInclude Include="storage\Var.h" />
+    <ClInclude Include="systemm\createDb.h" />
+    <ClInclude Include="systemm\dbManager.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="common\socket.cpp" />
+    <ClCompile Include="filesystem\testfilesystem.cpp" />
+    <ClCompile Include="query\parse.cpp" />
+    <ClCompile Include="query\qlm.cpp" />
+    <ClCompile Include="storage\Table.cpp" />
+    <ClCompile Include="storage\teststorage.cpp" />
+    <ClCompile Include="storage\Var.cpp" />
+    <ClCompile Include="systemm\createDb.cpp" />
+    <ClCompile Include="systemm\dbManager.cpp" />
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{21F6F1CD-2BAC-495A-8719-5236F4AD930A}</ProjectGuid>
+    <RootNamespace>dbp1</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v110</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v110</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup />
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
