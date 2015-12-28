@@ -178,7 +178,9 @@ int parse_sql_create(char *&cmd) {
 	}
 	if (parse_sql_keyword(cmd, " TABLE ")) {
 		char *tbName = cmd;
-		if (parse_sql_name(cmd) != '(')
+		if (parse_sql_name(cmd) != ' ')
+			return -1;
+		if (!parse_sql_keyword("("))
 			return -1;
 		vector<Type> types(0);
 		vector<string> names(0);
@@ -349,3 +351,25 @@ int main() {
 	delete []cmd;
 }
 //#endif
+
+int parse_entrance(char c) {
+	static string cmd = "";
+	int ret = 0;	// not run the cmd
+	switch (c) {
+		case ';':
+			cmd += c;
+			ret = parse_sql_statement(cmd.c_str());
+			cmd = "";
+			return ret;
+		case ' ':
+		case '\t':
+		case '\n':
+			if (cmd == "" || cmd.back() == ' ' || cmd.back() == '(' || cmd.back() == ',')
+				return ret;
+			cmd += ' ';
+			return ret;
+		default:
+			cmd += c;
+			return ret;
+	}
+}
