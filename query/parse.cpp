@@ -88,6 +88,25 @@ int parse_sql_int(char *&cmd, int &data) {
 	return end;
 }
 
+int parse_sql_float(char *&cmd, float &data) {
+	int end;
+	for (data = 0; '0' <= *cmd && *cmd <= '9'; cmd++)
+		data = data * 10 + (*cmd - '0');
+	end = *cmd;
+	*cmd = '\0';
+	cmd++;
+	if (end == '.') {
+		for (float e = 1; '0' <= *cmd && *cmd <= '9'; cmd++) {
+			e *= 0.1;
+			data += (*cmd - '0') * e;
+		}
+		end = *cmd;
+		*cmd = '\0';
+		cmd++;
+	}
+	return end;
+}
+
 int parse_sql_char(char *&cmd, char *&data, int &length) {
 	int end;
 	data = cmd;
@@ -108,6 +127,8 @@ int parse_sql_type(char *&cmd, Type &type) {
 		type.type = TYPE_INT;
 	else if (parse_sql_keyword(cmd, "varchar("))
 		type.type = TYPE_CHAR;
+	else if (parse_sql_keyword(cmd, "float("))
+		type.type = TYPE_FLOAT;
 	else
 		return -1;
 	end = parse_sql_int(cmd, type.setting);
@@ -121,12 +142,26 @@ int parse_sql_value(char *&cmd, Value &value) {
 		char *data;
 		end = parse_sql_char(cmd, data, value.type.setting);
 		value.data = data;
-	} else {
-		value.type.type = TYPE_INT;
-		value.type.setting = 0;
-		int *data = new int;
-		end = parse_sql_int(cmd, *data);
-		value.data = data;
+	} else if ('0' <= *cmd && *cmd <= '9') {
+		bool Int = true;
+		for (char *str = cmd; *str && Int; str++)
+			if (*str == '.')
+				Int = false;
+			else if (!('0' <= *str && *str <= '9'))
+				break;
+		if (Int) {
+			value.type.type = TYPE_INT;
+			value.type.setting = 0;
+			int *data = new int;
+			end = parse_sql_int(cmd, *data);
+			value.data = data;
+		} else {
+			value.type.type = TYPE_FLOAT;
+			value.type.setting = 0;
+			float *data = new float;
+			end = parse_sql_float(cmd, *data);
+			value.data = data;
+		}
 	}
 	return end;
 }
