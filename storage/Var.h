@@ -95,21 +95,21 @@ public:
 	}
 
 	bool equal(Var *v) {
-		if (v->type() == TYPE_CHAR) {
+		if (v->type().type == TYPE_CHAR) {
 			return strcmp(val, ((VarCharVar*)v)->val) == 0;
 		}
 		return false;
 	}
 
 	bool greater_than(Var *v) {
-		if (v->type() == TYPE_CHAR) {
+		if (v->type().type == TYPE_CHAR) {
 			return false;//TODO
 		}
 		return false;
 	}
 
 	bool less_than(Var *v) {
-		if (v->type() == TYPE_CHAR) {
+		if (v->type().type == TYPE_CHAR) {
 			return false;//TODO
 		}
 		return false;

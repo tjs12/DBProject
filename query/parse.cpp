@@ -424,16 +424,21 @@ int parse_entrance(char c) {
 	}
 }
 
-int main() {
+int main(int argn, char **argv) {
 	char *cmd = new char[1 << 8];
-	SocketIO io;
-	QL_Manager::getInst() -> setIO(&io);
+	IO *io;
+	if (argn > 1 && strcmp(argv[1], "ui") == 0) {
+		io = new SocketIO;
+	}
+	else 
+		io = new StdIO;
+	QL_Manager::getInst() -> setIO(io);
 	char temp;
 	int ret;
-	while (temp = io.getchar()) {
+	while (temp = io->getchar()) {
 		//printf("cmd's running result: %d\n------------------------\n", parse_entrance(temp));
 		ret = parse_entrance(temp);
-		if (ret != NO_COMMAND) io.print("\n" + to_string(ret) + "#end");
+		if (ret != NO_COMMAND) io->print("\n" + to_string(ret) + "#end");
 	}
 	delete []cmd;
 }

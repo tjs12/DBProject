@@ -77,7 +77,8 @@ public:
 
 	unsigned int *getData() {
 		int j = 0;
-		if (data == 0) data = new unsigned int[getRecordSize(columnNum, columnTypes)];
+		if (data != 0) delete []data;
+		data = new unsigned int[getRecordSize(columnNum, columnTypes)];
 
 		for (int i = 0; i < columnNum; i++) {
 			vars[i]->writeToBuf(&data[j]);
