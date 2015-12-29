@@ -129,7 +129,16 @@ namespace DBUI
                         errstr = "Failed";
                         break;
                     case -1:
-                        errstr = "Parse error";
+                        errstr = "Syntax error";
+                        break;
+                    case 10:
+                        errstr = "Primary key error";
+                        break;
+                    case 11:
+                        errstr = "Record doesn't match the table!";
+                        break;
+                    case 12:
+                        errstr = "Cannot open file!";
                         break;
                     case 1:
                         errstr = "Succeed";
