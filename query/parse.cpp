@@ -342,7 +342,23 @@ int parse_sql_select(char *&cmd) {
 	vector<RelAttr> selAttrs(0);
 	if (!parse_sql_keyword(cmd, " "))
 	   return -1;
+	char *aggre = cmd;
+	if (parse_sql_keyword(cmd, "SUM")
+		|| parse_sql_keyword(cmd, "AVG")
+		|| parse_sql_keyword(cmd, "MAX")
+		|| parse_sql_keyword(cmd, "MIN"))
+		if (*cmd == '(') {
+			*cmd = '\0';
+			cmd++;
+		} else
+			return -1;
+	else
+		aggre = NULL;
 	parse_sql_relAttrs(cmd, selAttrs);
+	for (int i = 0; i < selAttrs.size(); i++)
+		selAttrs[i].aggre = aggre;
+	if (aggre && !parse_sql_keyword(" "))
+		return -1;
 	if (!parse_sql_keyword(cmd, "FROM "))
 		return -1;
 	vector<char *> relations(0);
@@ -350,13 +366,12 @@ int parse_sql_select(char *&cmd) {
 		relations.push_back(cmd);
 		end = parse_sql_name(cmd);
 	} while (end == ',');
-	if (!parse_sql_keyword(cmd, "WHERE "))
-		return -1;
-	vector<Condition> conditions;
+	vector<Condition> conditions(0);
+	if (parse_sql_keyword(cmd, "WHERE "))
 		end = parse_sql_conditions(cmd, conditions);
-	return QL_Manager::getInst() -> Select(selAttrs.size(), selAttrs.size()==0? 0: &selAttrs.front(), 
+	return QL_Manager::getInst() -> Select(selAttrs.size(), selAttrs.size() ? &selAttrs.front() : NULL,
 		relations.size(), &relations.front(),
-		conditions.size(), conditions.size()==0 ? 0 : &conditions.front());
+		conditions.size(), conditions.size() ? &conditions.front() : NULL);
 }
 
 // cmd should point to a writable memory
