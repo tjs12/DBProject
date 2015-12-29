@@ -1,7 +1,5 @@
 #include "createDb.h"
 
-int m;
-
 string DbCreator::dbName = "";
 string DbCreator::dbPath ="";
 bool DbCreator::exsist(string dir,const string name){

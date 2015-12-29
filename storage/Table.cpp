@@ -44,6 +44,7 @@ RC Table::openTable(string name)
 	fm = new FileManager();
 	bpm = new BufPageManager(fm);
 	if (!fm -> openFile(name.c_str(), fid)) {
+		cout<<"table does not exsist,open table failed."<<endl;
 		return RETURN_FAILED;
 	}
 	tableName = name;

@@ -8,6 +8,9 @@ int DbManager::createDb(const string name){
 		curDbName = DbCreator::dbName; curDbPath = DbCreator::dbPath;
 		dbNames.push_back(curDbName);
 	}
+	else{
+		cout<<"数据库创建失败！"<<endl;
+	}
 	return result;
 }
 
