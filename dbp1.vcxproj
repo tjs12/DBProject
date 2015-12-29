@@ -24,7 +24,6 @@
     <ClInclude Include="filesystem\utils\MyHashMap.h" />
     <ClInclude Include="filesystem\utils\MyLinkList.h" />
     <ClInclude Include="filesystem\utils\pagedef.h" />
-    <ClInclude Include="query\parse.h" />
     <ClInclude Include="query\qlm.h" />
     <ClInclude Include="storage\Record.h" />
     <ClInclude Include="storage\rmm.h" />
@@ -38,13 +37,13 @@
   <ItemGroup>
     <ClCompile Include="common\socket.cpp" />
     <ClCompile Include="filesystem\testfilesystem.cpp" />
+    <ClCompile Include="query\parse.cpp" />
     <ClCompile Include="query\qlm.cpp" />
     <ClCompile Include="storage\Table.cpp" />
     <ClCompile Include="storage\teststorage.cpp" />
     <ClCompile Include="storage\Var.cpp" />
     <ClCompile Include="systemm\createDb.cpp" />
     <ClCompile Include="systemm\dbManager.cpp" />
-    <ClCompile Include="test\basic_test.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{21F6F1CD-2BAC-495A-8719-5236F4AD930A}</ProjectGuid>

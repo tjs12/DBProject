@@ -81,9 +81,6 @@
     <ClInclude Include="common\IO.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="query\parse.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="storage\Table.cpp">
@@ -110,7 +107,7 @@
     <ClCompile Include="common\socket.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="test\basic_test.cpp">
+    <ClCompile Include="query\parse.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

@@ -1,83 +1,198 @@
-﻿生成启动时间为 2015/12/30 0:43:25。
-     1>项目“E:\DBProject\dbp1.vcxproj”在节点 2 上(Build 个目标)。
+﻿生成启动时间为 12/30/2015 1:39:28 AM。
+     1>项目“C:\Users\Francis\Documents\Lectiones\MMXV Autumnus\DB\DBProject\DBProject\dbp1.vcxproj”在节点 2 上(Rebuild 个目标)。
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt query\qlm.cpp storage\Table.cpp storage\Var.cpp storage\teststorage.cpp systemm\createDb.cpp systemm\dbManager.cpp test\basic_test.cpp
-         basic_test.cpp
-     1>e:\dbproject\common\io.h(57): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 c:\program files (x86)\microsoft visual studio 11.0\vc\include\string.h(110) : 参见“strcpy”的声明
-     1>e:\dbproject\storage\var.h(61): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 c:\program files (x86)\microsoft visual studio 11.0\vc\include\string.h(110) : 参见“strcpy”的声明
-     1>e:\dbproject\storage\var.h(74): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 c:\program files (x86)\microsoft visual studio 11.0\vc\include\string.h(110) : 参见“strcpy”的声明
-     1>e:\dbproject\storage\record.h(48): warning C4018: “<”: 有符号/无符号不匹配
-     1>e:\dbproject\storage\record.h(102): warning C4018: “<”: 有符号/无符号不匹配
-     1>e:\dbproject\storage\record.h(109): warning C4018: “<”: 有符号/无符号不匹配
-     1>e:\dbproject\filesystem\bufmanager\bufpagemanager.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
-     1>e:\dbproject\filesystem\utils\myhashmap.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
-     1>e:\dbproject\filesystem\utils\pagedef.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
-     1>e:\dbproject\filesystem\utils\mybitmap.h(176): warning C4146: 一元负运算符应用于无符号类型，结果仍为无符号类型
-     1>e:\dbproject\filesystem\bufmanager\findreplace.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
-     1>e:\dbproject\filesystem\fileio\filemanager.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
-     1>e:\dbproject\filesystem\fileio\filemanager.h(22): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 c:\program files (x86)\microsoft visual studio 11.0\vc\include\stdio.h(218) : 参见“fopen”的声明
-     1>e:\dbproject\filesystem\fileio\filemanager.h(32): warning C4996: 'open': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _open. See online help for details.
-                 c:\program files (x86)\microsoft visual studio 11.0\vc\include\io.h(315) : 参见“open”的声明
-     1>e:\dbproject\filesystem\fileio\filemanager.h(68): warning C4996: 'write': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _write. See online help for details.
-                 c:\program files (x86)\microsoft visual studio 11.0\vc\include\io.h(321) : 参见“write”的声明
-     1>e:\dbproject\filesystem\fileio\filemanager.h(90): warning C4996: 'read': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _read. See online help for details.
-                 c:\program files (x86)\microsoft visual studio 11.0\vc\include\io.h(316) : 参见“read”的声明
-     1>e:\dbproject\filesystem\fileio\filemanager.h(102): warning C4996: 'close': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _close. See online help for details.
-                 c:\program files (x86)\microsoft visual studio 11.0\vc\include\io.h(305) : 参见“close”的声明
-     1>e:\dbproject\query\parse.h(356): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 c:\program files (x86)\microsoft visual studio 11.0\vc\include\string.h(110) : 参见“strcpy”的声明
-     1>e:\dbproject\test\basic_test.cpp(17): warning C4018: “<”: 有符号/无符号不匹配
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt common\socket.cpp filesystem\testfilesystem.cpp query\parse.cpp query\qlm.cpp storage\Table.cpp storage\teststorage.cpp storage\Var.cpp systemm\createDb.cpp systemm\dbManager.cpp
          dbManager.cpp
-     1>e:\dbproject\filesystem\bufmanager\bufpagemanager.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
-     1>e:\dbproject\filesystem\utils\myhashmap.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
-     1>e:\dbproject\filesystem\utils\pagedef.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
-     1>e:\dbproject\filesystem\utils\mybitmap.h(176): warning C4146: 一元负运算符应用于无符号类型，结果仍为无符号类型
-     1>e:\dbproject\filesystem\bufmanager\findreplace.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
-     1>e:\dbproject\filesystem\fileio\filemanager.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
-     1>e:\dbproject\filesystem\fileio\filemanager.h(22): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+     1>c:\users\francis\documents\lectiones\mmxv autumnus\db\dbproject\dbproject\filesystem\bufmanager\bufpagemanager.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
+     1>c:\users\francis\documents\lectiones\mmxv autumnus\db\dbproject\dbproject\filesystem\utils\myhashmap.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
+     1>c:\users\francis\documents\lectiones\mmxv autumnus\db\dbproject\dbproject\filesystem\utils\pagedef.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
+     1>c:\users\francis\documents\lectiones\mmxv autumnus\db\dbproject\dbproject\filesystem\utils\mybitmap.h(176): warning C4146: 一元负运算符应用于无符号类型，结果仍为无符号类型
+     1>c:\users\francis\documents\lectiones\mmxv autumnus\db\dbproject\dbproject\filesystem\bufmanager\findreplace.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
+     1>c:\users\francis\documents\lectiones\mmxv autumnus\db\dbproject\dbproject\filesystem\fileio\filemanager.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
+     1>c:\users\francis\documents\lectiones\mmxv autumnus\db\dbproject\dbproject\filesystem\fileio\filemanager.h(22): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
                  c:\program files (x86)\microsoft visual studio 11.0\vc\include\stdio.h(218) : 参见“fopen”的声明
-     1>e:\dbproject\filesystem\fileio\filemanager.h(32): warning C4996: 'open': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _open. See online help for details.
+     1>c:\users\francis\documents\lectiones\mmxv autumnus\db\dbproject\dbproject\filesystem\fileio\filemanager.h(32): warning C4996: 'open': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _open. See online help for details.
                  c:\program files (x86)\microsoft visual studio 11.0\vc\include\io.h(315) : 参见“open”的声明
-     1>e:\dbproject\filesystem\fileio\filemanager.h(68): warning C4996: 'write': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _write. See online help for details.
+     1>c:\users\francis\documents\lectiones\mmxv autumnus\db\dbproject\dbproject\filesystem\fileio\filemanager.h(68): warning C4996: 'write': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _write. See online help for details.
                  c:\program files (x86)\microsoft visual studio 11.0\vc\include\io.h(321) : 参见“write”的声明
-     1>e:\dbproject\filesystem\fileio\filemanager.h(90): warning C4996: 'read': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _read. See online help for details.
+     1>c:\users\francis\documents\lectiones\mmxv autumnus\db\dbproject\dbproject\filesystem\fileio\filemanager.h(90): warning C4996: 'read': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _read. See online help for details.
                  c:\program files (x86)\microsoft visual studio 11.0\vc\include\io.h(316) : 参见“read”的声明
-     1>e:\dbproject\filesystem\fileio\filemanager.h(102): warning C4996: 'close': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _close. See online help for details.
+     1>c:\users\francis\documents\lectiones\mmxv autumnus\db\dbproject\dbproject\filesystem\fileio\filemanager.h(102): warning C4996: 'close': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _close. See online help for details.
                  c:\program files (x86)\microsoft visual studio 11.0\vc\include\io.h(305) : 参见“close”的声明
-     1>e:\dbproject\storage\var.h(61): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+     1>c:\users\francis\documents\lectiones\mmxv autumnus\db\dbproject\dbproject\storage\var.h(77): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
                  c:\program files (x86)\microsoft visual studio 11.0\vc\include\string.h(110) : 参见“strcpy”的声明
-     1>e:\dbproject\storage\var.h(74): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+     1>c:\users\francis\documents\lectiones\mmxv autumnus\db\dbproject\dbproject\storage\var.h(90): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
                  c:\program files (x86)\microsoft visual studio 11.0\vc\include\string.h(110) : 参见“strcpy”的声明
-     1>e:\dbproject\storage\record.h(48): warning C4018: “<”: 有符号/无符号不匹配
-     1>e:\dbproject\storage\record.h(102): warning C4018: “<”: 有符号/无符号不匹配
-     1>e:\dbproject\storage\record.h(109): warning C4018: “<”: 有符号/无符号不匹配
-     1>e:\dbproject\systemm\dbmanager.cpp(45): warning C4996: 'rmdir': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _rmdir. See online help for details.
+     1>c:\users\francis\documents\lectiones\mmxv autumnus\db\dbproject\dbproject\storage\record.h(49): warning C4018: “<”: 有符号/无符号不匹配
+     1>c:\users\francis\documents\lectiones\mmxv autumnus\db\dbproject\dbproject\storage\record.h(103): warning C4018: “<”: 有符号/无符号不匹配
+     1>c:\users\francis\documents\lectiones\mmxv autumnus\db\dbproject\dbproject\storage\record.h(110): warning C4018: “<”: 有符号/无符号不匹配
+     1>c:\users\francis\documents\lectiones\mmxv autumnus\db\dbproject\dbproject\systemm\dbmanager.cpp(43): warning C4996: 'rmdir': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _rmdir. See online help for details.
                  c:\program files (x86)\microsoft visual studio 11.0\vc\include\direct.h(141) : 参见“rmdir”的声明
-         正在生成代码...
-     1>e:\dbproject\query\parse.h(237): warning C4715: “parse_sql_show”: 不是所有的控件路径都返回值
-         正在跳过...(未检测到相关更改)
          createDb.cpp
-         teststorage.cpp
          Var.cpp
+     1>c:\users\francis\documents\lectiones\mmxv autumnus\db\dbproject\dbproject\storage\var.h(77): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 11.0\vc\include\string.h(110) : 参见“strcpy”的声明
+     1>c:\users\francis\documents\lectiones\mmxv autumnus\db\dbproject\dbproject\storage\var.h(90): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 11.0\vc\include\string.h(110) : 参见“strcpy”的声明
+         teststorage.cpp
+     1>c:\users\francis\documents\lectiones\mmxv autumnus\db\dbproject\dbproject\filesystem\bufmanager\bufpagemanager.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
+     1>c:\users\francis\documents\lectiones\mmxv autumnus\db\dbproject\dbproject\filesystem\utils\myhashmap.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
+     1>c:\users\francis\documents\lectiones\mmxv autumnus\db\dbproject\dbproject\filesystem\utils\pagedef.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
+     1>c:\users\francis\documents\lectiones\mmxv autumnus\db\dbproject\dbproject\filesystem\utils\mybitmap.h(176): warning C4146: 一元负运算符应用于无符号类型，结果仍为无符号类型
+     1>c:\users\francis\documents\lectiones\mmxv autumnus\db\dbproject\dbproject\filesystem\bufmanager\findreplace.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
+     1>c:\users\francis\documents\lectiones\mmxv autumnus\db\dbproject\dbproject\filesystem\fileio\filemanager.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
+     1>c:\users\francis\documents\lectiones\mmxv autumnus\db\dbproject\dbproject\filesystem\fileio\filemanager.h(22): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 11.0\vc\include\stdio.h(218) : 参见“fopen”的声明
+     1>c:\users\francis\documents\lectiones\mmxv autumnus\db\dbproject\dbproject\filesystem\fileio\filemanager.h(32): warning C4996: 'open': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _open. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 11.0\vc\include\io.h(315) : 参见“open”的声明
+     1>c:\users\francis\documents\lectiones\mmxv autumnus\db\dbproject\dbproject\filesystem\fileio\filemanager.h(68): warning C4996: 'write': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _write. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 11.0\vc\include\io.h(321) : 参见“write”的声明
+     1>c:\users\francis\documents\lectiones\mmxv autumnus\db\dbproject\dbproject\filesystem\fileio\filemanager.h(90): warning C4996: 'read': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _read. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 11.0\vc\include\io.h(316) : 参见“read”的声明
+     1>c:\users\francis\documents\lectiones\mmxv autumnus\db\dbproject\dbproject\filesystem\fileio\filemanager.h(102): warning C4996: 'close': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _close. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 11.0\vc\include\io.h(305) : 参见“close”的声明
+     1>c:\users\francis\documents\lectiones\mmxv autumnus\db\dbproject\dbproject\storage\var.h(77): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 11.0\vc\include\string.h(110) : 参见“strcpy”的声明
+     1>c:\users\francis\documents\lectiones\mmxv autumnus\db\dbproject\dbproject\storage\var.h(90): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 11.0\vc\include\string.h(110) : 参见“strcpy”的声明
+     1>c:\users\francis\documents\lectiones\mmxv autumnus\db\dbproject\dbproject\storage\record.h(49): warning C4018: “<”: 有符号/无符号不匹配
+     1>c:\users\francis\documents\lectiones\mmxv autumnus\db\dbproject\dbproject\storage\record.h(103): warning C4018: “<”: 有符号/无符号不匹配
+     1>c:\users\francis\documents\lectiones\mmxv autumnus\db\dbproject\dbproject\storage\record.h(110): warning C4018: “<”: 有符号/无符号不匹配
          Table.cpp
+     1>c:\users\francis\documents\lectiones\mmxv autumnus\db\dbproject\dbproject\filesystem\bufmanager\bufpagemanager.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
+     1>c:\users\francis\documents\lectiones\mmxv autumnus\db\dbproject\dbproject\filesystem\utils\myhashmap.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
+     1>c:\users\francis\documents\lectiones\mmxv autumnus\db\dbproject\dbproject\filesystem\utils\pagedef.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
+     1>c:\users\francis\documents\lectiones\mmxv autumnus\db\dbproject\dbproject\filesystem\utils\mybitmap.h(176): warning C4146: 一元负运算符应用于无符号类型，结果仍为无符号类型
+     1>c:\users\francis\documents\lectiones\mmxv autumnus\db\dbproject\dbproject\filesystem\bufmanager\findreplace.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
+     1>c:\users\francis\documents\lectiones\mmxv autumnus\db\dbproject\dbproject\filesystem\fileio\filemanager.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
+     1>c:\users\francis\documents\lectiones\mmxv autumnus\db\dbproject\dbproject\filesystem\fileio\filemanager.h(22): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 11.0\vc\include\stdio.h(218) : 参见“fopen”的声明
+     1>c:\users\francis\documents\lectiones\mmxv autumnus\db\dbproject\dbproject\filesystem\fileio\filemanager.h(32): warning C4996: 'open': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _open. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 11.0\vc\include\io.h(315) : 参见“open”的声明
+     1>c:\users\francis\documents\lectiones\mmxv autumnus\db\dbproject\dbproject\filesystem\fileio\filemanager.h(68): warning C4996: 'write': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _write. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 11.0\vc\include\io.h(321) : 参见“write”的声明
+     1>c:\users\francis\documents\lectiones\mmxv autumnus\db\dbproject\dbproject\filesystem\fileio\filemanager.h(90): warning C4996: 'read': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _read. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 11.0\vc\include\io.h(316) : 参见“read”的声明
+     1>c:\users\francis\documents\lectiones\mmxv autumnus\db\dbproject\dbproject\filesystem\fileio\filemanager.h(102): warning C4996: 'close': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _close. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 11.0\vc\include\io.h(305) : 参见“close”的声明
+     1>c:\users\francis\documents\lectiones\mmxv autumnus\db\dbproject\dbproject\storage\var.h(77): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 11.0\vc\include\string.h(110) : 参见“strcpy”的声明
+     1>c:\users\francis\documents\lectiones\mmxv autumnus\db\dbproject\dbproject\storage\var.h(90): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 11.0\vc\include\string.h(110) : 参见“strcpy”的声明
+     1>c:\users\francis\documents\lectiones\mmxv autumnus\db\dbproject\dbproject\storage\record.h(49): warning C4018: “<”: 有符号/无符号不匹配
+     1>c:\users\francis\documents\lectiones\mmxv autumnus\db\dbproject\dbproject\storage\record.h(103): warning C4018: “<”: 有符号/无符号不匹配
+     1>c:\users\francis\documents\lectiones\mmxv autumnus\db\dbproject\dbproject\storage\record.h(110): warning C4018: “<”: 有符号/无符号不匹配
+     1>c:\users\francis\documents\lectiones\mmxv autumnus\db\dbproject\dbproject\storage\table.cpp(108): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 11.0\vc\include\string.h(110) : 参见“strcpy”的声明
+     1>c:\users\francis\documents\lectiones\mmxv autumnus\db\dbproject\dbproject\storage\table.cpp(251): warning C4800: “unsigned int”: 将值强制为布尔值“true”或“false”(性能警告)
          qlm.cpp
+     1>c:\users\francis\documents\lectiones\mmxv autumnus\db\dbproject\dbproject\common\io.h(57): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 11.0\vc\include\string.h(110) : 参见“strcpy”的声明
+     1>c:\users\francis\documents\lectiones\mmxv autumnus\db\dbproject\dbproject\storage\var.h(77): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 11.0\vc\include\string.h(110) : 参见“strcpy”的声明
+     1>c:\users\francis\documents\lectiones\mmxv autumnus\db\dbproject\dbproject\storage\var.h(90): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 11.0\vc\include\string.h(110) : 参见“strcpy”的声明
+     1>c:\users\francis\documents\lectiones\mmxv autumnus\db\dbproject\dbproject\storage\record.h(49): warning C4018: “<”: 有符号/无符号不匹配
+     1>c:\users\francis\documents\lectiones\mmxv autumnus\db\dbproject\dbproject\storage\record.h(103): warning C4018: “<”: 有符号/无符号不匹配
+     1>c:\users\francis\documents\lectiones\mmxv autumnus\db\dbproject\dbproject\storage\record.h(110): warning C4018: “<”: 有符号/无符号不匹配
+     1>c:\users\francis\documents\lectiones\mmxv autumnus\db\dbproject\dbproject\filesystem\bufmanager\bufpagemanager.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
+     1>c:\users\francis\documents\lectiones\mmxv autumnus\db\dbproject\dbproject\filesystem\utils\myhashmap.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
+     1>c:\users\francis\documents\lectiones\mmxv autumnus\db\dbproject\dbproject\filesystem\utils\pagedef.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
+     1>c:\users\francis\documents\lectiones\mmxv autumnus\db\dbproject\dbproject\filesystem\utils\mybitmap.h(176): warning C4146: 一元负运算符应用于无符号类型，结果仍为无符号类型
+     1>c:\users\francis\documents\lectiones\mmxv autumnus\db\dbproject\dbproject\filesystem\bufmanager\findreplace.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
+     1>c:\users\francis\documents\lectiones\mmxv autumnus\db\dbproject\dbproject\filesystem\fileio\filemanager.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
+     1>c:\users\francis\documents\lectiones\mmxv autumnus\db\dbproject\dbproject\filesystem\fileio\filemanager.h(22): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 11.0\vc\include\stdio.h(218) : 参见“fopen”的声明
+     1>c:\users\francis\documents\lectiones\mmxv autumnus\db\dbproject\dbproject\filesystem\fileio\filemanager.h(32): warning C4996: 'open': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _open. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 11.0\vc\include\io.h(315) : 参见“open”的声明
+     1>c:\users\francis\documents\lectiones\mmxv autumnus\db\dbproject\dbproject\filesystem\fileio\filemanager.h(68): warning C4996: 'write': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _write. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 11.0\vc\include\io.h(321) : 参见“write”的声明
+     1>c:\users\francis\documents\lectiones\mmxv autumnus\db\dbproject\dbproject\filesystem\fileio\filemanager.h(90): warning C4996: 'read': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _read. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 11.0\vc\include\io.h(316) : 参见“read”的声明
+     1>c:\users\francis\documents\lectiones\mmxv autumnus\db\dbproject\dbproject\filesystem\fileio\filemanager.h(102): warning C4996: 'close': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _close. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 11.0\vc\include\io.h(305) : 参见“close”的声明
+     1>c:\users\francis\documents\lectiones\mmxv autumnus\db\dbproject\dbproject\query\qlm.cpp(142): warning C4018: “<”: 有符号/无符号不匹配
+     1>c:\users\francis\documents\lectiones\mmxv autumnus\db\dbproject\dbproject\query\qlm.cpp(167): warning C4018: “<”: 有符号/无符号不匹配
+     1>c:\users\francis\documents\lectiones\mmxv autumnus\db\dbproject\dbproject\query\qlm.cpp(202): warning C4018: “<”: 有符号/无符号不匹配
+     1>c:\users\francis\documents\lectiones\mmxv autumnus\db\dbproject\dbproject\query\qlm.cpp(206): warning C4018: “<”: 有符号/无符号不匹配
+     1>c:\users\francis\documents\lectiones\mmxv autumnus\db\dbproject\dbproject\query\qlm.cpp(208): warning C4018: “<”: 有符号/无符号不匹配
+     1>c:\users\francis\documents\lectiones\mmxv autumnus\db\dbproject\dbproject\query\qlm.cpp(213): warning C4018: “<”: 有符号/无符号不匹配
+     1>c:\users\francis\documents\lectiones\mmxv autumnus\db\dbproject\dbproject\query\qlm.cpp(217): warning C4018: “<”: 有符号/无符号不匹配
+     1>c:\users\francis\documents\lectiones\mmxv autumnus\db\dbproject\dbproject\query\qlm.cpp(220): warning C4018: “<”: 有符号/无符号不匹配
+     1>c:\users\francis\documents\lectiones\mmxv autumnus\db\dbproject\dbproject\query\qlm.cpp(229): warning C4018: “<”: 有符号/无符号不匹配
+     1>c:\users\francis\documents\lectiones\mmxv autumnus\db\dbproject\dbproject\query\qlm.cpp(237): warning C4018: “<”: 有符号/无符号不匹配
+     1>c:\users\francis\documents\lectiones\mmxv autumnus\db\dbproject\dbproject\query\qlm.cpp(238): warning C4018: “<”: 有符号/无符号不匹配
+     1>c:\users\francis\documents\lectiones\mmxv autumnus\db\dbproject\dbproject\query\qlm.cpp(252): warning C4018: “<”: 有符号/无符号不匹配
+     1>c:\users\francis\documents\lectiones\mmxv autumnus\db\dbproject\dbproject\query\qlm.cpp(253): warning C4018: “<”: 有符号/无符号不匹配
+         parse.cpp
+     1>c:\users\francis\documents\lectiones\mmxv autumnus\db\dbproject\dbproject\common\io.h(57): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 11.0\vc\include\string.h(110) : 参见“strcpy”的声明
+     1>c:\users\francis\documents\lectiones\mmxv autumnus\db\dbproject\dbproject\storage\var.h(77): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 11.0\vc\include\string.h(110) : 参见“strcpy”的声明
+     1>c:\users\francis\documents\lectiones\mmxv autumnus\db\dbproject\dbproject\storage\var.h(90): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 11.0\vc\include\string.h(110) : 参见“strcpy”的声明
+     1>c:\users\francis\documents\lectiones\mmxv autumnus\db\dbproject\dbproject\storage\record.h(49): warning C4018: “<”: 有符号/无符号不匹配
+     1>c:\users\francis\documents\lectiones\mmxv autumnus\db\dbproject\dbproject\storage\record.h(103): warning C4018: “<”: 有符号/无符号不匹配
+     1>c:\users\francis\documents\lectiones\mmxv autumnus\db\dbproject\dbproject\storage\record.h(110): warning C4018: “<”: 有符号/无符号不匹配
+     1>c:\users\francis\documents\lectiones\mmxv autumnus\db\dbproject\dbproject\filesystem\bufmanager\bufpagemanager.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
+     1>c:\users\francis\documents\lectiones\mmxv autumnus\db\dbproject\dbproject\filesystem\utils\myhashmap.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
+     1>c:\users\francis\documents\lectiones\mmxv autumnus\db\dbproject\dbproject\filesystem\utils\pagedef.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
+     1>c:\users\francis\documents\lectiones\mmxv autumnus\db\dbproject\dbproject\filesystem\utils\mybitmap.h(176): warning C4146: 一元负运算符应用于无符号类型，结果仍为无符号类型
+     1>c:\users\francis\documents\lectiones\mmxv autumnus\db\dbproject\dbproject\filesystem\bufmanager\findreplace.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
+     1>c:\users\francis\documents\lectiones\mmxv autumnus\db\dbproject\dbproject\filesystem\fileio\filemanager.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
+     1>c:\users\francis\documents\lectiones\mmxv autumnus\db\dbproject\dbproject\filesystem\fileio\filemanager.h(22): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 11.0\vc\include\stdio.h(218) : 参见“fopen”的声明
+     1>c:\users\francis\documents\lectiones\mmxv autumnus\db\dbproject\dbproject\filesystem\fileio\filemanager.h(32): warning C4996: 'open': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _open. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 11.0\vc\include\io.h(315) : 参见“open”的声明
+     1>c:\users\francis\documents\lectiones\mmxv autumnus\db\dbproject\dbproject\filesystem\fileio\filemanager.h(68): warning C4996: 'write': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _write. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 11.0\vc\include\io.h(321) : 参见“write”的声明
+     1>c:\users\francis\documents\lectiones\mmxv autumnus\db\dbproject\dbproject\filesystem\fileio\filemanager.h(90): warning C4996: 'read': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _read. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 11.0\vc\include\io.h(316) : 参见“read”的声明
+     1>c:\users\francis\documents\lectiones\mmxv autumnus\db\dbproject\dbproject\filesystem\fileio\filemanager.h(102): warning C4996: 'close': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _close. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 11.0\vc\include\io.h(305) : 参见“close”的声明
+     1>c:\users\francis\documents\lectiones\mmxv autumnus\db\dbproject\dbproject\query\parse.cpp(103): warning C4305: “*=”: 从“double”到“float”截断
+     1>c:\users\francis\documents\lectiones\mmxv autumnus\db\dbproject\dbproject\query\parse.cpp(358): warning C4018: “<”: 有符号/无符号不匹配
+     1>c:\users\francis\documents\lectiones\mmxv autumnus\db\dbproject\dbproject\query\parse.cpp(409): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 11.0\vc\include\string.h(110) : 参见“strcpy”的声明
+         testfilesystem.cpp
+     1>c:\users\francis\documents\lectiones\mmxv autumnus\db\dbproject\dbproject\filesystem\testfilesystem.cpp : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
+     1>c:\users\francis\documents\lectiones\mmxv autumnus\db\dbproject\dbproject\filesystem\bufmanager\bufpagemanager.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
+     1>c:\users\francis\documents\lectiones\mmxv autumnus\db\dbproject\dbproject\filesystem\utils\myhashmap.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
+     1>c:\users\francis\documents\lectiones\mmxv autumnus\db\dbproject\dbproject\filesystem\utils\pagedef.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
+     1>c:\users\francis\documents\lectiones\mmxv autumnus\db\dbproject\dbproject\filesystem\utils\mybitmap.h(176): warning C4146: 一元负运算符应用于无符号类型，结果仍为无符号类型
+     1>c:\users\francis\documents\lectiones\mmxv autumnus\db\dbproject\dbproject\filesystem\bufmanager\findreplace.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
+     1>c:\users\francis\documents\lectiones\mmxv autumnus\db\dbproject\dbproject\filesystem\fileio\filemanager.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
+     1>c:\users\francis\documents\lectiones\mmxv autumnus\db\dbproject\dbproject\filesystem\fileio\filemanager.h(22): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 11.0\vc\include\stdio.h(218) : 参见“fopen”的声明
+     1>c:\users\francis\documents\lectiones\mmxv autumnus\db\dbproject\dbproject\filesystem\fileio\filemanager.h(32): warning C4996: 'open': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _open. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 11.0\vc\include\io.h(315) : 参见“open”的声明
+     1>c:\users\francis\documents\lectiones\mmxv autumnus\db\dbproject\dbproject\filesystem\fileio\filemanager.h(68): warning C4996: 'write': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _write. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 11.0\vc\include\io.h(321) : 参见“write”的声明
+     1>c:\users\francis\documents\lectiones\mmxv autumnus\db\dbproject\dbproject\filesystem\fileio\filemanager.h(90): warning C4996: 'read': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _read. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 11.0\vc\include\io.h(316) : 参见“read”的声明
+     1>c:\users\francis\documents\lectiones\mmxv autumnus\db\dbproject\dbproject\filesystem\fileio\filemanager.h(102): warning C4996: 'close': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _close. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 11.0\vc\include\io.h(305) : 参见“close”的声明
+         socket.cpp
+     1>c:\users\francis\documents\lectiones\mmxv autumnus\db\dbproject\dbproject\common\socket.cpp : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
+         正在生成代码...
+     1>c:\users\francis\documents\lectiones\mmxv autumnus\db\dbproject\dbproject\query\parse.cpp(275): warning C4715: “parse_sql_show”: 不是所有的控件路径都返回值
+     1>c:\users\francis\documents\lectiones\mmxv autumnus\db\dbproject\dbproject\storage\record.h(70): warning C4715: “Record::addVar”: 不是所有的控件路径都返回值
+     1>c:\users\francis\documents\lectiones\mmxv autumnus\db\dbproject\dbproject\storage\table.cpp(40): warning C4715: “Table::createTable”: 不是所有的控件路径都返回值
+     1>c:\users\francis\documents\lectiones\mmxv autumnus\db\dbproject\dbproject\storage\record.h(70): warning C4715: “Record::addVar”: 不是所有的控件路径都返回值
+     1>c:\users\francis\documents\lectiones\mmxv autumnus\db\dbproject\dbproject\storage\var.cpp(15): warning C4715: “Var::fromBuf”: 不是所有的控件路径都返回值
        Link:
-         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"E:\DBProject\Debug\dbp1.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"E:\DBProject\Debug\dbp1.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"E:\DBProject\Debug\dbp1.lib" /MACHINE:X86 Debug\socket.obj
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Francis\Documents\Lectiones\MMXV Autumnus\DB\DBProject\DBProject\Debug\dbp1.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\Francis\Documents\Lectiones\MMXV Autumnus\DB\DBProject\DBProject\Debug\dbp1.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Francis\Documents\Lectiones\MMXV Autumnus\DB\DBProject\DBProject\Debug\dbp1.lib" /MACHINE:X86 Debug\socket.obj
          Debug\testfilesystem.obj
+         Debug\parse.obj
          Debug\qlm.obj
          Debug\Table.obj
          Debug\teststorage.obj
          Debug\Var.obj
          Debug\createDb.obj
          Debug\dbManager.obj
-         Debug\basic_test.obj
-         dbp1.vcxproj -> E:\DBProject\Debug\dbp1.exe
-     1>已完成生成项目“E:\DBProject\dbp1.vcxproj”(Build 个目标)的操作。
+         dbp1.vcxproj -> C:\Users\Francis\Documents\Lectiones\MMXV Autumnus\DB\DBProject\DBProject\Debug\dbp1.exe
+     1>已完成生成项目“C:\Users\Francis\Documents\Lectiones\MMXV Autumnus\DB\DBProject\DBProject\dbp1.vcxproj”(Rebuild 个目标)的操作。
 
 生成成功。
 
-已用时间 00:00:07.06
+已用时间 00:00:23.76

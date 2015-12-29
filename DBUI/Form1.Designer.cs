@@ -44,24 +44,24 @@
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.toolStripContainer2 = new System.Windows.Forms.ToolStripContainer();
+            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+            this.toolStripStatusRet = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripStatusError = new System.Windows.Forms.ToolStripStatusLabel();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.button1 = new System.Windows.Forms.Button();
             this.textBox1 = new System.Windows.Forms.TextBox();
-            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
-            this.toolStripStatusRet = new System.Windows.Forms.ToolStripStatusLabel();
-            this.toolStripStatusError = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStrip1.SuspendLayout();
             this.toolStripContainer2.BottomToolStripPanel.SuspendLayout();
             this.toolStripContainer2.ContentPanel.SuspendLayout();
             this.toolStripContainer2.TopToolStripPanel.SuspendLayout();
             this.toolStripContainer2.SuspendLayout();
+            this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
-            this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // toolStrip1
@@ -205,6 +205,28 @@
             // 
             this.toolStripContainer2.TopToolStripPanel.Controls.Add(this.toolStrip1);
             // 
+            // statusStrip1
+            // 
+            this.statusStrip1.Dock = System.Windows.Forms.DockStyle.None;
+            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripStatusRet,
+            this.toolStripStatusError});
+            this.statusStrip1.Location = new System.Drawing.Point(0, 0);
+            this.statusStrip1.Name = "statusStrip1";
+            this.statusStrip1.Size = new System.Drawing.Size(765, 22);
+            this.statusStrip1.TabIndex = 3;
+            this.statusStrip1.Text = "statusStrip1";
+            // 
+            // toolStripStatusRet
+            // 
+            this.toolStripStatusRet.Name = "toolStripStatusRet";
+            this.toolStripStatusRet.Size = new System.Drawing.Size(0, 17);
+            // 
+            // toolStripStatusError
+            // 
+            this.toolStripStatusError.Name = "toolStripStatusError";
+            this.toolStripStatusError.Size = new System.Drawing.Size(0, 17);
+            // 
             // splitContainer1
             // 
             this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -262,28 +284,6 @@
             this.textBox1.TabIndex = 0;
             this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
             // 
-            // statusStrip1
-            // 
-            this.statusStrip1.Dock = System.Windows.Forms.DockStyle.None;
-            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripStatusRet,
-            this.toolStripStatusError});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 0);
-            this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(765, 22);
-            this.statusStrip1.TabIndex = 3;
-            this.statusStrip1.Text = "statusStrip1";
-            // 
-            // toolStripStatusRet
-            // 
-            this.toolStripStatusRet.Name = "toolStripStatusRet";
-            this.toolStripStatusRet.Size = new System.Drawing.Size(0, 17);
-            // 
-            // toolStripStatusError
-            // 
-            this.toolStripStatusError.Name = "toolStripStatusError";
-            this.toolStripStatusError.Size = new System.Drawing.Size(0, 17);
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
@@ -301,14 +301,14 @@
             this.toolStripContainer2.TopToolStripPanel.PerformLayout();
             this.toolStripContainer2.ResumeLayout(false);
             this.toolStripContainer2.PerformLayout();
+            this.statusStrip1.ResumeLayout(false);
+            this.statusStrip1.PerformLayout();
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel2.ResumeLayout(false);
             this.splitContainer1.Panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
-            this.statusStrip1.ResumeLayout(false);
-            this.statusStrip1.PerformLayout();
             this.ResumeLayout(false);
 
         }

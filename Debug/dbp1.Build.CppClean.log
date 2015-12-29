@@ -1,55 +1,37 @@
-E:\DBPROJECT\DEBUG\SOCKET.OBJ
-E:\DBPROJECT\DEBUG\TESTFILESYSTEM.OBJ
-E:\DBPROJECT\DEBUG\QLM.OBJ
-E:\DBPROJECT\DEBUG\TABLE.OBJ
-E:\DBPROJECT\DEBUG\TESTSTORAGE.OBJ
-E:\DBPROJECT\DEBUG\VAR.OBJ
-E:\DBPROJECT\DEBUG\CREATEDB.OBJ
-E:\DBPROJECT\DEBUG\DBMANAGER.OBJ
-E:\DBPROJECT\DEBUG\BASIC_TEST.OBJ
-E:\DBPROJECT\DEBUG\VC110.PDB
-E:\DBPROJECT\DEBUG\DBP1.ILK
-E:\DBPROJECT\DEBUG\DBP1.EXE
-E:\DBPROJECT\DEBUG\DBP1.PDB
-E:\DBProject\Debug\basic_test.obj
-E:\DBProject\Debug\createDb.obj
-E:\DBProject\Debug\dbManager.obj
-E:\DBProject\Debug\qlm.obj
-E:\DBProject\Debug\socket.obj
-E:\DBProject\Debug\Table.obj
-E:\DBProject\Debug\testfilesystem.obj
-E:\DBProject\Debug\teststorage.obj
-E:\DBProject\Debug\Var.obj
-E:\DBProject\Debug\dbp1.ilk
-E:\DBProject\Debug\cl.command.1.tlog
-E:\DBProject\Debug\CL.read.1.tlog
-E:\DBProject\Debug\CL.write.1.tlog
-E:\DBProject\Debug\link-cvtres.read.1.tlog
-E:\DBProject\Debug\link-cvtres.write.1.tlog
-E:\DBProject\Debug\link-rc.read.1.tlog
-E:\DBProject\Debug\link-rc.write.1.tlog
-E:\DBProject\Debug\link.32428-cvtres.read.1.tlog
-E:\DBProject\Debug\link.32428-cvtres.write.1.tlog
-E:\DBProject\Debug\link.32428-rc.read.1.tlog
-E:\DBProject\Debug\link.32428-rc.write.1.tlog
-E:\DBProject\Debug\link.32428.read.1.tlog
-E:\DBProject\Debug\link.32428.write.1.tlog
-E:\DBProject\Debug\link.39772-cvtres.read.1.tlog
-E:\DBProject\Debug\link.39772-cvtres.write.1.tlog
-E:\DBProject\Debug\link.39772-rc.read.1.tlog
-E:\DBProject\Debug\link.39772-rc.write.1.tlog
-E:\DBProject\Debug\link.39772.read.1.tlog
-E:\DBProject\Debug\link.39772.write.1.tlog
-E:\DBProject\Debug\link.74224-cvtres.read.1.tlog
-E:\DBProject\Debug\link.74224-cvtres.write.1.tlog
-E:\DBProject\Debug\link.74224-rc.read.1.tlog
-E:\DBProject\Debug\link.74224-rc.write.1.tlog
-E:\DBProject\Debug\link.74224.read.1.tlog
-E:\DBProject\Debug\link.74224.write.1.tlog
-E:\DBProject\Debug\link.command.1.tlog
-E:\DBProject\Debug\link.read.1.tlog
-E:\DBProject\Debug\link.write.1.tlog
-E:\DBProject\Debug\vc110.idb
-E:\DBProject\Debug\dbp1.pdb
-E:\DBProject\Debug\vc110.pdb
-E:\DBProject\Debug\dbp1.exe
+C:\USERS\FRANCIS\DOCUMENTS\LECTIONES\MMXV AUTUMNUS\DB\DBPROJECT\DBPROJECT\DEBUG\SOCKET.OBJ
+C:\USERS\FRANCIS\DOCUMENTS\LECTIONES\MMXV AUTUMNUS\DB\DBPROJECT\DBPROJECT\DEBUG\TESTFILESYSTEM.OBJ
+C:\USERS\FRANCIS\DOCUMENTS\LECTIONES\MMXV AUTUMNUS\DB\DBPROJECT\DBPROJECT\DEBUG\QLM.OBJ
+C:\USERS\FRANCIS\DOCUMENTS\LECTIONES\MMXV AUTUMNUS\DB\DBPROJECT\DBPROJECT\DEBUG\TABLE.OBJ
+C:\USERS\FRANCIS\DOCUMENTS\LECTIONES\MMXV AUTUMNUS\DB\DBPROJECT\DBPROJECT\DEBUG\TESTSTORAGE.OBJ
+C:\USERS\FRANCIS\DOCUMENTS\LECTIONES\MMXV AUTUMNUS\DB\DBPROJECT\DBPROJECT\DEBUG\VAR.OBJ
+C:\USERS\FRANCIS\DOCUMENTS\LECTIONES\MMXV AUTUMNUS\DB\DBPROJECT\DBPROJECT\DEBUG\CREATEDB.OBJ
+C:\USERS\FRANCIS\DOCUMENTS\LECTIONES\MMXV AUTUMNUS\DB\DBPROJECT\DBPROJECT\DEBUG\DBMANAGER.OBJ
+C:\USERS\FRANCIS\DOCUMENTS\LECTIONES\MMXV AUTUMNUS\DB\DBPROJECT\DBPROJECT\DEBUG\VC110.PDB
+C:\USERS\FRANCIS\DOCUMENTS\LECTIONES\MMXV AUTUMNUS\DB\DBPROJECT\DBPROJECT\DEBUG\PARSE.OBJ
+C:\USERS\FRANCIS\DOCUMENTS\LECTIONES\MMXV AUTUMNUS\DB\DBPROJECT\DBPROJECT\DEBUG\DBP1.ILK
+C:\USERS\FRANCIS\DOCUMENTS\LECTIONES\MMXV AUTUMNUS\DB\DBPROJECT\DBPROJECT\DEBUG\DBP1.EXE
+C:\USERS\FRANCIS\DOCUMENTS\LECTIONES\MMXV AUTUMNUS\DB\DBPROJECT\DBPROJECT\DEBUG\DBP1.PDB
+C:\Users\Francis\Documents\Lectiones\MMXV Autumnus\DB\DBProject\DBProject\Debug\createDb.obj
+C:\Users\Francis\Documents\Lectiones\MMXV Autumnus\DB\DBProject\DBProject\Debug\dbManager.obj
+C:\Users\Francis\Documents\Lectiones\MMXV Autumnus\DB\DBProject\DBProject\Debug\parse.obj
+C:\Users\Francis\Documents\Lectiones\MMXV Autumnus\DB\DBProject\DBProject\Debug\qlm.obj
+C:\Users\Francis\Documents\Lectiones\MMXV Autumnus\DB\DBProject\DBProject\Debug\socket.obj
+C:\Users\Francis\Documents\Lectiones\MMXV Autumnus\DB\DBProject\DBProject\Debug\Table.obj
+C:\Users\Francis\Documents\Lectiones\MMXV Autumnus\DB\DBProject\DBProject\Debug\testfilesystem.obj
+C:\Users\Francis\Documents\Lectiones\MMXV Autumnus\DB\DBProject\DBProject\Debug\teststorage.obj
+C:\Users\Francis\Documents\Lectiones\MMXV Autumnus\DB\DBProject\DBProject\Debug\Var.obj
+C:\Users\Francis\Documents\Lectiones\MMXV Autumnus\DB\DBProject\DBProject\Debug\dbp1.ilk
+C:\Users\Francis\Documents\Lectiones\MMXV Autumnus\DB\DBProject\DBProject\Debug\cl.command.1.tlog
+C:\Users\Francis\Documents\Lectiones\MMXV Autumnus\DB\DBProject\DBProject\Debug\CL.read.1.tlog
+C:\Users\Francis\Documents\Lectiones\MMXV Autumnus\DB\DBProject\DBProject\Debug\CL.write.1.tlog
+C:\Users\Francis\Documents\Lectiones\MMXV Autumnus\DB\DBProject\DBProject\Debug\link-cvtres.read.1.tlog
+C:\Users\Francis\Documents\Lectiones\MMXV Autumnus\DB\DBProject\DBProject\Debug\link-cvtres.write.1.tlog
+C:\Users\Francis\Documents\Lectiones\MMXV Autumnus\DB\DBProject\DBProject\Debug\link-rc.read.1.tlog
+C:\Users\Francis\Documents\Lectiones\MMXV Autumnus\DB\DBProject\DBProject\Debug\link-rc.write.1.tlog
+C:\Users\Francis\Documents\Lectiones\MMXV Autumnus\DB\DBProject\DBProject\Debug\link.command.1.tlog
+C:\Users\Francis\Documents\Lectiones\MMXV Autumnus\DB\DBProject\DBProject\Debug\link.read.1.tlog
+C:\Users\Francis\Documents\Lectiones\MMXV Autumnus\DB\DBProject\DBProject\Debug\link.write.1.tlog
+C:\Users\Francis\Documents\Lectiones\MMXV Autumnus\DB\DBProject\DBProject\Debug\vc110.idb
+C:\Users\Francis\Documents\Lectiones\MMXV Autumnus\DB\DBProject\DBProject\Debug\dbp1.pdb
+C:\Users\Francis\Documents\Lectiones\MMXV Autumnus\DB\DBProject\DBProject\Debug\vc110.pdb
+C:\Users\Francis\Documents\Lectiones\MMXV Autumnus\DB\DBProject\DBProject\Debug\dbp1.exe
