@@ -3,6 +3,7 @@ using System.Net;
 using System.Net.Sockets;
 using System.Threading;
 using System.Text;
+using System.Diagnostics;
 using DBUI;
 
 // State object for receiving data from remote device.
@@ -33,6 +34,11 @@ public class AsynchronousClient
 
     // The response from the remote device.
     private static String response = String.Empty;
+
+    public static String get_response()
+    {
+        return response;
+    }
 
     public static void StartClient()
     {
@@ -100,6 +106,40 @@ public class AsynchronousClient
         catch (Exception e)
         {
             Console.WriteLine(e.ToString());
+            connectDone.Set();
+        }
+    }
+
+    public static void Receive0()
+    {
+        try
+        {
+            // Create the state object.
+            StateObject state = new StateObject();
+            state.workSocket = client;
+
+            // Begin receiving the data from the remote device.
+            //client.BeginReceive(state.buffer, 0, StateObject.BufferSize, 0,
+            //    new AsyncCallback(ReceiveCallback), state);
+            int bytesRead;
+            response = "";
+            while (true)
+            {
+                bytesRead = client.Receive(state.buffer);
+                state.sb.Append(Encoding.ASCII.GetString(state.buffer, 0, bytesRead));
+                Debug.WriteLine("Received: " + state.sb.ToString() + "\n");
+                if (state.sb.ToString().Length >= 4 && state.sb.ToString().Substring(state.sb.ToString().Length - 4) == "#end")
+                {
+                    response = state.sb.ToString();
+                    //form.setData(response);
+                    return;
+                }
+            }
+
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.ToString());
         }
     }
 
@@ -110,7 +150,7 @@ public class AsynchronousClient
             // Create the state object.
             StateObject state = new StateObject();
             state.workSocket = client;
-
+            Debug.WriteLine(state.sb.ToString() + "\n");
             // Begin receiving the data from the remote device.
             client.BeginReceive(state.buffer, 0, StateObject.BufferSize, 0,
                 new AsyncCallback(ReceiveCallback), state);
@@ -138,11 +178,12 @@ public class AsynchronousClient
                 
                 // There might be more data, so store the data received so far.
                 state.sb.Append(Encoding.ASCII.GetString(state.buffer, 0, bytesRead));
-
-                if (state.sb.ToString().Substring(state.sb.ToString().Length - 4) == "#end")
+                Debug.WriteLine(state.sb.ToString());
+                if (state.sb.ToString().Length >= 4 && state.sb.ToString().Substring(state.sb.ToString().Length - 4) == "#end")
                 {
                     response = state.sb.ToString();
-                    form.setData(response.Substring(0, response.Length - 4));
+                    //form.setData(response.Substring(0, response.Length - 4));
+                    receiveDone.Set();
                     return;
                 }
 
@@ -156,7 +197,7 @@ public class AsynchronousClient
                 if (state.sb.Length > 1)
                 {
                     response = state.sb.ToString();
-                    form.setData(response);
+                    //form.setData(response);
                 }
                 // Signal that all bytes have been received.
                 receiveDone.Set();
@@ -172,6 +213,8 @@ public class AsynchronousClient
     {
         // Convert the string data to byte data using ASCII encoding.
         byte[] byteData = Encoding.ASCII.GetBytes(data);
+        Array.Resize(ref byteData, data.Length + 1);
+        byteData[data.Length] = 0;
 
         // Begin sending the data to the remote device.
         client.BeginSend(byteData, 0, byteData.Length, 0,

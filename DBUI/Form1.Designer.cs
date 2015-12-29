@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
-            this.toolStripContainer1 = new System.Windows.Forms.ToolStripContainer();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.新建NToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.打开OToolStripButton = new System.Windows.Forms.ToolStripButton();
@@ -49,8 +48,11 @@
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.button1 = new System.Windows.Forms.Button();
             this.textBox1 = new System.Windows.Forms.TextBox();
-            this.toolStripContainer1.SuspendLayout();
+            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+            this.toolStripStatusRet = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripStatusError = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStrip1.SuspendLayout();
+            this.toolStripContainer2.BottomToolStripPanel.SuspendLayout();
             this.toolStripContainer2.ContentPanel.SuspendLayout();
             this.toolStripContainer2.TopToolStripPanel.SuspendLayout();
             this.toolStripContainer2.SuspendLayout();
@@ -59,19 +61,8 @@
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // toolStripContainer1
-            // 
-            // 
-            // toolStripContainer1.ContentPanel
-            // 
-            this.toolStripContainer1.ContentPanel.Size = new System.Drawing.Size(150, 150);
-            this.toolStripContainer1.Location = new System.Drawing.Point(0, 0);
-            this.toolStripContainer1.Name = "toolStripContainer1";
-            this.toolStripContainer1.Size = new System.Drawing.Size(150, 175);
-            this.toolStripContainer1.TabIndex = 0;
-            this.toolStripContainer1.Text = "toolStripContainer1";
             // 
             // toolStrip1
             // 
@@ -92,7 +83,7 @@
             this.toolStripButton1});
             this.toolStrip1.Location = new System.Drawing.Point(3, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(515, 27);
+            this.toolStrip1.Size = new System.Drawing.Size(409, 27);
             this.toolStrip1.TabIndex = 0;
             // 
             // 新建NToolStripButton
@@ -103,6 +94,7 @@
             this.新建NToolStripButton.Name = "新建NToolStripButton";
             this.新建NToolStripButton.Size = new System.Drawing.Size(23, 24);
             this.新建NToolStripButton.Text = "新建(&N)";
+            this.新建NToolStripButton.Visible = false;
             // 
             // 打开OToolStripButton
             // 
@@ -112,6 +104,7 @@
             this.打开OToolStripButton.Name = "打开OToolStripButton";
             this.打开OToolStripButton.Size = new System.Drawing.Size(23, 24);
             this.打开OToolStripButton.Text = "打开(&O)";
+            this.打开OToolStripButton.Visible = false;
             // 
             // 保存SToolStripButton
             // 
@@ -121,11 +114,13 @@
             this.保存SToolStripButton.Name = "保存SToolStripButton";
             this.保存SToolStripButton.Size = new System.Drawing.Size(23, 24);
             this.保存SToolStripButton.Text = "保存(&S)";
+            this.保存SToolStripButton.Visible = false;
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
             this.toolStripSeparator1.Size = new System.Drawing.Size(6, 27);
+            this.toolStripSeparator1.Visible = false;
             // 
             // 帮助LToolStripButton
             // 
@@ -135,6 +130,7 @@
             this.帮助LToolStripButton.Name = "帮助LToolStripButton";
             this.帮助LToolStripButton.Size = new System.Drawing.Size(23, 24);
             this.帮助LToolStripButton.Text = "帮助(&L)";
+            this.帮助LToolStripButton.Click += new System.EventHandler(this.帮助LToolStripButton_Click);
             // 
             // toolStripSeparator3
             // 
@@ -152,6 +148,7 @@
             this.IPTextbox.Name = "IPTextbox";
             this.IPTextbox.Size = new System.Drawing.Size(100, 27);
             this.IPTextbox.Text = "127.0.0.1";
+            this.IPTextbox.TextChanged += new System.EventHandler(this.IPTextbox_TextChanged);
             // 
             // toolStripSeparator2
             // 
@@ -169,6 +166,7 @@
             this.PortTextbox.Name = "PortTextbox";
             this.PortTextbox.Size = new System.Drawing.Size(100, 27);
             this.PortTextbox.Text = "4000";
+            this.PortTextbox.TextChanged += new System.EventHandler(this.IPTextbox_TextChanged);
             // 
             // toolStripSeparator4
             // 
@@ -188,10 +186,14 @@
             // toolStripContainer2
             // 
             // 
+            // toolStripContainer2.BottomToolStripPanel
+            // 
+            this.toolStripContainer2.BottomToolStripPanel.Controls.Add(this.statusStrip1);
+            // 
             // toolStripContainer2.ContentPanel
             // 
             this.toolStripContainer2.ContentPanel.Controls.Add(this.splitContainer1);
-            this.toolStripContainer2.ContentPanel.Size = new System.Drawing.Size(765, 472);
+            this.toolStripContainer2.ContentPanel.Size = new System.Drawing.Size(765, 450);
             this.toolStripContainer2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.toolStripContainer2.Location = new System.Drawing.Point(0, 0);
             this.toolStripContainer2.Name = "toolStripContainer2";
@@ -218,8 +220,8 @@
             // 
             this.splitContainer1.Panel2.Controls.Add(this.button1);
             this.splitContainer1.Panel2.Controls.Add(this.textBox1);
-            this.splitContainer1.Size = new System.Drawing.Size(765, 472);
-            this.splitContainer1.SplitterDistance = 252;
+            this.splitContainer1.Size = new System.Drawing.Size(765, 450);
+            this.splitContainer1.SplitterDistance = 240;
             this.splitContainer1.TabIndex = 0;
             // 
             // dataGridView1
@@ -233,12 +235,13 @@
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.ReadOnly = true;
             this.dataGridView1.RowTemplate.Height = 27;
-            this.dataGridView1.Size = new System.Drawing.Size(765, 252);
+            this.dataGridView1.Size = new System.Drawing.Size(765, 240);
             this.dataGridView1.TabIndex = 0;
             // 
             // button1
             // 
             this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button1.Enabled = false;
             this.button1.Location = new System.Drawing.Point(665, 3);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(97, 30);
@@ -255,8 +258,31 @@
             this.textBox1.Location = new System.Drawing.Point(0, 0);
             this.textBox1.Multiline = true;
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(659, 216);
+            this.textBox1.Size = new System.Drawing.Size(659, 206);
             this.textBox1.TabIndex = 0;
+            this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
+            // 
+            // statusStrip1
+            // 
+            this.statusStrip1.Dock = System.Windows.Forms.DockStyle.None;
+            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripStatusRet,
+            this.toolStripStatusError});
+            this.statusStrip1.Location = new System.Drawing.Point(0, 0);
+            this.statusStrip1.Name = "statusStrip1";
+            this.statusStrip1.Size = new System.Drawing.Size(765, 22);
+            this.statusStrip1.TabIndex = 3;
+            this.statusStrip1.Text = "statusStrip1";
+            // 
+            // toolStripStatusRet
+            // 
+            this.toolStripStatusRet.Name = "toolStripStatusRet";
+            this.toolStripStatusRet.Size = new System.Drawing.Size(0, 17);
+            // 
+            // toolStripStatusError
+            // 
+            this.toolStripStatusError.Name = "toolStripStatusError";
+            this.toolStripStatusError.Size = new System.Drawing.Size(0, 17);
             // 
             // Form1
             // 
@@ -264,13 +290,12 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(765, 499);
             this.Controls.Add(this.toolStripContainer2);
-            this.Controls.Add(this.toolStripContainer1);
             this.Name = "Form1";
             this.Text = "Form1";
-            this.toolStripContainer1.ResumeLayout(false);
-            this.toolStripContainer1.PerformLayout();
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
+            this.toolStripContainer2.BottomToolStripPanel.ResumeLayout(false);
+            this.toolStripContainer2.BottomToolStripPanel.PerformLayout();
             this.toolStripContainer2.ContentPanel.ResumeLayout(false);
             this.toolStripContainer2.TopToolStripPanel.ResumeLayout(false);
             this.toolStripContainer2.TopToolStripPanel.PerformLayout();
@@ -282,13 +307,14 @@
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            this.statusStrip1.ResumeLayout(false);
+            this.statusStrip1.PerformLayout();
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private System.Windows.Forms.ToolStripContainer toolStripContainer1;
         private System.Windows.Forms.ToolStrip toolStrip1;
         private System.Windows.Forms.ToolStripButton 新建NToolStripButton;
         private System.Windows.Forms.ToolStripButton 打开OToolStripButton;
@@ -308,6 +334,9 @@
         private System.Windows.Forms.ToolStripButton toolStripButton1;
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.StatusStrip statusStrip1;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusRet;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusError;
     }
 }
 

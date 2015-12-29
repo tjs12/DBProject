@@ -225,6 +225,6 @@ RC QL_Manager::Select (int           nSelAttrs,        // # attrs in Select clau
 		}
 		io -> print("\n");
 	}
-	io -> print("#end");
+	//io -> print("#end");
 	return RETURN_SUCCEED;
 }

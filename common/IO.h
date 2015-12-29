@@ -55,7 +55,7 @@ public:
 	void print(std::string str) {
 		char *temp = new char[str.length() + 1];
 		strcpy(temp, str.c_str());
-		cout << temp;
+		cout << "Print:\n    \"" << temp << "\"" << endl;
 		socket.Send(temp);
 		delete []temp;
 	}
@@ -64,6 +64,7 @@ public:
 			pos = 0;
 			socket.Receive(buf);
 		}
+		cout << "Received: " << pos << "\n    \"" <<buf[pos] << "\"" << endl;
 		return buf[pos++];
 	}
 	private:

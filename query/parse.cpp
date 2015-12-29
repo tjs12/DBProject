@@ -31,6 +31,9 @@ RC useDb(string str) {DbManager* m = DbManager::getInstance(); return m -> useDb
 void showTables() {DbManager* m = DbManager::getInstance(); m -> showTables();}
 
 #endif
+
+#define NO_COMMAND -2
+
 bool parse_sql_keyword(char *&cmd, char *kw) {	// contrast key word
 	int i = 0;
 	while (kw[i]) {
@@ -347,7 +350,7 @@ int parse_sql_statement(char *cmd) {
 
 int parse_entrance(char c) {
 	static string cmd = "";
-	int ret = 0;	// not run the cmd
+	int ret = NO_COMMAND;	// not run the cmd
 	char *temp;
 	switch (c) {
 		case ';':
@@ -373,12 +376,14 @@ int parse_entrance(char c) {
 
 int main() {
 	char *cmd = new char[1 << 8];
-	StdIO io;
+	SocketIO io;
 	QL_Manager::getInst() -> setIO(&io);
 	char temp;
+	int ret;
 	while (temp = io.getchar()) {
 		//printf("cmd's running result: %d\n------------------------\n", parse_entrance(temp));
-		parse_entrance(temp);
+		ret = parse_entrance(temp);
+		if (ret != NO_COMMAND) io.print("\n" + to_string(ret) + "#end");
 	}
 	delete []cmd;
 }

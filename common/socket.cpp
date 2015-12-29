@@ -80,8 +80,9 @@ void Socket::Receive(char* RecvBuffer)
 {
 	int Ret = 0;
 	//char *RecvBuffer = new char[MAX_PATH];
-	RecvBuffer[0] = 0;
+	memset(RecvBuffer, 0, sizeof(char) * MAX_PATH);
 	Ret = recv(CientSocket, RecvBuffer, MAX_PATH, 0);
+	cout << "recv: " << RecvBuffer << endl;
 	if ( Ret == 0 || Ret == SOCKET_ERROR ) 
 	{
 		/*cout<<"客户端退出!"<<endl;
