@@ -8,9 +8,6 @@ int DbManager::createDb(const string name){
 		curDbName = DbCreator::dbName; curDbPath = DbCreator::dbPath;
 		dbNames.push_back(curDbName);
 	}
-	else{
-		cout<<"数据库创建失败！"<<endl;
-	}
 	return result;
 }
 
@@ -18,6 +15,7 @@ int DbManager::createTable(vector<Type>types,vector<string>names,string name,int
 	string absoluteName = curDbPath+"\\"+name;
 	Table* table = new Table();
 	table->createTable(types,names,absoluteName,pri_key);
+	delete table;
 	return 0;
 }
 int DbManager::useDb(const string name){

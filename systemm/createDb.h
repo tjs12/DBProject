@@ -6,9 +6,9 @@
 #include <stdio.h>
 #include <string>
 #include <iostream>
-#define rootpath ".\\dbs\\"
+#define rootpath "dbs\\"
 using namespace std;
-
+extern int m;
 class DbCreator{
 	public:
 		static bool exsist(string dir,const string name);
