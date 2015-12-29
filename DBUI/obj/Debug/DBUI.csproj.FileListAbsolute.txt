@@ -1,0 +1,9 @@
+C:\Users\Francis\Documents\Lectiones\MMXV Autumnus\DB\dbp1\DBUI\bin\Debug\DBUI.exe.config
+C:\Users\Francis\Documents\Lectiones\MMXV Autumnus\DB\dbp1\DBUI\bin\Debug\DBUI.exe
+C:\Users\Francis\Documents\Lectiones\MMXV Autumnus\DB\dbp1\DBUI\bin\Debug\DBUI.pdb
+C:\Users\Francis\Documents\Lectiones\MMXV Autumnus\DB\dbp1\DBUI\obj\Debug\DBUI.Form1.resources
+C:\Users\Francis\Documents\Lectiones\MMXV Autumnus\DB\dbp1\DBUI\obj\Debug\DBUI.Properties.Resources.resources
+C:\Users\Francis\Documents\Lectiones\MMXV Autumnus\DB\dbp1\DBUI\obj\Debug\DBUI.csproj.GenerateResource.Cache
+C:\Users\Francis\Documents\Lectiones\MMXV Autumnus\DB\dbp1\DBUI\obj\Debug\DBUI.exe
+C:\Users\Francis\Documents\Lectiones\MMXV Autumnus\DB\dbp1\DBUI\obj\Debug\DBUI.pdb
+C:\Users\Francis\Documents\Lectiones\MMXV Autumnus\DB\dbp1\DBUI\obj\Debug\DBUI.csprojResolveAssemblyReference.cache

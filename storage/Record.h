@@ -3,6 +3,7 @@
 
 #include "Var.h"
 #include "../common/Condition.h"
+#include "../common/rc.h"
 #include <cstring>
 #include <vector>
 
@@ -113,7 +114,11 @@ public:
 			}
 			if (c.op == '=')
 				return vars[j]->equal(vars[j]);
-			else 
+			else if (c.op == '<')
+				return vars[i]->less_than(vars[j]);
+			else if (c.op == '>')
+				return vars[i]->greater_than(vars[j]);
+			else
 				return false; //TODO
 
 		}
@@ -121,6 +126,10 @@ public:
 			Var *data = Var::fromBuf((unsigned int*)c.rhsValue.data, c.rhsValue.type);
 			if (c.op == '=')
 				return data->equal(vars[i]);
+			else if (c.op == '<')
+				return vars[i]->less_than(data);
+			else if (c.op == '>')
+				return vars[i]->greater_than(data);
 			else 
 				return false; //TODO
 		}

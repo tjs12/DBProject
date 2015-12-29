@@ -18,7 +18,7 @@ RC QL_Manager::select_all_attr (
 		Table t;
 		string tablepath = m->getCurDbPath(), tablename = string(relations[0]);
 		tablepath = tablepath.append("\\").append(tablename);
-		if (t.openTable(tablepath) == RETURN_FAILED) return RETURN_FAILED;
+		if (t.openTable(tablepath) != RETURN_SUCCEED) return RETURN_FAILED_OPEN_FILE;
 
 		res.clear();
 		res_rid.clear();
@@ -49,8 +49,8 @@ RC QL_Manager::select_all_attr (
 		tablepath1 = tablepath1.append("\\").append(tablename1);
 		string tablepath2 = DbManager::getInstance()->getCurDbPath(), tablename2 = relations[1];
 		tablepath2 = tablepath2.append("\\").append(tablename2);
-		if (t1.openTable(tablepath1) == RETURN_FAILED) return RETURN_FAILED;
-		if (t2.openTable(tablepath2) == RETURN_FAILED) return RETURN_FAILED;
+		if (t1.openTable(tablepath1) != RETURN_SUCCEED) return RETURN_FAILED_OPEN_FILE;
+		if (t2.openTable(tablepath2) != RETURN_SUCCEED) return RETURN_FAILED_OPEN_FILE;
 
 		res.clear();
 		res_rid.clear();
@@ -105,13 +105,20 @@ RC QL_Manager::Insert (const char  *relName,           // relation to insert int
 	Table t;  
 	string tablepath = DbManager::getInstance()->getCurDbPath(), tablename = relName;
 	tablepath = tablepath.append("\\").append(tablename);
-	if (t.openTable(tablepath) == RETURN_FAILED) return RETURN_FAILED;
+	int retcode = t.openTable(tablepath);
+	if (retcode != RETURN_SUCCEED) return retcode;
 
+	//check if the types are the same
+	if (nValues != t.columnNum) return RETURN_FAILED_REC_UNMATCH;
+	for (int i = 0; i < nValues; i++)
+		if (types[i].type != t.columnTypes[i].type) return RETURN_FAILED_REC_UNMATCH;
+
+	//check if there are records with the same value for primary key
 	if (t.primaryKey != -1) {
 		for (TableIterator i(&t); !i.isEnd(); i.gotoNext()) {
 			Record current = i.current();
 			if ((rec.getVar(t.primaryKey))->equal(current.getVar(t.primaryKey)))
-				return RETURN_FAILED;
+				return RETURN_FAILED_PRIKEY_REP;
 		}
 	}
 
@@ -129,7 +136,7 @@ RC QL_Manager::Delete (const char *relName,            // relation to delete fro
 	Table t;  
 	string tablepath = DbManager::getInstance()->getCurDbPath(), tablename = relName;
 	tablepath = tablepath.append("\\").append(tablename);
-	if (t.openTable(tablepath) == RETURN_FAILED) return RETURN_FAILED;
+	if (t.openTable(tablepath) != RETURN_SUCCEED) return RETURN_FAILED_OPEN_FILE;
 
 
 	for (int i = 0; i < res_rid.size(); i++) {
@@ -151,7 +158,7 @@ RC QL_Manager::Delete (const char *relName,            // relation to delete fro
 	Table t;  
 	string tablepath = DbManager::getInstance()->getCurDbPath(), tablename = relName;
 	tablepath = tablepath.append("\\").append(tablename);
-	if (t.openTable(tablepath) == RETURN_FAILED) return RETURN_FAILED;
+	if (t.openTable(tablepath) != RETURN_SUCCEED) return RETURN_FAILED_OPEN_FILE;
 
 	Record mask = Record(t.columnTypes);
 	unsigned int *maskdata = new unsigned int[mask.size()];
@@ -193,11 +200,22 @@ RC QL_Manager::Select (int           nSelAttrs,        // # attrs in Select clau
 
 	//Table t;  
 	for (int i = 0; i < attr_names.size(); i++) {
-		io -> print(attr_names[i] + " ");
+		for (int j = 0; j < nSelAttrs; j++)
+			if (attr_names[i].compare(selAttrs[j].attrName) == 0 || 
+					(selAttrs[j].relName!=0 && attr_names[i].compare(string(selAttrs[j].relName).append(".").append(selAttrs[j].attrName)) == 0) ) //*
+					io -> print(attr_names[i] + ((i < attr_names.size() - 1)?" ":""));
+		if (nSelAttrs == 0)
+			io -> print(attr_names[i] + ((i < attr_names.size() - 1)?" ":""));
 	}
+
 	io -> print("\n");
 	for (int i = 0; i < attr_names.size(); i++) {
-		io -> print(to_string(attr_types[i].type) + " " + to_string(attr_types[i].setting) + " ");
+		for (int j = 0; j < nSelAttrs; j++)
+			if (attr_names[i].compare(selAttrs[j].attrName) == 0 || 
+					(selAttrs[j].relName!=0 && attr_names[i].compare(string(selAttrs[j].relName).append(".").append(selAttrs[j].attrName)) == 0) ) //*
+				io -> print(to_string(attr_types[i].type) + " " + to_string(attr_types[i].setting) + ((i < attr_names.size() - 1)?" ":""));
+		if (nSelAttrs == 0)
+			io -> print(to_string(attr_types[i].type) + " " + to_string(attr_types[i].setting) + ((i < attr_names.size() - 1)?" ":""));
 	}
 	io -> print("\n");
 
@@ -210,9 +228,10 @@ RC QL_Manager::Select (int           nSelAttrs,        // # attrs in Select clau
 					io -> print(res[i].getVar(j)->toString() +  " ");
 				}
 			}
-			if (nSelAttrs == 0) cout << res[i].getVar(j)->toString() << ' ';
+			if (nSelAttrs == 0) io -> print(res[i].getVar(j)->toString() + ' ');
 		}
-		cout << endl;
+		io -> print("\n");
 	}
+	//io -> print("#end");
 	return RETURN_SUCCEED;
 }
