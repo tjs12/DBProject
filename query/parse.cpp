@@ -8,6 +8,7 @@
 #define TEST 0
 #if TEST
 #include <cstdio>
+#include <cctype>
 using namespace std;
 #define createDb(str) printf("createDb(%s)\n", str);
 #define createTable printf("createTable()\n");
@@ -37,7 +38,7 @@ void showTables() {DbManager* m = DbManager::getInstance(); m -> showTables();}
 bool parse_sql_keyword(char *&cmd, char *kw) {	// contrast key word
 	int i = 0;
 	while (kw[i]) {
-		if (cmd[i] != kw[i])
+		if (tolower(cmd[i]) != tolower(kw[i]))
 			return false;
 		i++;
 	}
@@ -437,4 +438,3 @@ int main() {
 	}
 	delete []cmd;
 }
-
