@@ -8,6 +8,7 @@
 #define TEST 0
 #if TEST
 #include <cstdio>
+#include <cctype>
 using namespace std;
 #define createDb(str) printf("createDb(%s)\n", str);
 #define createTable printf("createTable()\n");
@@ -31,10 +32,13 @@ RC useDb(string str) {DbManager* m = DbManager::getInstance(); return m -> useDb
 void showTables() {DbManager* m = DbManager::getInstance(); m -> showTables();}
 
 #endif
+
+#define NO_COMMAND -2
+
 bool parse_sql_keyword(char *&cmd, char *kw) {	// contrast key word
 	int i = 0;
 	while (kw[i]) {
-		if (cmd[i] != kw[i])
+		if (tolower(cmd[i]) != tolower(kw[i]))
 			return false;
 		i++;
 	}
@@ -88,6 +92,25 @@ int parse_sql_int(char *&cmd, int &data) {
 	return end;
 }
 
+int parse_sql_float(char *&cmd, float &data) {
+	int end;
+	for (data = 0; '0' <= *cmd && *cmd <= '9'; cmd++)
+		data = data * 10 + (*cmd - '0');
+	end = *cmd;
+	*cmd = '\0';
+	cmd++;
+	if (end == '.') {
+		for (float e = 1; '0' <= *cmd && *cmd <= '9'; cmd++) {
+			e *= 0.1;
+			data += (*cmd - '0') * e;
+		}
+		end = *cmd;
+		*cmd = '\0';
+		cmd++;
+	}
+	return end;
+}
+
 int parse_sql_char(char *&cmd, char *&data, int &length) {
 	int end;
 	data = cmd;
@@ -108,6 +131,8 @@ int parse_sql_type(char *&cmd, Type &type) {
 		type.type = TYPE_INT;
 	else if (parse_sql_keyword(cmd, "varchar("))
 		type.type = TYPE_CHAR;
+	else if (parse_sql_keyword(cmd, "float("))
+		type.type = TYPE_FLOAT;
 	else
 		return -1;
 	end = parse_sql_int(cmd, type.setting);
@@ -121,12 +146,26 @@ int parse_sql_value(char *&cmd, Value &value) {
 		char *data;
 		end = parse_sql_char(cmd, data, value.type.setting);
 		value.data = data;
-	} else {
-		value.type.type = TYPE_INT;
-		value.type.setting = 0;
-		int *data = new int;
-		end = parse_sql_int(cmd, *data);
-		value.data = data;
+	} else if ('0' <= *cmd && *cmd <= '9') {
+		bool Int = true;
+		for (char *str = cmd; *str && Int; str++)
+			if (*str == '.')
+				Int = false;
+			else if (!('0' <= *str && *str <= '9'))
+				break;
+		if (Int) {
+			value.type.type = TYPE_INT;
+			value.type.setting = 0;
+			int *data = new int;
+			end = parse_sql_int(cmd, *data);
+			value.data = data;
+		} else {
+			value.type.type = TYPE_FLOAT;
+			value.type.setting = 0;
+			float *data = new float;
+			end = parse_sql_float(cmd, *data);
+			value.data = data;
+		}
 	}
 	return end;
 }
@@ -304,7 +343,23 @@ int parse_sql_select(char *&cmd) {
 	vector<RelAttr> selAttrs(0);
 	if (!parse_sql_keyword(cmd, " "))
 	   return -1;
+	char *aggre = cmd;
+	if (parse_sql_keyword(cmd, "SUM")
+		|| parse_sql_keyword(cmd, "AVG")
+		|| parse_sql_keyword(cmd, "MAX")
+		|| parse_sql_keyword(cmd, "MIN"))
+		if (*cmd == '(') {
+			*cmd = '\0';
+			cmd++;
+		} else
+			return -1;
+	else
+		aggre = NULL;
 	parse_sql_relAttrs(cmd, selAttrs);
+	for (int i = 0; i < selAttrs.size(); i++)
+		selAttrs[i].aggre = aggre;
+	if (aggre && !parse_sql_keyword(" "))
+		return -1;
 	if (!parse_sql_keyword(cmd, "FROM "))
 		return -1;
 	vector<char *> relations(0);
@@ -312,13 +367,12 @@ int parse_sql_select(char *&cmd) {
 		relations.push_back(cmd);
 		end = parse_sql_name(cmd);
 	} while (end == ',');
-	if (!parse_sql_keyword(cmd, "WHERE "))
-		return -1;
-	vector<Condition> conditions;
+	vector<Condition> conditions(0);
+	if (parse_sql_keyword(cmd, "WHERE "))
 		end = parse_sql_conditions(cmd, conditions);
-	return QL_Manager::getInst() -> Select(selAttrs.size(), selAttrs.size()==0? 0: &selAttrs.front(), 
+	return QL_Manager::getInst() -> Select(selAttrs.size(), selAttrs.size() ? &selAttrs.front() : NULL,
 		relations.size(), &relations.front(),
-		conditions.size(), conditions.size()==0 ? 0 : &conditions.front());
+		conditions.size(), conditions.size() ? &conditions.front() : NULL);
 }
 
 // cmd should point to a writable memory
@@ -347,7 +401,7 @@ int parse_sql_statement(char *cmd) {
 
 int parse_entrance(char c) {
 	static string cmd = "";
-	int ret = 0;	// not run the cmd
+	int ret = NO_COMMAND;	// not run the cmd
 	char *temp;
 	switch (c) {
 		case ';':
@@ -371,6 +425,7 @@ int parse_entrance(char c) {
 	}
 }
 
+<<<<<<< HEAD:query/parse.h
 //int main() {
 //	char *cmd = new char[1 << 8];
 //	StdIO io;
@@ -383,3 +438,18 @@ int parse_entrance(char c) {
 //	delete []cmd;
 //}
 
+=======
+int main() {
+	char *cmd = new char[1 << 8];
+	SocketIO io;
+	QL_Manager::getInst() -> setIO(&io);
+	char temp;
+	int ret;
+	while (temp = io.getchar()) {
+		//printf("cmd's running result: %d\n------------------------\n", parse_entrance(temp));
+		ret = parse_entrance(temp);
+		if (ret != NO_COMMAND) io.print("\n" + to_string(ret) + "#end");
+	}
+	delete []cmd;
+}
+>>>>>>> 4b41a2c59817d46c740617454b49a62fce7db442:query/parse.cpp

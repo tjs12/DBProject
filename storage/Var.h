@@ -14,6 +14,8 @@ public:
 	virtual void writeToBuf(unsigned int *buf) = 0;
 	virtual Var *copy() = 0;
 	virtual bool equal(Var *v) = 0;
+	virtual bool greater_than(Var *v) = 0;
+	virtual bool less_than(Var *v) = 0;
 	static Var *fromBuf(unsigned int *buf, Type type);
 };
 
@@ -43,6 +45,20 @@ public:
 	bool equal(Var *v) {
 		if (v->type() == Type(TYPE_INT)) {
 			if (((IntVar*)v) -> val == val) return true;
+		}
+		return false;
+	}
+
+	bool greater_than(Var *v) {
+		if (v->type() == Type(TYPE_INT)) {
+			if (((IntVar*)v) -> val < val) return true;
+		}
+		return false;
+	}
+
+	bool less_than(Var *v) {
+		if (v->type() == Type(TYPE_INT)) {
+			if (((IntVar*)v) -> val > val) return true;
 		}
 		return false;
 	}
@@ -85,11 +101,71 @@ public:
 		return false;
 	}
 
+	bool greater_than(Var *v) {
+		if (v->type == Type(TYPE_CHAR)) {
+			return false;//TODO
+		}
+		return false;
+	}
+
+	bool less_than(Var *v) {
+		if (v->type == Type(TYPE_CHAR)) {
+			return false;//TODO
+		}
+		return false;
+	}
+
 	char *val;
 	int maxlen;
 };
 
+class RealVar : public Var
+{
+public:
+	RealVar(float v) {
+		val = v;
+	}
 
+	std::string toString() {
+		return to_string(val);
+	}
+
+	Type type() {
+		return Type(TYPE_REAL, 0);
+	}
+
+	void writeToBuf(unsigned int *buf) {
+		*((float*)buf) = val;
+	}
+
+	Var *copy() {
+		return new RealVar(val);
+	}
+
+	bool equal(Var *v) {
+		if (v->type() == Type(TYPE_REAL)) {
+			if (((RealVar*)v) -> val == val) return true;
+		}
+		return false;
+	}
+
+	bool greater_than(Var *v) {
+		if (v->type() == Type(TYPE_REAL)) {
+			if (((IntVar*)v) -> val < val) return true;
+		}
+		return false;
+	}
+
+	bool less_than(Var *v) {
+		if (v->type() == Type(TYPE_REAL)) {
+			if (((IntVar*)v) -> val > val) return true;
+		}
+		return false;
+	}
+	
+	float val;
+	
+};
 
 
 
