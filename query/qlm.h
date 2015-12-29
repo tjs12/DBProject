@@ -53,6 +53,10 @@ private:
               int           nConditions,      // # conditions in Where clause
               Condition conditions[]);  // conditions in Where clause
 
+	void start_aggre(char *func, Type t);
+	void aggre(char *func, Var *v);
+	Var *aggre_rec;
+
 	vector<Record> res;
 	vector<int> res_rid;
 	vector<string> attr_names;

@@ -132,7 +132,7 @@ int parse_sql_type(char *&cmd, Type &type) {
 	else if (parse_sql_keyword(cmd, "varchar("))
 		type.type = TYPE_CHAR;
 	else if (parse_sql_keyword(cmd, "float("))
-		type.type = TYPE_FLOAT;
+		type.type = TYPE_REAL;
 	else
 		return -1;
 	end = parse_sql_int(cmd, type.setting);
@@ -160,7 +160,7 @@ int parse_sql_value(char *&cmd, Value &value) {
 			end = parse_sql_int(cmd, *data);
 			value.data = data;
 		} else {
-			value.type.type = TYPE_FLOAT;
+			value.type.type = TYPE_REAL;
 			value.type.setting = 0;
 			float *data = new float;
 			end = parse_sql_float(cmd, *data);
@@ -358,7 +358,7 @@ int parse_sql_select(char *&cmd) {
 	parse_sql_relAttrs(cmd, selAttrs);
 	for (int i = 0; i < selAttrs.size(); i++)
 		selAttrs[i].aggre = aggre;
-	if (aggre && !parse_sql_keyword(" "))
+	if (aggre && !parse_sql_keyword(cmd, " "))
 		return -1;
 	if (!parse_sql_keyword(cmd, "FROM "))
 		return -1;

@@ -43,21 +43,21 @@ public:
 	}
 
 	bool equal(Var *v) {
-		if (v->type() == Type(TYPE_INT)) {
+		if (v->type() == TYPE_INT) {
 			if (((IntVar*)v) -> val == val) return true;
 		}
 		return false;
 	}
 
 	bool greater_than(Var *v) {
-		if (v->type() == Type(TYPE_INT)) {
+		if (v->type() == TYPE_INT) {
 			if (((IntVar*)v) -> val < val) return true;
 		}
 		return false;
 	}
 
 	bool less_than(Var *v) {
-		if (v->type() == Type(TYPE_INT)) {
+		if (v->type() == TYPE_INT) {
 			if (((IntVar*)v) -> val > val) return true;
 		}
 		return false;
@@ -95,21 +95,21 @@ public:
 	}
 
 	bool equal(Var *v) {
-		if (v->type() == Type(TYPE_CHAR)) {
+		if (v->type() == TYPE_CHAR) {
 			return strcmp(val, ((VarCharVar*)v)->val) == 0;
 		}
 		return false;
 	}
 
 	bool greater_than(Var *v) {
-		if (v->type == Type(TYPE_CHAR)) {
+		if (v->type() == TYPE_CHAR) {
 			return false;//TODO
 		}
 		return false;
 	}
 
 	bool less_than(Var *v) {
-		if (v->type == Type(TYPE_CHAR)) {
+		if (v->type() == TYPE_CHAR) {
 			return false;//TODO
 		}
 		return false;

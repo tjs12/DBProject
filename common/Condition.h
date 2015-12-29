@@ -10,6 +10,7 @@ using namespace std;
 struct RelAttr {
   char *relName;     // relation name (may be NULL) 
   char *attrName;    // attribute name              
+  char *aggre;
   friend ostream &operator<<(ostream &s, const RelAttr &ra);
 };
 

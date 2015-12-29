@@ -209,15 +209,45 @@ RC QL_Manager::Select (int           nSelAttrs,        // # attrs in Select clau
 	}
 
 	io -> print("\n");
+
 	for (int i = 0; i < attr_names.size(); i++) {
 		for (int j = 0; j < nSelAttrs; j++)
 			if (attr_names[i].compare(selAttrs[j].attrName) == 0 || 
-					(selAttrs[j].relName!=0 && attr_names[i].compare(string(selAttrs[j].relName).append(".").append(selAttrs[j].attrName)) == 0) ) //*
+				(selAttrs[j].relName!=0 && attr_names[i].compare(string(selAttrs[j].relName).append(".").append(selAttrs[j].attrName)) == 0) ) //*
 				io -> print(to_string(attr_types[i].type) + " " + to_string(attr_types[i].setting) + ((i < attr_names.size() - 1)?" ":""));
-		if (nSelAttrs == 0)
+
+		if (nSelAttrs == 0) //SELECT *
 			io -> print(to_string(attr_types[i].type) + " " + to_string(attr_types[i].setting) + ((i < attr_names.size() - 1)?" ":""));
 	}
+		
+	
 	io -> print("\n");
+
+
+	if (nSelAttrs == 1 && selAttrs[0].aggre != 0) {//Aggregation Functions
+		Type temp_t;
+		for (int i = 0; i < attr_names.size(); i++) {
+			if (attr_names[i].compare(selAttrs[0].attrName) == 0 || 
+				(selAttrs[0].relName!=0 && attr_names[i].compare(string(selAttrs[0].relName).append(".").append(selAttrs[0].attrName)) == 0) ) {
+					temp_t = attr_types[i].type;
+			}
+		}
+
+		start_aggre(selAttrs[0].aggre, temp_t);
+		for (int j = 0; j < res.size(); j++) {
+			for (int i = 0; i < attr_names.size(); i++) {
+				if (attr_names[i].compare(selAttrs[0].attrName) == 0 || 
+					(selAttrs[0].relName!=0 && attr_names[i].compare(string(selAttrs[0].relName).append(".").append(selAttrs[0].attrName)) == 0) )
+					aggre(selAttrs[0].aggre, res[j].getVar(i));
+			}
+		}
+		if (strcmp(selAttrs[0].aggre, "AVG") == 0) {
+			((IntVar*)aggre_rec)->val /= res.size();
+		}
+		io -> print(aggre_rec -> toString());
+		return RETURN_SUCCEED;
+	}
+
 
 	for (int i = 0; i < res.size(); i++) {
 		for (int j = 0; j < attr_names.size(); j++) {
@@ -234,4 +264,60 @@ RC QL_Manager::Select (int           nSelAttrs,        // # attrs in Select clau
 	}
 	//io -> print("#end");
 	return RETURN_SUCCEED;
+}
+
+void QL_Manager::aggre(char *func, Var *v)
+{
+	if (aggre_rec->type().type == TYPE_INT) {
+		if (strcmp(func, "MAX") == 0) {
+			if (aggre_rec->less_than(v))
+				((IntVar*)aggre_rec)->val = ((IntVar*)v)->val;
+		}
+		else if (strcmp(func, "MIN") == 0){
+			if (aggre_rec->greater_than(v))
+				((IntVar*)aggre_rec)->val = ((IntVar*)v)->val;
+		}
+		else if (strcmp(func, "SUM") == 0 || strcmp(func, "AVG") == 0){
+			((IntVar*)aggre_rec)->val += ((IntVar*)v)->val;
+		}
+	}
+	else if (aggre_rec->type().type == TYPE_INT) {
+		if (strcmp(func, "MAX") == 0) {
+			if (aggre_rec->less_than(v))
+				((RealVar*)aggre_rec)->val = ((RealVar*)v)->val;
+		}
+		else if (strcmp(func, "MIN") == 0){
+			if (aggre_rec->greater_than(v))
+				((RealVar*)aggre_rec)->val = ((RealVar*)v)->val;
+		}
+		else if (strcmp(func, "SUM") == 0 || strcmp(func, "AVG") == 0) {
+			((RealVar*)aggre_rec)->val += ((RealVar*)v)->val;
+		}
+	}
+}
+
+void QL_Manager::start_aggre(char *func, Type t)
+{
+	if (t.type == TYPE_INT) {
+		if (strcmp(func, "MAX") == 0) {
+			aggre_rec  = new IntVar(MININT);
+		}
+		else if (strcmp(func, "MIN") == 0){
+			aggre_rec  = new IntVar(MAXINT);
+		}
+		else {
+			aggre_rec = new IntVar(0);
+		}
+	}
+	else if (t.type == TYPE_REAL) {
+		if (strcmp(func, "MAX") == 0) {
+			aggre_rec  = new RealVar(FLT_MIN);
+		}
+		else if (strcmp(func, "MIN") == 0){
+			aggre_rec  = new RealVar(FLT_MAX);
+		}
+		else {
+			aggre_rec = new RealVar(0);
+		}
+	}
 }
