@@ -63,7 +63,7 @@ public:
 	RC createTable(vector<Type> &col_type, vector<string> &col_names, string name, int pri_key = -1);
 	RC openTable(string name);
 	
-	Table() {primaryKey = -1;}
+	Table() {primaryKey = -1; columnNum = 0;}
 	~Table();
 private:
 	FileManager *fm;

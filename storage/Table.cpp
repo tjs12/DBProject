@@ -271,9 +271,11 @@ void Table::check_page_validity(BufType b, int pgnum)
 Table::~Table()
 {
 	int index;
-	make_header(bpm->getPage(fid, 0, index));
-	bpm -> markDirty(index);
-	bpm -> close();
+	if (columnNum != 0) {
+		make_header(bpm->getPage(fid, 0, index));
+		bpm -> markDirty(index);
+		bpm -> close();
+	}
 	delete bpm;
 	delete fm;
 
