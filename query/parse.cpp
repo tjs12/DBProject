@@ -171,7 +171,7 @@ int parse_sql_value(char *&cmd, Value &value) {
 
 int parse_sql_values(char *&cmd, vector<Value> &values) {
 	int end;
-	if (!parse_sql_keyword(cmd, "VALUES ("))
+	if (!parse_sql_keyword(cmd, "("))
 		return -1;
 	values.clear();
 	Value value;
@@ -332,9 +332,16 @@ int parse_sql_insert(char *&cmd) {
 	char *relName = cmd;
 	if (parse_sql_name(cmd) != ' ')
 		return -1;
-	vector<Value> values(0);
-	parse_sql_values(cmd, values);
-	return QL_Manager::getInst() -> Insert(relName, values.size(), &values.front());
+	if (!parse_sql_keyword(cmd, "VALUES "))
+		return -1;
+	int ret;
+	do {
+		vector<Value> values(0);
+		if (parse_sql_values(cmd, values) != ')')
+			return -1;
+		ret = QL_Manager::getInst() -> Insert(relName, values.size(), &values.front());
+	} while (parse_sql_keyword(cmd, ","));
+	return ret;
 }
 
 int parse_sql_select(char *&cmd) {
