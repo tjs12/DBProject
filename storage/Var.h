@@ -135,7 +135,8 @@ public:
 	}
 
 	void writeToBuf(unsigned int *buf) {
-		*((float*)buf) = val;
+		//*((float*)buf) = val;
+		memcpy(buf, &val, sizeof(float));
 	}
 
 	Var *copy() {

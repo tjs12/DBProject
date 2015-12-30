@@ -130,7 +130,7 @@ int parse_sql_type(char *&cmd, Type &type) {
 		type.type = TYPE_INT;
 	else if (parse_sql_keyword(cmd, "varchar("))
 		type.type = TYPE_CHAR;
-	else if (parse_sql_keyword(cmd, "float("))
+	else if (parse_sql_keyword(cmd, "real("))
 		type.type = TYPE_REAL;
 	else
 		return -1;

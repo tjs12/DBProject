@@ -111,7 +111,10 @@ RC QL_Manager::Insert (const char  *relName,           // relation to insert int
 	//check if the types are the same
 	if (nValues != t.columnNum) return RETURN_FAILED_REC_UNMATCH;
 	for (int i = 0; i < nValues; i++)
-		if (types[i].type != t.columnTypes[i].type) return RETURN_FAILED_REC_UNMATCH;
+		if (types[i].type != t.columnTypes[i].type) 
+			return RETURN_FAILED_REC_UNMATCH;
+		else
+			rec.columnTypes[i].setting = t.columnTypes[i].setting;
 
 	//check if there are records with the same value for primary key
 	if (t.primaryKey != -1) {

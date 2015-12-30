@@ -37,6 +37,7 @@ RC Table::createTable(vector<Type> &col_type, vector<string> &col_names, string 
 	bpm -> markDirty(index);
 	
 	//PAGE_HEADER_SIZE = PAGE_HEADER_FIXED_LEN + ((PAGE_INT_NUM + columnTypes.size() - 1) / columnTypes.size() + 31) / 32;
+	return RETURN_SUCCEED;
 }
 
 RC Table::openTable(string name)

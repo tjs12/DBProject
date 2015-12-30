@@ -7,7 +7,9 @@ Var *Var::fromBuf(unsigned int *buf, Type type)
 		return i;
 	}
 	else if (type.type == TYPE_REAL) {
-		RealVar *i = new RealVar(*((float*)(*buf)));
+		float temp;
+		memcpy(&temp, buf, sizeof(float));
+		RealVar *i = new RealVar(temp);
 		return i;
 	}
 	else if (type.type == TYPE_CHAR) {
