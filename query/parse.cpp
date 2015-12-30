@@ -223,7 +223,7 @@ int parse_sql_create(char *&cmd) {
 			return -1;
 		vector<Type> types(0);
 		vector<string> names(0);
-		while (!parse_sql_keyword(cmd, "PRIMARY KEY(")) {
+		while (!parse_sql_keyword(cmd, "PRIMARY KEY(") && !parse_sql_keyword(cmd, "PRIMARY KEY (")) {
 			char *id = cmd;
 			parse_sql_name(cmd);
 			names.push_back(id);
@@ -332,7 +332,7 @@ int parse_sql_insert(char *&cmd) {
 	char *relName = cmd;
 	if (parse_sql_name(cmd) != ' ')
 		return -1;
-	if (!parse_sql_keyword(cmd, "VALUES "))
+	if (!parse_sql_keyword(cmd, "VALUES ") && !parse_sql_keyword(cmd, "VALUES"))
 		return -1;
 	int ret;
 	do {
